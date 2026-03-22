@@ -18,11 +18,11 @@ export function HeroSection() {
       <div className='relative z-10 mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-12 px-6 md:px-20 lg:grid-cols-2'>
         <div className='flex flex-col justify-center space-y-8'>
           <div className='flex flex-wrap gap-3'>
-            {HERO.pills.map((pill) => (
+            {HERO.pills.map((pill, index) => (
               <span
                 key={pill.label}
                 className={`border px-4 py-1 text-xs font-medium tracking-widest uppercase ${
-                  pill.accent
+                  index === 0 || pill.accent
                     ? 'border-[#5045324d] text-[#9accf3]'
                     : 'border-[#5045324d] text-[#e5e2e199]'
                 }`}

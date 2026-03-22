@@ -1,7 +1,3 @@
-'use client'
-
-import { useState } from 'react'
-
 import { Container, Section } from '@/ui/core'
 
 /**
@@ -9,8 +5,6 @@ import { Container, Section } from '@/ui/core'
  * 4-step process section
  */
 export function ProcessSection() {
-  const [activeIndex, setActiveIndex] = useState(0)
-
   const steps = [
     {
       number: '01',
@@ -46,42 +40,16 @@ export function ProcessSection() {
         </h2>
 
         <div className='grid grid-cols-1 gap-12 md:grid-cols-4'>
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <div
               key={step.number}
-              onMouseEnter={() => setActiveIndex(index)}
-              onFocus={() => setActiveIndex(index)}
-              onClick={() => setActiveIndex(index)}
-              onKeyDown={(event) => {
-                if (event.key === 'Enter' || event.key === ' ') {
-                  event.preventDefault()
-                  setActiveIndex(index)
-                }
-              }}
-              role='button'
               tabIndex={0}
-              className={`group relative border-t-2 bg-[#201f1f] p-8 transition-colors duration-300 focus:outline-none ${
-                activeIndex === index
-                  ? 'border-[#ffbf00]'
-                  : 'border-[#5045324d] hover:border-[#ffbf00]'
-              }`}
+              className='group relative border-t-2 border-[#5045324d] bg-[#201f1f] p-8 transition-colors duration-300 hover:border-[#ffbf00] focus-visible:border-[#ffbf00] focus-visible:outline-none'
             >
-              <span
-                className={`absolute -top-6 left-8 font-display text-6xl font-bold transition-colors duration-300 ${
-                  activeIndex === index
-                    ? 'text-[#ffbf0033]'
-                    : 'text-[#e5e2e10d] group-hover:text-[#ffbf0033]'
-                }`}
-              >
+              <span className='absolute -top-6 left-8 font-display text-6xl font-bold text-[#e5e2e10d] transition-colors duration-300 group-hover:text-[#ffbf0033] group-focus-visible:text-[#ffbf0033]'>
                 {step.number}
               </span>
-              <h3
-                className={`pb-4 pt-4 text-xl font-bold transition-colors duration-300 ${
-                  activeIndex === index
-                    ? 'text-[#ffdf8a]'
-                    : 'group-hover:text-[#ffdf8a]'
-                }`}
-              >
+              <h3 className='pb-4 pt-4 text-xl font-bold transition-colors duration-300 group-hover:text-[#ffdf8a] group-focus-visible:text-[#ffdf8a]'>
                 {step.title}
               </h3>
               <p className='leading-relaxed text-[#e5e2e199]'>

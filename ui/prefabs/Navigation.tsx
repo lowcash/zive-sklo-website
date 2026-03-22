@@ -7,15 +7,41 @@ import { NAV, BRAND } from '@/lib/content'
 import { MobileMenu } from './MobileMenu'
 
 /**
- * Navigation - RSC with client leaf for mobile menu
+ * Navigation - client component for active section tracking
  * Sticky glass nav with mobile hamburger
  */
 export function Navigation() {
-  const [activeHref, setActiveHref] = useState(NAV.links[0]?.href ?? '')
+  const [activeHref, setActiveHref] = useState('')
 
   useEffect(() => {
     const resolveActiveSection = () => {
       if (!NAV.links.length) {
+        return
+      }
+
+      const sections = NAV.links
+        .map((link) => {
+          const sectionId = link.href.replace('#', '')
+          const section = document.getElementById(sectionId)
+          return section
+            ? {
+                href: link.href,
+                offsetTop: section.offsetTop,
+              }
+            : null
+        })
+        .filter((section): section is { href: string; offsetTop: number } => Boolean(section))
+
+      if (!sections.length) {
+        setActiveHref('')
+        return
+      }
+
+      const marker = window.scrollY + window.innerHeight * 0.45
+      const firstSectionTop = sections[0].offsetTop
+
+      if (marker < firstSectionTop) {
+        setActiveHref('')
         return
       }
 
@@ -24,23 +50,14 @@ export function Navigation() {
         document.documentElement.scrollHeight - 2
 
       if (atPageBottom) {
-        setActiveHref(NAV.links[NAV.links.length - 1].href)
+        setActiveHref(sections[sections.length - 1].href)
         return
       }
 
-      const marker = window.scrollY + window.innerHeight * 0.45
-      let nextActiveHref = NAV.links[0].href
-
-      for (const link of NAV.links) {
-        const sectionId = link.href.replace('#', '')
-        const section = document.getElementById(sectionId)
-
-        if (!section) {
-          continue
-        }
-
+      let nextActiveHref = ''
+      for (const section of sections) {
         if (section.offsetTop <= marker) {
-          nextActiveHref = link.href
+          nextActiveHref = section.href
         }
       }
 
@@ -60,9 +77,13 @@ export function Navigation() {
   return (
     <nav className='glass-nav fixed top-0 z-50 w-full bg-gradient-to-b from-[#131313] to-transparent shadow-[0_20px_40px_rgba(255,186,56,0.05)]'>
       <div className='mx-auto flex max-w-[1440px] items-center justify-between px-6 py-6 md:px-10'>
-        <span className='font-display text-xl tracking-tighter text-[#E5E2E1]'>
+        <a
+          href='#top'
+          className='font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors duration-300 hover:text-[#FFD79B]'
+          aria-label='Přejít na začátek stránky'
+        >
           {BRAND.name}
-        </span>
+        </a>
 
         <div className='hidden items-center gap-8 font-display text-lg font-bold tracking-tight md:flex'>
           {NAV.links.map((link) => (
@@ -89,7 +110,7 @@ export function Navigation() {
         </a>
 
         <div className='md:hidden'>
-          <MobileMenu />
+          <MobileMenu activeHref={activeHref} />
         </div>
       </div>
     </nav>

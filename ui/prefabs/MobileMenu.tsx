@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
-import { NAV } from '@/lib/content'
+import { BRAND, NAV } from '@/lib/content'
 
 /**
  * MobileMenu - Client leaf component for mobile navigation
  * Hamburger menu with full-screen overlay and Framer Motion animations
  */
-export function MobileMenu() {
+export function MobileMenu({ activeHref }: { activeHref: string }) {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
 
@@ -43,6 +43,15 @@ export function MobileMenu() {
           transition={{ duration: 0.25 }}
           className='fixed inset-0 z-[70] flex min-h-dvh w-screen flex-col items-center justify-center bg-[rgba(28,27,27,0.72)] backdrop-blur-[20px]'
         >
+          <a
+            href='#top'
+            onClick={closeMenu}
+            className='absolute left-6 top-6 font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors hover:text-[#FFD79B]'
+            aria-label='Přejít na začátek stránky'
+          >
+            {BRAND.name}
+          </a>
+
           {/* Close Button */}
           <button
             onClick={closeMenu}
@@ -64,7 +73,9 @@ export function MobileMenu() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.06, duration: 0.3 }}
-                className='font-display text-3xl font-bold text-[#E5E2E1] transition-colors hover:text-[#FFD79B]'
+                className={`font-display text-3xl font-bold transition-colors duration-300 hover:text-[#FFD79B] ${
+                  activeHref === link.href ? 'text-[#FFB300]' : 'text-[#E5E2E1]'
+                }`}
               >
                 {link.label}
               </motion.a>
