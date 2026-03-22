@@ -25,21 +25,25 @@ export function ContactSection() {
 
             <div className='space-y-8'>
               <div className='flex items-center gap-6'>
-                <span className='material-symbols-outlined text-[#ffbf00]'>
+                <span className='material-symbols-outlined !text-[24px] text-[#ffbf00]'>
                   mail
                 </span>
                 <div>
-                  <p className='text-xs uppercase text-[#e5e2e166]'>E-mail</p>
+                  <p className='font-label text-xs uppercase text-[#e5e2e166]'>
+                    E-mail
+                  </p>
                   <p className='font-bold'>akce@zivesklo.cz</p>
                 </div>
               </div>
 
               <div className='flex items-center gap-6'>
-                <span className='material-symbols-outlined text-[#ffbf00]'>
+                <span className='material-symbols-outlined !text-[24px] text-[#ffbf00]'>
                   phone_iphone
                 </span>
                 <div>
-                  <p className='text-xs uppercase text-[#e5e2e166]'>Telefon</p>
+                  <p className='font-label text-xs uppercase text-[#e5e2e166]'>
+                    Telefon
+                  </p>
                   <p className='font-bold'>+420 777 123 456</p>
                 </div>
               </div>

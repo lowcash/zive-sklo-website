@@ -76,7 +76,7 @@ export function ContactForm() {
     <form onSubmit={handleSubmit} className='space-y-8'>
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
         <div className='space-y-2'>
-          <label className='block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
             Jméno a příjmení
           </label>
           <input
@@ -92,7 +92,7 @@ export function ContactForm() {
         </div>
 
         <div className='space-y-2'>
-          <label className='block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
             E-mail
           </label>
           <input
@@ -109,7 +109,7 @@ export function ContactForm() {
       </div>
 
       <div className='space-y-2'>
-        <label className='block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+        <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
           Typ akce & počet hostů
         </label>
         <input
@@ -127,7 +127,7 @@ export function ContactForm() {
       </div>
 
       <div className='space-y-2'>
-        <label className='block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+        <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
           Vaše zpráva
         </label>
         <textarea

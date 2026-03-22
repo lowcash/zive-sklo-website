@@ -15,7 +15,7 @@ export function FooterSection() {
             {FOOTER.brand.name}
           </span>
 
-          <div className='flex flex-wrap justify-center gap-8 text-sm uppercase tracking-wide'>
+          <div className='font-label flex flex-wrap justify-center gap-8 text-sm uppercase tracking-wide'>
             {FOOTER.legal.map((item) => (
               <a
                 key={item.label}
@@ -27,7 +27,7 @@ export function FooterSection() {
             ))}
           </div>
 
-          <p className='text-xs uppercase tracking-widest text-[#E5E2E166]'>
+          <p className='font-label text-xs uppercase tracking-widest text-[#E5E2E166]'>
             {FOOTER.copyright}
           </p>
         </div>

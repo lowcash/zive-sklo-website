@@ -41,7 +41,7 @@ export function MobileMenu() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className='fixed inset-0 z-[70] flex min-h-dvh w-screen flex-col items-center justify-center bg-[#0e0e0e]'
+          className='fixed inset-0 z-[70] flex min-h-dvh w-screen flex-col items-center justify-center bg-[rgba(28,27,27,0.72)] backdrop-blur-[20px]'
         >
           {/* Close Button */}
           <button
@@ -49,7 +49,9 @@ export function MobileMenu() {
             className='absolute right-6 top-6 flex h-8 w-8 items-center justify-center text-[#E5E2E1]'
             aria-label='Close menu'
           >
-            <span className='material-symbols-outlined text-2xl'>close</span>
+            <span className='material-symbols-outlined !text-[24px] leading-none'>
+              close
+            </span>
           </button>
 
           {/* Navigation Links */}
@@ -59,8 +61,8 @@ export function MobileMenu() {
                 key={link.href}
                 href={link.href}
                 onClick={closeMenu}
-                initial={{ y: 16, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.06, duration: 0.3 }}
                 className='font-display text-3xl font-bold text-[#E5E2E1] transition-colors hover:text-[#FFD79B]'
               >
@@ -70,8 +72,8 @@ export function MobileMenu() {
             <motion.a
               href={NAV.ctaHref}
               onClick={closeMenu}
-              initial={{ y: 16, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: NAV.links.length * 0.06, duration: 0.3 }}
               className='mt-4 bg-[#ffbf00] px-8 py-4 font-display font-bold text-[#402d00] transition-colors hover:bg-[#FFB300]/90'
             >

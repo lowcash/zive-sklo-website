@@ -17,7 +17,7 @@ export function AudienceSection() {
           {AUDIENCE.segments.map((segment) => (
             <div key={segment.heading} className='flex gap-8 bg-[#1c1b1b] p-12'>
               <div className='flex h-12 w-12 shrink-0 items-center justify-center bg-[#131313]'>
-                <span className='material-symbols-outlined text-[#9accf3]'>
+                <span className='material-symbols-outlined !text-[24px] text-[#9accf3]'>
                   {segment.icon}
                 </span>
               </div>

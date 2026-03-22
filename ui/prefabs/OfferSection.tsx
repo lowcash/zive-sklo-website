@@ -49,7 +49,7 @@ export function OfferSection() {
               className='group bg-[#131313] p-12 transition-colors hover:bg-[#201f1f]'
             >
               <div className={`mb-8 ${card.iconClass}`}>
-                <span className='material-symbols-outlined text-4xl'>
+                <span className='material-symbols-outlined !text-4xl'>
                   {card.icon}
                 </span>
               </div>
@@ -60,7 +60,7 @@ export function OfferSection() {
               </p>
 
               <div className='mt-auto'>
-                <p className='mb-1 text-xs uppercase tracking-widest text-[#e5e2e166]'>
+                <p className='mb-1 font-label text-xs uppercase tracking-widest text-[#e5e2e166]'>
                   Cena od
                 </p>
                 <p className='font-display text-3xl font-bold text-[#ffbf00]'>
