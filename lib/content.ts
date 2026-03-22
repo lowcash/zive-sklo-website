@@ -22,17 +22,20 @@ export const NAV = {
 export const HERO = {
   backgroundImages: [
     "https://lh3.googleusercontent.com/aida-public/AB6AXuCPv46HEAkeK13i3ks4NUpwZgMfxR3g6nQ1HjEV2R8szvtlGpgXF_JTi-Nv5ouu8Bi4Ka9VM4RmixZB5pKHtGjSuCXgCHm4u-CJjgPKALAzFAkK8Y4mOrlyjYBpYiYp7-klGzPepQfPsqyXMeKqQnhZzIECIKd32yAaibwBoYWMP0DgAeHNlAiIPlUIvjDP4-83MsTdsp2k5uRbbbJm1-2MyBRpJ-KXB0hTwfnjqkcfYQSURNDuraITupZ2yrM0RJH-6qOJtzQ5m48",
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuBRtfyewayp5M6M43DiS5g0q6xbvXAEOjtea7Q_v2iU1Ann1byelshZtSHVbQjkEdlKQsl8fo0JxRn_JMCqgckOORyWfvzy-szfkJm12MuU5MNOgl1F2I72NqgmsCpzKYezS1Bq4xZf19V85c2IeUPJ4xx8mHnWqndN3n7EAB0QJ0-D0NOlKMs_cxz0LLFKbsjbJWGV_H8GI8LWbcYYSnwle7eaGyopUs03F-yQcaivd507oB3068z-DzzdtS7i3sH8zurqKDRWAS0",
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuCnOFDcu1dmt4pZXk1kk289Ouj8Mtnon0ugA0XWsx2jphLgqQ5yEDp9HdzlJ3YUfJ6vHHX0JXqOpcUQ3nixVF_Zq9f0Yf6LQq1-wiNC30hYL0YNxUvWtgD3ib0bZTQ8hJMCgcHE1Mo9A2p8ITHNlZSqKoUxEL1N-pJmiC7I8jD7v_vVjIoYsItkKBgjZndyOTVc7BA78EkMZnYo2EW5mCmlVGtuKqWju7QO8kCXFx3_PzRu1NJLnB33ztznbszNoPhGUs0QMocrqIU",
   ],
   h1Prefix: "Zažijte kouzlo",
   h1Highlight: "foukaného skla",
   h1Suffix: "na vlastní oči.",
   subtitle:
-    "Přivezeme sklářskou pec přímo na vaši akci. Unikátní spojení tradičního řemesla, ohně a moderního designu, které vaše hosty uchvátí.",
+    "Přivezeme živou sklářskou dílnu přímo k vám na firemní akce, školní exkurze i městské slavnosti. Žádné výrobky z krabice. Jen oheň, sklo a lidský dech.",
+  trustLine: "Vhodné pro školy, firmy i městské slavnosti.",
   pills: [
-    { label: "PREMIUM B2B", accent: true },
-    { label: "LIVE SHOW" },
-    { label: "WORKSHOPS" },
-    { label: "CZECH CRAFT" },
+    { label: "Živá výroba skla", accent: true },
+    { label: "Školní programy" },
+    { label: "Městské slavnosti" },
+    { label: "Firemní akce" },
   ],
   ctaLabel: "Nezávazně poptat akci",
   ctaHref: "#kontakt",
@@ -43,7 +46,8 @@ export const HERO = {
 export const ABOUT = {
   heading: "Nepřivezeme jen výrobky. Přivezeme celý příběh jejich vzniku.",
   text: "Živé Sklo je mobilní sklářská dílna z Vsetína — města s dlouhou tradicí výroby skleněných ozdob. Naše dílna se vejde do jedné dodávky a může se rozložit téměř kdekoliv — na náměstí, ve firmě nebo ve škole. Návštěvníci sledují celý proces výroby od zahřátí skleněné trubice v plameni až po vznik hotové ozdoby. Každá ozdoba je originál. A každý zážitek zůstane. Projekt vznikl z více než dvacetileté zkušenosti s výrobou skleněných vánočních ozdob ve Vsetíně.",
-  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85",
+  image:
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuBRtfyewayp5M6M43DiS5g0q6xbvXAEOjtea7Q_v2iU1Ann1byelshZtSHVbQjkEdlKQsl8fo0JxRn_JMCqgckOORyWfvzy-szfkJm12MuU5MNOgl1F2I72NqgmsCpzKYezS1Bq4xZf19V85c2IeUPJ4xx8mHnWqndN3n7EAB0QJ0-D0NOlKMs_cxz0LLFKbsjbJWGV_H8GI8LWbcYYSnwle7eaGyopUs03F-yQcaivd507oB3068z-DzzdtS7i3sH8zurqKDRWAS0",
 };
 
 export const PROCESS = {
@@ -84,6 +88,7 @@ export const OFFER = {
     "Každý program přizpůsobujeme na míru počtu účastníků, délce akce i vašemu záměru.",
   primary: [
     {
+      icon: "visibility",
       title: "Živé divadlo řemesla",
       description:
         "Fascinující sklářská show, která se stane magnetem vaší akce a zastaví každého kolemjdoucího. Vaši hosté sledují vznik skleněné ozdoby od skleněné trubice až po hotový výrobek. Ticho, soustředění, dech a pak obdiv.",
@@ -93,6 +98,7 @@ export const OFFER = {
       ctaHref: "#kontakt",
     },
     {
+      icon: "groups",
       title: "Týmový rituál – Firemní event",
       description:
         "Neobvyklý zážitek pro firmy a týmy. Foukání skla vyžaduje soustředění a preciznost — přesně to, na čem stojí dobrá spolupráce ve vašem týmu. Každý odchází s vlastnoručně vyrobenou ozdobou.",
@@ -103,6 +109,7 @@ export const OFFER = {
       ctaHref: "#kontakt",
     },
     {
+      icon: "school",
       title: "Fyzika v plamenech – Školní program",
       description:
         "Přineste do školy zážitek, který propojí fyziku, chemii a tradiční řemeslo v jednom odpoledni. Programy jsou navrženy tak, aby děti bavily a zároveň něco naučily o materiálu a lidském dechu.",
@@ -140,31 +147,56 @@ export const OFFER = {
 };
 
 export const AUDIENCE = {
-  heading: "Pro koho tvoříme",
+  heading: "Pro ty, kdo chtějí nabídnout lidem něco opravdového.",
   segments: [
     {
-      icon: "corporate_fare",
-      heading: "Firemní Eventy",
+      icon: "school",
+      label: "Školy",
+      title: "Školy a vzdělávací instituce",
+      heading: "Výuka, která se nezapomene",
       description:
-        "Teambuildingy a večírky, které vybočují z řady. Přiveďte své kolegy k ohni.",
-    },
-    {
-      icon: "campaign",
-      heading: "Marketingové Akce",
-      description:
-        "Představení nových produktů nebo brandové kampaně s unikátním vizuálem.",
+        "Přineste do školy zážitek, který propojí fyziku, chemii a tradiční řemeslo. Programy jsou navrženy tak, aby děti bavily a zároveň něco naučily.",
+      bullets: [
+        "Programy pro MŠ, ZŠ i SŠ",
+        "Přijedeme k vám nebo vás přivítáme v dílně",
+        "Možnost propojení s výukou fyziky a přírodovědy",
+        "Každé dítě si odnese vlastní výrobek",
+      ],
+      ctaLabel: "Nezávazně poptat",
+      ctaHref: "#kontakt",
     },
     {
       icon: "location_city",
-      heading: "Městské Slavnosti",
+      label: "Města a obce",
+      title: "Města, obce a kulturní akce",
+      heading: "Živá sklářská dílna jako kulturní atrakce",
       description:
-        "Kulturní program pro širokou veřejnost s důrazem na české tradice.",
+        "Hledáte program, který přitáhne pozornost na vašem trhu nebo slavnosti? Mobilní sklářská dílna zastaví každého kolemjdoucího. Není to stánek — je to živé divadlo řemesla.",
+      bullets: [
+        "Vhodné pro vánoční trhy, slavnosti a festivaly",
+        "Samostatná instalace bez velkých nároků na zázemí",
+        "Přitahuje rodiny, děti i dospělé",
+        "Připomíná tradiční řemeslo a sklářství",
+      ],
+      ctaLabel: "Nezávazně poptat",
+      ctaHref: "#kontakt",
     },
     {
-      icon: "celebration",
-      heading: "VIP Konference",
+      icon: "corporate_fare",
+      label: "Firmy",
+      title: "Firmy a firemní akce",
+      heading: "Zážitek, který spojuje tým",
       description:
-        "Exkluzivní doprovodný program pro ty nejnáročnější obchodní partnery.",
+        "Foukání skla vyžaduje soustředění a preciznost — přesně to, na čem stojí dobrá spolupráce v týmu. Navíc si každý účastník odnese vlastnoručně vyrobenou ozdobu.",
+      bullets: [
+        "Teambuilding pro 10–50 osob",
+        "Možnost živé ukázky na firemním večírku",
+        "Program přizpůsoben na míru firmě",
+        "Každý účastník si odnese vlastní výrobek",
+        "Program na 2–4 hodiny",
+      ],
+      ctaLabel: "Nezávazně poptat",
+      ctaHref: "#kontakt",
     },
   ],
 };
@@ -172,20 +204,16 @@ export const AUDIENCE = {
 export const STATS = {
   items: [
     {
-      value: "150+",
-      label: "Akcí ročně",
+      value: "1 200 °C",
+      label: "Teplota plamene při foukání skla",
     },
     {
-      value: "12k+",
-      label: "Vyfouklých skel",
+      value: "100 %",
+      label: "Ručně vyrobené, každý kus je originál",
     },
     {
-      value: "10",
-      label: "Let tradice",
-    },
-    {
-      value: "100%",
-      label: "Bezpečnost",
+      value: "1 dech",
+      label: "Každá ozdoba vzniká jediným lidským dechem",
     },
   ],
 };
@@ -198,6 +226,7 @@ export const GALLERY = {
     "https://lh3.googleusercontent.com/aida-public/AB6AXuDxXFa8yY7_ZWuIcZTjbmVSAKec1SeUyCeMhRwe_dLhY17VnIbvmDm8oBG8gVtng3SZQEkC-5i4X4HxnuubWzeUJpasVviqGBkr0ineqjHg85Hxfi21CV2BjfJuf20GpEz-7IiqeBbJhQCo0FUM6gETq1CWegB70uIM6Wt5m36xeUidgBmlRYUxhBdMQhB0OBchZENfaOA0MYhSTeg7tIirP-tdNu6jCgtD7_Qb8zMq8q75kYZSNQIAQ2I8FNpEA7Na6PROPNAzhT4",
     "https://lh3.googleusercontent.com/aida-public/AB6AXuB7YYq1bWkpWuVruwm8UztdX5f_INz9ZTy_1jwuqkUJ_7p68vf6jHsgsTWquVrS1qYN3KiTfCUPIUl1fkE_Yq738j0QiNtxxUfqkMlXJIIvJ0WNwqI3jMsI0o_MEZw7azs1tbrVT019JNzyUaEqAeWb1lOGqXmMmKryP1UK6exTjHsE6gjrfsnY6eSMxqwnZKxCc1AKxY_D8qbbxfF7EIBWDWuQIXBNwZ0DnFWBUKuFdxXcRLfG4BJTLG9bM-EUeaCxQsUMlPLA6k4",
     "https://lh3.googleusercontent.com/aida-public/AB6AXuCnOFDcu1dmt4pZXk1kk289Ouj8Mtnon0ugA0XWsx2jphLgqQ5yEDp9HdzlJ3YUfJ6vHHX0JXqOpcUQ3nixVF_Zq9f0Yf6LQq1-wiNC30hYL0YNxUvWtgD3ib0bZTQ8hJMCgcHE1Mo9A2p8ITHNlZSqKoUxEL1N-pJmiC7I8jD7v_vVjIoYsItkKBgjZndyOTVc7BA78EkMZnYo2EW5mCmlVGtuKqWju7QO8kCXFx3_PzRu1NJLnB33ztznbszNoPhGUs0QMocrqIU",
+    "https://lh3.googleusercontent.com/aida-public/AB6AXuBRtfyewayp5M6M43DiS5g0q6xbvXAEOjtea7Q_v2iU1Ann1byelshZtSHVbQjkEdlKQsl8fo0JxRn_JMCqgckOORyWfvzy-szfkJm12MuU5MNOgl1F2I72NqgmsCpzKYezS1Bq4xZf19V85c2IeUPJ4xx8mHnWqndN3n7EAB0QJ0-D0NOlKMs_cxz0LLFKbsjbJWGV_H8GI8LWbcYYSnwle7eaGyopUs03F-yQcaivd507oB3068z-DzzdtS7i3sH8zurqKDRWAS0",
   ],
 };
 
@@ -205,24 +234,28 @@ export const BENEFITS = {
   heading: "Proč zvolit Živé sklo pro vaši akci",
   items: [
     {
-      title: "Autentičnost",
+      icon: "inventory_2",
+      title: "Přijedeme vybaveni",
       description:
-        "Žádné atrapy. Pracujeme s teplotami přes 1100°C a skutečným sklářským kmenem.",
+        "Nic nemusíte zajišťovat. Přivezeme veškeré vybavení a postaráme se o bezpečný provoz.",
     },
     {
-      title: "Mobilita",
+      icon: "verified_user",
+      title: "Bezpečný provoz",
       description:
-        "Díky naší technologii nepotřebujeme žádné speciální připojení. Jsme soběstační.",
+        "V souladu s požadavky pojišťoven a přísnými normami. Bezpečný provoz vhodný pro veřejné akce.",
     },
     {
-      title: "Design",
+      icon: "groups",
+      title: "Pro každou akci",
       description:
-        "Naše výrobky nejsou jen suvenýry, ale designové objekty, které si lidé vystaví.",
+        "Program vhodný pro děti i dospělé, pro malé skupiny i velké akce od 10 do 500 lidí.",
     },
     {
-      title: "Flexibilita",
+      icon: "description",
+      title: "Profesionální komunikace",
       description:
-        "Přizpůsobíme vizuál pece a oblečení personálu vašemu brandu nebo tématu akce.",
+        "Komunikujeme profesionálně — smlouva, faktura, pojištění.",
     },
   ],
   downloadLabel: "Stáhnout informační list pro pořadatele",
@@ -233,21 +266,35 @@ export const CONTACT = {
   heading: "Poptejte svoji akci",
   subtitle:
     "Vyplňte krátký formulář a my se vám co nejdříve ozveme s nabídkou na míru.",
+  details: [
+    {
+      icon: "mail",
+      label: "E-mail",
+      value: "info@zivesklo.cz",
+      href: "mailto:info@zivesklo.cz",
+    },
+    {
+      icon: "phone_iphone",
+      label: "Telefon",
+      value: "+420 737 206 653",
+      href: "tel:+420737206653",
+    },
+  ],
   fields: {
     name: {
       label: "Jméno a příjmení",
-      placeholder: "Vaše jméno",
+      placeholder: "Jan Novák",
       required: true,
     },
     email: {
       label: "E-mail",
-      placeholder: "vas@email.cz",
+      placeholder: "email@firma.cz",
       required: true,
       type: "email",
     },
     phone: {
       label: "Telefon",
-      placeholder: "+420 123 456 789",
+      placeholder: "+420 737 206 653",
       required: true,
       type: "tel",
     },
@@ -289,10 +336,22 @@ export const CONTACT = {
 
 export const FOOTER = {
   brand: BRAND,
-  legal: [
-    { label: "Obchodní podmínky", href: "#" },
-    { label: "Ochrana údajů", href: "#" },
-    { label: "Cookies", href: "#" },
+  nav: NAV.links,
+  contacts: [
+    { label: "info@zivesklo.cz", href: "mailto:info@zivesklo.cz" },
+    { label: "+420 737 206 653", href: "tel:+420737206653" },
   ],
-  copyright: "© 2024 Živé Sklo. Všechna práva vyhrazena.",
+  social: [
+    {
+      label: "Instagram",
+      value: "@zivesklo",
+      href: "https://instagram.com/zivesklo",
+    },
+    {
+      label: "Facebook",
+      value: "Živé Sklo",
+      href: "https://facebook.com/zivesklo",
+    },
+  ],
+  copyright: "© 2026 Živé Sklo – Vlastimil Juřička. Všechna práva vyhrazena.",
 };

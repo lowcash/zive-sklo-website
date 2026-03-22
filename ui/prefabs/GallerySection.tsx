@@ -71,9 +71,14 @@ export function GallerySection() {
     <Section id='galerie' spacing='xl' surface='subtle'>
       <Container>
         <div className='mb-12 flex items-end justify-between'>
-          <h2 className='font-display text-4xl font-bold tracking-tight'>
-            Galerie zážitků
-          </h2>
+          <div className='space-y-3'>
+            <h2 className='font-display text-4xl font-bold tracking-tight'>
+              {GALLERY.heading}
+            </h2>
+            <p className='font-label text-xs uppercase tracking-[0.18em] text-[#e5e2e180]'>
+              {GALLERY.hint}
+            </p>
+          </div>
           <div className='flex gap-4'>
             <button
               type='button'

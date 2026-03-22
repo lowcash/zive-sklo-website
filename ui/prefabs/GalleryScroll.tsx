@@ -32,10 +32,12 @@ export function GalleryScroll({ images, scrollRef }: GalleryScrollProps) {
           <Image
             src={src}
             alt={`Galerie ${index + 1}`}
-            fill
-            sizes='(max-width: 768px) 80vw, (max-width: 1280px) 50vw, 600px'
+            width={960}
+            height={1200}
+            sizes='(max-width: 768px) 80vw, 400px'
+            unoptimized
             className={`object-cover transition-all duration-500 hover:grayscale-0 ${
-              index % 2 === 0 ? 'grayscale' : ''
+              index % 2 === 0 ? 'h-full w-full grayscale' : 'h-full w-full'
             }`}
             quality={85}
           />

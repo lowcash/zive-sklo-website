@@ -4,6 +4,8 @@ import type { FormEvent } from 'react'
 
 import { useState } from 'react'
 
+import { CONTACT } from '@/lib/content'
+
 /**
  * ContactForm - Client leaf component for form validation
  * Handles form state and client-side validation
@@ -12,8 +14,12 @@ export function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    eventTypeGuests: '',
+    phone: '',
+    eventType: '',
+    datePlace: '',
+    participants: '',
     message: '',
+    gdpr: false,
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -27,9 +33,11 @@ export function ContactForm() {
 
     if (!formData.name.trim()) newErrors.name = 'Jméno je povinné'
     if (!formData.email.trim()) newErrors.email = 'E-mail je povinný'
-    if (!formData.eventTypeGuests.trim()) {
-      newErrors.eventTypeGuests = 'Typ akce a počet hostů je povinný'
-    }
+    if (!formData.phone.trim()) newErrors.phone = 'Telefon je povinný'
+    if (!formData.eventType) newErrors.eventType = 'Typ akce je povinný'
+    if (!formData.datePlace.trim()) newErrors.datePlace = 'Datum a místo jsou povinné'
+    if (!formData.participants.trim()) newErrors.participants = 'Počet účastníků je povinný'
+    if (!formData.gdpr) newErrors.gdpr = 'Souhlas se zpracováním je povinný'
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
@@ -47,23 +55,27 @@ export function ContactForm() {
     setFormData({
       name: '',
       email: '',
-      eventTypeGuests: '',
+      phone: '',
+      eventType: '',
+      datePlace: '',
+      participants: '',
       message: '',
+      gdpr: false,
     })
     setErrors({})
     setIsSubmitting(false)
   }
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { name, value } = e.target
+    const { name, value, type } = e.target
+    const nextValue =
+      type === 'checkbox' && 'checked' in e.target ? e.target.checked : value
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: nextValue,
     }))
 
     // Clear error when user starts typing
@@ -77,14 +89,14 @@ export function ContactForm() {
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
         <div className='space-y-2'>
           <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
-            Jméno a příjmení
+            {CONTACT.fields.name.label}
           </label>
           <input
             name='name'
             type='text'
             value={formData.name}
             onChange={handleChange}
-            placeholder='Jan Novák'
+            placeholder={CONTACT.fields.name.placeholder}
             className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
             required
           />
@@ -93,51 +105,123 @@ export function ContactForm() {
 
         <div className='space-y-2'>
           <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
-            E-mail
+            {CONTACT.fields.email.label}
           </label>
           <input
             name='email'
             type='email'
             value={formData.email}
             onChange={handleChange}
-            placeholder='email@firma.cz'
+            placeholder={CONTACT.fields.email.placeholder}
             className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
             required
           />
           {errors.email && <p className='text-sm text-red-400'>{errors.email}</p>}
         </div>
+
+        <div className='space-y-2'>
+          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+            {CONTACT.fields.phone.label}
+          </label>
+          <input
+            name='phone'
+            type='tel'
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder={CONTACT.fields.phone.placeholder}
+            className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
+            required
+          />
+          {errors.phone && <p className='text-sm text-red-400'>{errors.phone}</p>}
+        </div>
+
+        <div className='space-y-2'>
+          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+            {CONTACT.fields.eventType.label}
+          </label>
+          <select
+            name='eventType'
+            value={formData.eventType}
+            onChange={handleChange}
+            className='w-full border-b border-[#5045324d] bg-[#131313] px-0 py-3 text-[#e5e2e1] focus:border-[#ffbf00] focus:outline-none'
+            required
+          >
+            {CONTACT.fields.eventType.options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          {errors.eventType && (
+            <p className='text-sm text-red-400'>{errors.eventType}</p>
+          )}
+        </div>
+      </div>
+
+      <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
+        <div className='space-y-2'>
+          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+            {CONTACT.fields.datePlace.label}
+          </label>
+          <input
+            name='datePlace'
+            type='text'
+            value={formData.datePlace}
+            onChange={handleChange}
+            placeholder={CONTACT.fields.datePlace.placeholder}
+            className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
+            required
+          />
+          {errors.datePlace && (
+            <p className='text-sm text-red-400'>{errors.datePlace}</p>
+          )}
+        </div>
+
+        <div className='space-y-2'>
+          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+            {CONTACT.fields.participants.label}
+          </label>
+          <input
+            name='participants'
+            type='text'
+            value={formData.participants}
+            onChange={handleChange}
+            placeholder={CONTACT.fields.participants.placeholder}
+            className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
+            required
+          />
+          {errors.participants && (
+            <p className='text-sm text-red-400'>{errors.participants}</p>
+          )}
+        </div>
       </div>
 
       <div className='space-y-2'>
         <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
-          Typ akce & počet hostů
-        </label>
-        <input
-          name='eventTypeGuests'
-          type='text'
-          value={formData.eventTypeGuests}
-          onChange={handleChange}
-          placeholder='Např. Vánoční večírek, 100 osob'
-          className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
-          required
-        />
-        {errors.eventTypeGuests && (
-          <p className='text-sm text-red-400'>{errors.eventTypeGuests}</p>
-        )}
-      </div>
-
-      <div className='space-y-2'>
-        <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
-          Vaše zpráva
+          {CONTACT.fields.message.label}
         </label>
         <textarea
           name='message'
           rows={4}
           value={formData.message}
           onChange={handleChange}
-          placeholder='Povězte nám více o vaší představě...'
+          placeholder={CONTACT.fields.message.placeholder}
           className='w-full resize-y border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
         />
+      </div>
+
+      <div className='space-y-3'>
+        <label className='flex items-start gap-3 text-sm text-[#e5e2e1cc]'>
+          <input
+            name='gdpr'
+            type='checkbox'
+            checked={formData.gdpr}
+            onChange={handleChange}
+            className='mt-1 h-4 w-4 rounded border border-[#5045324d] bg-transparent text-[#ffbf00] focus:ring-[#ffbf00]'
+          />
+          <span>{CONTACT.fields.gdpr.label}</span>
+        </label>
+        {errors.gdpr && <p className='text-sm text-red-400'>{errors.gdpr}</p>}
       </div>
 
       <button
@@ -145,7 +229,7 @@ export function ContactForm() {
         disabled={isSubmitting}
         className='w-full bg-[#ffbf00] py-5 text-sm font-bold uppercase tracking-widest text-[#402d00] transition-all hover:bg-[#ffbf00e6] disabled:cursor-not-allowed disabled:opacity-70'
       >
-        {isSubmitting ? 'Odesílám...' : 'Odeslat nezávaznou poptávku'}
+        {isSubmitting ? 'Odesílám...' : CONTACT.submitLabel}
       </button>
     </form>
   )

@@ -43,27 +43,27 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
           transition={{ duration: 0.25 }}
           className='fixed inset-0 z-[70] flex min-h-dvh w-screen flex-col items-center justify-center bg-[rgba(28,27,27,0.72)] backdrop-blur-[20px]'
         >
-          <a
-            href='#top'
-            onClick={closeMenu}
-            className='absolute left-6 top-6 font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors hover:text-[#FFD79B]'
-            aria-label='Přejít na začátek stránky'
-          >
-            {BRAND.name}
-          </a>
+          <div className='absolute inset-x-0 top-0 mx-auto flex max-w-[1440px] items-center justify-between px-6 py-6 md:px-10'>
+            <a
+              href='#top'
+              onClick={closeMenu}
+              className='font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors hover:text-[#FFD79B]'
+              aria-label='Přejít na začátek stránky'
+            >
+              {BRAND.name}
+            </a>
 
-          {/* Close Button */}
-          <button
-            onClick={closeMenu}
-            className='absolute right-6 top-6 flex h-8 w-8 items-center justify-center text-[#E5E2E1]'
-            aria-label='Close menu'
-          >
-            <span className='material-symbols-outlined !text-[24px] leading-none'>
-              close
-            </span>
-          </button>
+            <button
+              onClick={closeMenu}
+              className='flex h-8 w-8 items-center justify-center text-[#E5E2E1]'
+              aria-label='Close menu'
+            >
+              <span className='material-symbols-outlined !text-[24px] leading-none'>
+                close
+              </span>
+            </button>
+          </div>
 
-          {/* Navigation Links */}
           <nav className='flex flex-col items-center gap-10'>
             {NAV.links.map((link, index) => (
               <motion.a

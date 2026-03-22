@@ -35,5 +35,6 @@ export { ContactSection } from './ContactSection'
 export { ContactForm } from './ContactForm'
 
 export { FooterSection } from './FooterSection'
+export { ScrollToTopButton } from './ScrollToTopButton'
 
 export { EntranceAnimation } from './EntranceAnimation'

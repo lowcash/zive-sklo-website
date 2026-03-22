@@ -10,6 +10,7 @@ import {
   BenefitsSection,
   ContactSection,
   FooterSection,
+  ScrollToTopButton,
 } from "@/ui/prefabs";
 
 export default function HomePage() {
@@ -21,13 +22,14 @@ export default function HomePage() {
         <AboutSection />
         <ProcessSection />
         <OfferSection />
-        <StatsSection />
         <AudienceSection />
+        <StatsSection />
         <GallerySection />
         <BenefitsSection />
         <ContactSection />
       </main>
       <FooterSection />
+      <ScrollToTopButton />
     </>
   );
 }

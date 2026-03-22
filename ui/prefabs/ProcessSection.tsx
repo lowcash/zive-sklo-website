@@ -1,3 +1,4 @@
+import { PROCESS } from '@/lib/content'
 import { Container, Section } from '@/ui/core'
 
 /**
@@ -5,42 +6,15 @@ import { Container, Section } from '@/ui/core'
  * 4-step process section
  */
 export function ProcessSection() {
-  const steps = [
-    {
-      number: '01',
-      title: 'Konzultace',
-      description:
-        'Definujeme formát akce, prostorové možnosti a vaše specifické požadavky na brandování.',
-    },
-    {
-      number: '02',
-      title: 'Příprava',
-      description:
-        'Zajistíme technické zázemí, mobilní pec a veškeré materiály potřebné pro show.',
-    },
-    {
-      number: '03',
-      title: 'Realizace',
-      description:
-        'Sklářská show v přímém přenosu, případně interaktivní workshop pro hosty.',
-    },
-    {
-      number: '04',
-      title: 'Expedice',
-      description:
-        'Hotové výrobky bezpečně zabalíme a doručíme přímo do rukou vašich hostů.',
-    },
-  ]
-
   return (
     <Section id='jak-to-funguje' spacing='xl'>
       <Container>
         <h2 className='mb-24 text-center font-display text-4xl font-bold tracking-tight'>
-          Jak probíhá realizace
+          {PROCESS.heading}
         </h2>
 
         <div className='grid grid-cols-1 gap-12 md:grid-cols-4'>
-          {steps.map((step) => (
+          {PROCESS.steps.map((step) => (
             <div
               key={step.number}
               tabIndex={0}
@@ -58,6 +32,10 @@ export function ProcessSection() {
             </div>
           ))}
         </div>
+
+        <p className='mx-auto mt-12 max-w-3xl text-center text-sm leading-relaxed text-[#e5e2e180] md:text-base'>
+          {PROCESS.trustLine}
+        </p>
       </Container>
     </Section>
   )

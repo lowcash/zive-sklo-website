@@ -1,7 +1,5 @@
 'use client'
 
-import type { FormEvent } from 'react'
-
 import { Text } from '@/ui/core'
 
 /**
@@ -14,20 +12,26 @@ export function DownloadLink({
   href: string
   label: string
 }) {
-  const handleClick = (e: React.MouseEvent) => {
-    if (href === '#') {
-      e.preventDefault()
-      alert('Informační list bude brzy k dispozici.')
-    }
+  if (href === '#') {
+    return (
+      <span
+        aria-disabled='true'
+        className='inline-flex cursor-not-allowed items-center gap-2 text-[#e5e2e180]'
+      >
+        <span aria-hidden='true'>📄</span>
+        <Text size='base' as='span'>
+          {label}
+        </Text>
+      </span>
+    )
   }
 
   return (
     <a
       href={href}
-      className='inline-flex items-center gap-2 text-accent-ice hover:text-accent-amber transition-colors'
-      onClick={handleClick}
+      className='inline-flex items-center gap-2 text-accent-ice transition-colors hover:text-accent-amber'
     >
-      <span>📄</span>
+      <span aria-hidden='true'>📄</span>
       <Text size='base' as='span'>
         {label}
       </Text>

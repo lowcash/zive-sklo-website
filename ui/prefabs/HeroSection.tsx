@@ -21,7 +21,7 @@ export function HeroSection() {
             {HERO.pills.map((pill, index) => (
               <span
                 key={pill.label}
-                className={`border px-4 py-1 text-xs font-medium tracking-widest uppercase ${
+                className={`inline-flex items-center border px-4 py-1 text-xs font-medium tracking-widest uppercase ${
                   index === 0 || pill.accent
                     ? 'border-[#5045324d] text-[#9accf3]'
                     : 'border-[#5045324d] text-[#e5e2e199]'
@@ -44,6 +44,10 @@ export function HeroSection() {
             {HERO.subtitle}
           </p>
 
+          <p className='max-w-xl font-label text-sm uppercase tracking-[0.18em] text-[#e5e2e180]'>
+            {HERO.trustLine}
+          </p>
+
           <div className='flex flex-col gap-6 pt-4 sm:flex-row'>
             <a
               href={HERO.ctaHref}
@@ -53,8 +57,9 @@ export function HeroSection() {
             </a>
             <a
               href={HERO.secondaryCtaHref}
-              className='border border-[#504532] px-10 py-5 text-center font-bold text-[#e5e2e1] transition-colors hover:bg-[#201f1f]'
+              className='inline-flex items-center justify-center gap-2 text-center font-display font-bold text-[#e5e2e1] transition-colors hover:text-[#FFD79B]'
             >
+              <span aria-hidden='true'>→</span>
               {HERO.secondaryCtaLabel}
             </a>
           </div>
