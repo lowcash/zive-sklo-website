@@ -6,20 +6,19 @@ export type ContainerProps = {
 }
 
 /**
- * Container primitive - provides consistent max-width and horizontal padding
- * NO BRAND STYLES - purely semantic layout container
+ * Container primitive aligned to reference layout rhythm.
  */
 export function Container({ children, size = 'lg' }: ContainerProps) {
   const sizeClasses = {
     sm: 'max-w-3xl',
     md: 'max-w-4xl',
-    lg: 'max-w-6xl',
-    xl: 'max-w-7xl',
+    lg: 'max-w-[1440px]',
+    xl: 'max-w-[1440px]',
     full: 'max-w-full',
   }
 
   return (
-    <div className={`mx-auto px-4 sm:px-6 lg:px-8 ${sizeClasses[size]}`}>
+    <div className={`mx-auto px-6 md:px-20 ${sizeClasses[size]}`}>
       {children}
     </div>
   )

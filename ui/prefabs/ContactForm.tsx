@@ -4,16 +4,6 @@ import type { FormEvent } from 'react'
 
 import { useState } from 'react'
 
-import {
-  Button,
-  Checkbox,
-  Input,
-  Select,
-  Textarea,
-} from '@/ui/core'
-
-import { CONTACT } from '@/lib/content'
-
 /**
  * ContactForm - Client leaf component for form validation
  * Handles form state and client-side validation
@@ -22,12 +12,8 @@ export function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
-    eventType: '',
-    datePlace: '',
-    participants: '',
+    eventTypeGuests: '',
     message: '',
-    gdpr: false,
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -41,11 +27,9 @@ export function ContactForm() {
 
     if (!formData.name.trim()) newErrors.name = 'Jméno je povinné'
     if (!formData.email.trim()) newErrors.email = 'E-mail je povinný'
-    if (!formData.phone.trim()) newErrors.phone = 'Telefon je povinný'
-    if (!formData.eventType) newErrors.eventType = 'Vyberte typ akce'
-    if (!formData.datePlace.trim()) newErrors.datePlace = 'Datum a místo jsou povinné'
-    if (!formData.participants.trim()) newErrors.participants = 'Počet účastníků je povinný'
-    if (!formData.gdpr) newErrors.gdpr = 'Musíte souhlasit se zpracováním údajů'
+    if (!formData.eventTypeGuests.trim()) {
+      newErrors.eventTypeGuests = 'Typ akce a počet hostů je povinný'
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
@@ -63,12 +47,8 @@ export function ContactForm() {
     setFormData({
       name: '',
       email: '',
-      phone: '',
-      eventType: '',
-      datePlace: '',
-      participants: '',
+      eventTypeGuests: '',
       message: '',
-      gdpr: false,
     })
     setErrors({})
     setIsSubmitting(false)
@@ -76,15 +56,14 @@ export function ContactForm() {
 
   const handleChange = (
     e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      HTMLInputElement | HTMLTextAreaElement
     >
   ) => {
-    const { name, value, type } = e.target
-    const checked = (e.target as HTMLInputElement).checked
+    const { name, value } = e.target
 
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: value,
     }))
 
     // Clear error when user starts typing
@@ -94,121 +73,80 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-6'>
-      {/* Name */}
-      <div>
-        <Input
-          name='name'
-          label={CONTACT.fields.name.label}
-          placeholder={CONTACT.fields.name.placeholder}
-          value={formData.name}
-          onChange={handleChange}
-          required={CONTACT.fields.name.required}
-          error={errors.name}
-        />
+    <form onSubmit={handleSubmit} className='space-y-8'>
+      <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
+        <div className='space-y-2'>
+          <label className='block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+            Jméno a příjmení
+          </label>
+          <input
+            name='name'
+            type='text'
+            value={formData.name}
+            onChange={handleChange}
+            placeholder='Jan Novák'
+            className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
+            required
+          />
+          {errors.name && <p className='text-sm text-red-400'>{errors.name}</p>}
+        </div>
+
+        <div className='space-y-2'>
+          <label className='block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+            E-mail
+          </label>
+          <input
+            name='email'
+            type='email'
+            value={formData.email}
+            onChange={handleChange}
+            placeholder='email@firma.cz'
+            className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
+            required
+          />
+          {errors.email && <p className='text-sm text-red-400'>{errors.email}</p>}
+        </div>
       </div>
 
-      {/* Email */}
-      <div>
-        <Input
-          name='email'
-          type='email'
-          label={CONTACT.fields.email.label}
-          placeholder={CONTACT.fields.email.placeholder}
-          value={formData.email}
+      <div className='space-y-2'>
+        <label className='block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          Typ akce & počet hostů
+        </label>
+        <input
+          name='eventTypeGuests'
+          type='text'
+          value={formData.eventTypeGuests}
           onChange={handleChange}
-          required={CONTACT.fields.email.required}
-          error={errors.email}
+          placeholder='Např. Vánoční večírek, 100 osob'
+          className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
+          required
         />
+        {errors.eventTypeGuests && (
+          <p className='text-sm text-red-400'>{errors.eventTypeGuests}</p>
+        )}
       </div>
 
-      {/* Phone */}
-      <div>
-        <Input
-          name='phone'
-          type='tel'
-          label={CONTACT.fields.phone.label}
-          placeholder={CONTACT.fields.phone.placeholder}
-          value={formData.phone}
-          onChange={handleChange}
-          required={CONTACT.fields.phone.required}
-          error={errors.phone}
-        />
-      </div>
-
-      {/* Event Type */}
-      <div>
-        <Select
-          name='eventType'
-          label={CONTACT.fields.eventType.label}
-          options={CONTACT.fields.eventType.options}
-          value={formData.eventType}
-          onChange={handleChange}
-          required={CONTACT.fields.eventType.required}
-          error={errors.eventType}
-        />
-      </div>
-
-      {/* Date and Place */}
-      <div>
-        <Input
-          name='datePlace'
-          label={CONTACT.fields.datePlace.label}
-          placeholder={CONTACT.fields.datePlace.placeholder}
-          value={formData.datePlace}
-          onChange={handleChange}
-          required={CONTACT.fields.datePlace.required}
-          error={errors.datePlace}
-        />
-      </div>
-
-      {/* Participants */}
-      <div>
-        <Input
-          name='participants'
-          label={CONTACT.fields.participants.label}
-          placeholder={CONTACT.fields.participants.placeholder}
-          value={formData.participants}
-          onChange={handleChange}
-          required={CONTACT.fields.participants.required}
-          error={errors.participants}
-        />
-      </div>
-
-      {/* Message */}
-      <div>
-        <Textarea
+      <div className='space-y-2'>
+        <label className='block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          Vaše zpráva
+        </label>
+        <textarea
           name='message'
-          label={CONTACT.fields.message.label}
-          placeholder={CONTACT.fields.message.placeholder}
+          rows={4}
           value={formData.message}
           onChange={handleChange}
-          rows={5}
+          placeholder='Povězte nám více o vaší představě...'
+          className='w-full resize-y border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
         />
       </div>
 
-      {/* GDPR */}
-      <div>
-        <Checkbox
-          name='gdpr'
-          label={CONTACT.fields.gdpr.label}
-          checked={formData.gdpr}
-          onChange={handleChange}
-          required={CONTACT.fields.gdpr.required}
-          error={errors.gdpr}
-        />
-      </div>
-
-      {/* Submit */}
-      <Button
+      <button
         type='submit'
-        variant='primary'
-        size='lg'
-        fullWidth
         disabled={isSubmitting}
+        className='w-full bg-[#ffbf00] py-5 text-sm font-bold uppercase tracking-widest text-[#402d00] transition-all hover:bg-[#ffbf00e6] disabled:cursor-not-allowed disabled:opacity-70'
       >
-        {isSubmitting ? 'Odesílám...' : CONTACT.submitLabel}
-      </Button>
+        {isSubmitting ? 'Odesílám...' : 'Odeslat nezávaznou poptávku'}
+      </button>
     </form>
   )
 }

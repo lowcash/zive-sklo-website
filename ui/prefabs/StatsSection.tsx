@@ -1,35 +1,28 @@
-import { Container, Section, Text } from '@/ui/core'
+import { Container } from '@/ui/core'
 
 import { STATS } from '@/lib/content'
 
-import { StatCounter } from './StatCounter'
-
-/**
- * StatsSection - RSC (Server Component)
- * Stats with count-up animation (client leaf)
- */
 /**
  * StatsSection - RSC (Server Component)
  * Stats with count-up animation (client leaf)
  */
 export function StatsSection() {
   return (
-    <Section id='statistiky' spacing='xl'>
+    <section className='border-y border-[#5045321a] bg-[#131313] py-24'>
       <Container>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-12'>
+        <div className='grid grid-cols-2 gap-12 text-center md:grid-cols-4'>
           {STATS.items.map((stat) => (
-            <div key={stat.label} className='text-center space-y-4'>
-              {/* Animated Value (client leaf) */}
-              <StatCounter value={stat.value} />
-
-              {/* Label */}
-              <Text size='base' color='secondary' align='center'>
+            <div key={stat.label}>
+              <p className='mb-2 font-display text-5xl font-bold text-[#ffbf00]'>
+                {stat.value}
+              </p>
+              <p className='text-xs uppercase tracking-widest text-[#e5e2e180]'>
                 {stat.label}
-              </Text>
+              </p>
             </div>
           ))}
         </div>
       </Container>
-    </Section>
+    </section>
   )
 }

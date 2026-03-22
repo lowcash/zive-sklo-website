@@ -1,4 +1,4 @@
-import { Container, Heading, Section, Text } from '@/ui/core'
+import { Container, Section } from '@/ui/core'
 
 import { GALLERY } from '@/lib/content'
 
@@ -10,24 +10,23 @@ import { GalleryScroll } from './GalleryScroll'
  */
 export function GallerySection() {
   return (
-    <Section id="galerie" spacing="xl" surface="subtle">
+    <Section id='galerie' spacing='xl' surface='subtle'>
       <Container>
-        {/* Heading */}
-        <div className="mb-8">
-          <Heading level={2} size="4xl" align="center">
-            {GALLERY.heading}
-          </Heading>
-        </div>
-
-        {/* Hint */}
-        <div className="mb-12">
-          <Text size="sm" color="secondary" align="center">
-            {GALLERY.hint}
-          </Text>
+        <div className='mb-12 flex items-end justify-between'>
+          <h2 className='font-display text-4xl font-bold tracking-tight'>
+            Galerie zážitků
+          </h2>
+          <div className='flex gap-4'>
+            <button className='flex h-12 w-12 items-center justify-center border border-[#504532] transition-colors hover:bg-[#ffbf00] hover:text-[#402d00]'>
+              <span className='material-symbols-outlined'>arrow_back</span>
+            </button>
+            <button className='flex h-12 w-12 items-center justify-center border border-[#504532] transition-colors hover:bg-[#ffbf00] hover:text-[#402d00]'>
+              <span className='material-symbols-outlined'>arrow_forward</span>
+            </button>
+          </div>
         </div>
       </Container>
 
-      {/* Scrollable Gallery (client leaf) */}
       <GalleryScroll images={GALLERY.images} />
     </Section>
   )

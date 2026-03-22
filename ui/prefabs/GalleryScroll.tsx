@@ -9,35 +9,31 @@ import Image from 'next/image'
  * Handles browser scroll APIs
  */
 export function GalleryScroll({ images }: { images: string[] }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const widthPattern = ['w-[400px]', 'w-[600px]', 'w-[400px]', 'w-[400px]']
 
   return (
     <div
       ref={scrollRef}
-      className="overflow-x-auto overflow-y-hidden scrollbar-hide"
-      style={{
-        scrollSnapType: "x mandatory",
-        WebkitOverflowScrolling: "touch",
-      }}
+      className='flex overflow-x-auto overflow-y-hidden gap-8 px-6 pb-6 md:px-20 scrollbar-hide'
     >
-      <div className="flex gap-6 px-6 md:px-12 pb-6">
-        {images.map((src, index) => (
-          <div
-            key={`${src}-${index}`}
-            className="flex-none w-[280px] md:w-[340px] aspect-[3/4] rounded-xl overflow-hidden"
-            style={{ scrollSnapAlign: "start" }}
-          >
-            <Image
-              src={src}
-              alt={`Galerie ${index + 1}`}
-              width={340}
-              height={453}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-              quality={85}
-            />
-          </div>
-        ))}
-      </div>
+      {images.map((src, index) => (
+        <div
+          key={`${src}-${index}`}
+          className={`relative h-[500px] flex-none ${widthPattern[index % widthPattern.length]}`}
+        >
+          <Image
+            src={src}
+            alt={`Galerie ${index + 1}`}
+            fill
+            sizes='(max-width: 768px) 80vw, (max-width: 1280px) 50vw, 600px'
+            className={`object-cover transition-all duration-500 hover:grayscale-0 ${
+              index % 2 === 0 ? 'grayscale' : ''
+            }`}
+            quality={85}
+          />
+        </div>
+      ))}
     </div>
-  );
+  )
 }

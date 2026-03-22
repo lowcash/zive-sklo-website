@@ -10,7 +10,6 @@ import Image from 'next/image'
  */
 export function HeroCarousel({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [scrollY, setScrollY] = useState(0)
 
   // Auto-advance carousel
   useEffect(() => {
@@ -21,16 +20,6 @@ export function HeroCarousel({ images }: { images: string[] }) {
     return () => clearInterval(interval)
   }, [images.length])
 
-  // Parallax effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
     <div className='absolute inset-0'>
       {images.map((src, index) => (
@@ -39,7 +28,6 @@ export function HeroCarousel({ images }: { images: string[] }) {
           className='absolute inset-0 transition-opacity duration-1000'
           style={{
             opacity: index === currentIndex ? 1 : 0,
-            transform: `translateY(${scrollY * 0.5}px)`,
           }}
         >
           <Image
@@ -47,7 +35,7 @@ export function HeroCarousel({ images }: { images: string[] }) {
             alt=''
             fill
             sizes='100vw'
-            className='object-cover'
+            className='object-cover opacity-40'
             priority={index === 0}
             quality={85}
           />

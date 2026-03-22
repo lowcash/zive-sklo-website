@@ -1,119 +1,76 @@
-import { Button, Card, Container, Grid, Heading, Section, Text } from '@/ui/core'
+import { Container } from '@/ui/core'
 
-import { OFFER } from '@/lib/content'
-
-/**
- * OfferSection - RSC (Server Component)
- * Offer section with primary and secondary program cards
- */
 /**
  * OfferSection - RSC (Server Component)
  * Offer section with primary and secondary program cards
  */
 export function OfferSection() {
+  const cards = [
+    {
+      icon: 'visibility',
+      iconClass: 'text-[#9accf3]',
+      title: 'Exkluzivní Show',
+      description:
+        'Čistě vizuální zážitek. Mistr sklář vytváří umělecká díla před očima diváků s odborným komentářem.',
+      price: '25 000 Kč',
+    },
+    {
+      icon: 'back_hand',
+      iconClass: 'text-[#ffbf00]',
+      title: 'Workshop Zážitky',
+      description:
+        'Nejoblíbenější volba. Hosté si pod vedením skláře vyfouknou svůj vlastní skleněný objekt.',
+      price: '38 000 Kč',
+    },
+    {
+      icon: 'diamond',
+      iconClass: 'text-[#9accf3]',
+      title: 'Premium Branding',
+      description:
+        'Výroba dárků s logem vaší společnosti přímo na místě. Maximální marketingový dopad.',
+      price: '55 000 Kč',
+    },
+  ]
+
   return (
-    <Section id='co-nabizime' spacing='xl'>
+    <section id='nabidka' className='bg-[#0e0e0e] py-32'>
       <Container>
-        {/* Heading */}
-        <div className='text-center mb-16 space-y-4'>
-          <Heading level={2} size='4xl'>
-            {OFFER.heading}
-          </Heading>
-          <div className='max-w-3xl mx-auto'>
-            <Text size='lg' color='secondary'>
-              {OFFER.subtitle}
-            </Text>
-          </div>
+        <div className='mb-20'>
+          <h2 className='mb-4 font-display text-4xl font-bold tracking-tight'>
+            Balíčky služeb
+          </h2>
+          <div className='h-1 w-20 bg-[#ffbf00]' />
         </div>
 
-        {/* Primary Programs */}
-        <div className='mb-12'>
-          <Grid cols={{ base: 1, md: 3 }} gap='lg'>
-            {OFFER.primary.map((program) => (
-              <Card
-                key={program.title}
-                variant='glass'
-                padding='lg'
-                layout='column'
-                gap='lg'
-              >
-                <div className='flex-grow space-y-4'>
-                  <Heading level={3} size='2xl'>
-                    {program.title}
-                  </Heading>
-
-                  <Text
-                    size='base'
-                    color='secondary'
-                    leading='relaxed'
-                  >
-                    {program.description}
-                  </Text>
-
-                  <div className='space-y-2 pt-4'>
-                    <Text size='sm' color='secondary'>
-                      <span className='font-semibold text-text-primary'>
-                        Vhodné pro:
-                      </span>
-                      {' '}
-                      {program.suitableFor}
-                    </Text>
-
-                    {program.duration && (
-                      <Text size='sm' color='secondary'>
-                        <span className='font-semibold text-text-primary'>
-                          Délka:
-                        </span>
-                        {' '}
-                        {program.duration}
-                      </Text>
-                    )}
-
-                    <span className='block text-lg font-bold text-accent-amber pt-2'>
-                      {program.price}
-                    </span>
-                  </div>
-                </div>
-
-                <Button variant='primary' fullWidth>
-                  <a href={program.ctaHref}>{program.ctaLabel}</a>
-                </Button>
-              </Card>
-            ))}
-          </Grid>
-        </div>
-
-        {/* Secondary Programs */}
-        <Grid cols={{ base: 1, sm: 2, md: 3 }} gap='lg'>
-          {OFFER.secondary.map((program) => (
-            <Card
-              key={program.title}
-              variant='outlined'
-              padding='md'
-              layout='column'
-              gap='md'
+        <div className='grid grid-cols-1 gap-px bg-[#50453233] md:grid-cols-3'>
+          {cards.map((card) => (
+            <div
+              key={card.title}
+              className='group bg-[#131313] p-12 transition-colors hover:bg-[#201f1f]'
             >
-              <Heading level={4} size='lg'>
-                {program.title}
-              </Heading>
-
-              <Text size='sm' color='secondary'>
-                {program.description}
-              </Text>
-
-              {program.price && (
-                <span className='block text-base font-semibold text-accent-amber'>
-                  {program.price}
+              <div className={`mb-8 ${card.iconClass}`}>
+                <span className='material-symbols-outlined text-4xl'>
+                  {card.icon}
                 </span>
-              )}
+              </div>
 
-              <Button variant='secondary' size='sm' fullWidth>
-                <a href={program.ctaHref}>{program.ctaLabel}</a>
-              </Button>
-            </Card>
+              <h3 className='mb-4 text-2xl font-bold'>{card.title}</h3>
+              <p className='mb-10 leading-relaxed text-[#e5e2e199]'>
+                {card.description}
+              </p>
+
+              <div className='mt-auto'>
+                <p className='mb-1 text-xs uppercase tracking-widest text-[#e5e2e166]'>
+                  Cena od
+                </p>
+                <p className='font-display text-3xl font-bold text-[#ffbf00]'>
+                  {card.price}
+                </p>
+              </div>
+            </div>
           ))}
-        </Grid>
+        </div>
       </Container>
-    </Section>
+    </section>
   )
 }

@@ -21,8 +21,8 @@ export default function HomePage() {
         <AboutSection />
         <ProcessSection />
         <OfferSection />
-        <AudienceSection />
         <StatsSection />
+        <AudienceSection />
         <GallerySection />
         <BenefitsSection />
         <ContactSection />

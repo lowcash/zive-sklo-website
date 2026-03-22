@@ -31,10 +31,6 @@
   --font-size-5xl: 3rem;
   --font-size-6xl: 3.75rem;
   
-  /* Font Families */
-  --font-display: var(--font-display);
-  --font-body: var(--font-body);
-  
   /* Border Radius */
   --radius-sm: 0;
   --radius-md: 0;
@@ -64,9 +60,47 @@
   body {
     @apply bg-[var(--color-surface-dark)] text-[var(--color-text-primary)] font-body;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
+    margin: 0;
+  }
+
+  ::selection {
+    color: #402d00;
+    background: #ffbf00;
+  }
 }
 
 @layer utilities {
+  .font-display,
+  .font-headline {
+    font-family: var(--font-display), serif;
+  }
+
+  .font-body,
+  .font-label {
+    font-family: var(--font-body), sans-serif;
+  }
+
+  .material-symbols-outlined {
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 300,
+      'GRAD' 0,
+      'opsz' 24;
+  }
+
+  .glass-nav {
+    background: rgba(28, 27, 27, 0.6);
+    backdrop-filter: blur(20px);
+  }
+
   .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;

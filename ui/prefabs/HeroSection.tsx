@@ -1,5 +1,3 @@
-import { Button, Container, Heading, Text } from '@/ui/core'
-
 import { HERO } from '@/lib/content'
 
 import { HeroCarousel } from './HeroCarousel'
@@ -8,69 +6,60 @@ import { HeroCarousel } from './HeroCarousel'
  * HeroSection - RSC (Server Component)
  * Full-height hero with auto-carousel background (client leaf)
  */
-/**
- * HeroSection - RSC (Server Component)
- * Full-height hero with auto-carousel background (client leaf)
- */
 export function HeroSection() {
   return (
-    <section className='relative min-h-screen flex items-center justify-center overflow-hidden'>
-      {/* Background Carousel (client leaf) */}
-      <HeroCarousel images={HERO.backgroundImages} />
-
-      {/* Overlay for text readability */}
-      <div className='absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60' />
-
-      {/* Content */}
-      <div className='relative z-10 text-center'>
-        <Container>
-          <div className='max-w-4xl mx-auto space-y-8'>
-            {/* H1 */}
-            <Heading
-              level={1}
-              size='6xl'
-              align='center'
-              leading='tight'
-            >
-              {HERO.h1}
-            </Heading>
-
-            {/* Subtitle */}
-            <div className='max-w-3xl mx-auto'>
-              <Text size='xl' align='center' leading='relaxed'>
-                {HERO.subtitle}
-              </Text>
-            </div>
-
-            {/* Trust Line */}
-            <Text size='sm' color='secondary' align='center'>
-              {HERO.trustLine}
-            </Text>
-
-            {/* Pills */}
-            <div className='flex flex-wrap justify-center gap-4 pt-4'>
-              {HERO.pills.map((pill) => (
-                <div
-                  key={pill.label}
-                  className='flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20'
-                >
-                  <span className='text-xl'>{pill.icon}</span>
-                  <Text size='sm' as='span'>
-                    {pill.label}
-                  </Text>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <div className='pt-8'>
-              <Button variant='primary' size='lg'>
-                <a href={HERO.ctaHref}>{HERO.ctaLabel}</a>
-              </Button>
-            </div>
-          </div>
-        </Container>
+    <header className='relative flex min-h-screen items-center overflow-hidden pt-20'>
+      <div className='absolute inset-0 z-0'>
+        <HeroCarousel images={HERO.backgroundImages} />
+        <div className='absolute inset-0 bg-gradient-to-r from-[#131313] via-[#131313cc] to-transparent' />
+        <div className='absolute left-1/4 top-1/2 h-[600px] w-[600px] -translate-y-1/2 rounded-full bg-[#ffbf00]/10 blur-[120px]' />
       </div>
-    </section>
+
+      <div className='relative z-10 mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-12 px-6 md:px-20 lg:grid-cols-2'>
+        <div className='flex flex-col justify-center space-y-8'>
+          <div className='flex flex-wrap gap-3'>
+            {HERO.pills.map((pill) => (
+              <span
+                key={pill.label}
+                className={`border px-4 py-1 text-xs font-medium tracking-widest uppercase ${
+                  pill.accent
+                    ? 'border-[#5045324d] text-[#9accf3]'
+                    : 'border-[#5045324d] text-[#e5e2e199]'
+                }`}
+              >
+                {pill.label}
+              </span>
+            ))}
+          </div>
+
+          <h1 className='font-display text-5xl font-bold leading-tight tracking-tighter text-white md:text-7xl'>
+            {HERO.h1Prefix}
+            <br />
+            <span className='text-[#ffbf00]'>{HERO.h1Highlight}</span>
+            <br />
+            {HERO.h1Suffix}
+          </h1>
+
+          <p className='max-w-xl text-lg leading-relaxed text-[#e5e2e1cc] md:text-xl'>
+            {HERO.subtitle}
+          </p>
+
+          <div className='flex flex-col gap-6 pt-4 sm:flex-row'>
+            <a
+              href={HERO.ctaHref}
+              className='bg-[#ffbf00] px-10 py-5 text-center font-bold text-[#402d00] transition-all hover:shadow-[0_0_30px_rgba(255,191,0,0.3)]'
+            >
+              {HERO.ctaLabel}
+            </a>
+            <a
+              href={HERO.secondaryCtaHref}
+              className='border border-[#504532] px-10 py-5 text-center font-bold text-[#e5e2e1] transition-colors hover:bg-[#201f1f]'
+            >
+              {HERO.secondaryCtaLabel}
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
   )
 }

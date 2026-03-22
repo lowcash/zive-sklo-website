@@ -1,7 +1,5 @@
-import type { ReactNode } from 'react'
-
 import { AUDIENCE } from '@/lib/content'
-import { Button, Card, Container, Grid, Heading, Section, Text } from '@/ui/core'
+import { Container, Section } from '@/ui/core'
 
 /**
  * AudienceSection - RSC (Server Component)
@@ -9,59 +7,27 @@ import { Button, Card, Container, Grid, Heading, Section, Text } from '@/ui/core
  */
 export function AudienceSection() {
   return (
-    <Section id="pro-koho-jsme" spacing="xl" surface="subtle">
+    <Section id='pro-koho' spacing='xl'>
       <Container>
-        {/* Heading */}
-        <div className="mb-16">
-          <Heading level={2} size="4xl" align="center">
-            {AUDIENCE.heading}
-          </Heading>
-        </div>
+        <h2 className='mb-20 font-display text-4xl font-bold tracking-tight'>
+          {AUDIENCE.heading}
+        </h2>
 
-        {/* Segments */}
-        <Grid cols={{ base: 1, md: 3 }} gap="lg">
+        <div className='grid grid-cols-1 gap-px bg-[#50453226] md:grid-cols-2'>
           {AUDIENCE.segments.map((segment) => (
-            <Card
-              key={segment.label}
-              variant="glass"
-              padding="xl"
-              layout="column"
-              gap="lg"
-            >
-              {/* Label */}
-              <span className="text-sm text-accent-amber uppercase tracking-wider font-semibold">
-                {segment.label}
-              </span>
-
-              {/* Heading */}
-              <Heading level={3} size="2xl">
-                {segment.heading}
-              </Heading>
-
-              {/* Description */}
-              <Text size="base" color="secondary" leading="relaxed">
-                {segment.description}
-              </Text>
-
-              {/* Features */}
-              <ul className="space-y-2">
-                {segment.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <span className="text-accent-amber mt-1">✓</span>
-                    <Text size="sm" color="secondary">
-                      {feature}
-                    </Text>
-                  </li>
-                ))}
-              </ul>
-
-              {/* CTA */}
-              <Button variant="primary" fullWidth>
-                <a href={segment.ctaHref}>{segment.ctaLabel}</a>
-              </Button>
-            </Card>
+            <div key={segment.heading} className='flex gap-8 bg-[#1c1b1b] p-12'>
+              <div className='flex h-12 w-12 shrink-0 items-center justify-center bg-[#131313]'>
+                <span className='material-symbols-outlined text-[#9accf3]'>
+                  {segment.icon}
+                </span>
+              </div>
+              <div>
+                <h4 className='mb-4 text-xl font-bold'>{segment.heading}</h4>
+                <p className='text-[#e5e2e199]'>{segment.description}</p>
+              </div>
+            </div>
           ))}
-        </Grid>
+        </div>
       </Container>
     </Section>
   )
