@@ -14,9 +14,9 @@ export function StatsSection() {
       <Container>
         <div className='grid grid-cols-1 gap-12 text-center md:grid-cols-3'>
           {STATS.items.map((stat) => (
-            <div key={stat.label}>
+            <div key={stat.label} className='relative'>
               <StatCounter value={stat.value} />
-              <p className='mx-auto mt-4 max-w-xs text-sm leading-relaxed text-[#e5e2e1]'>
+              <p className='relative z-10 mx-auto mt-4 max-w-xs text-sm leading-relaxed text-[#e5e2e1]'>
                 {stat.label}
               </p>
             </div>

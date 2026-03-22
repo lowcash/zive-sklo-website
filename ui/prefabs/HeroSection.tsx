@@ -65,6 +65,16 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+
+      <a
+        href='#o-projektu'
+        aria-label='Posunout na další sekci'
+        className='group absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[#e5e2e180] transition-colors hover:text-[#9accf3]'
+      >
+        <span className='material-symbols-outlined !text-[30px] motion-safe:animate-bounce'>
+          keyboard_arrow_down
+        </span>
+      </a>
     </header>
   )
 }

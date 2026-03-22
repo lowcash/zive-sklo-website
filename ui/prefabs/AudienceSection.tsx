@@ -15,9 +15,11 @@ export function AudienceSection() {
 
         <div className='grid grid-cols-1 gap-px bg-[#50453226] lg:grid-cols-3'>
           {AUDIENCE.segments.map((segment) => (
-            <article
+            <a
               key={segment.heading}
-              className='flex h-full flex-col gap-8 bg-[#1c1b1b] p-12'
+              href={segment.ctaHref}
+              aria-label={`${segment.heading} – ${segment.ctaLabel}`}
+              className='group flex h-full flex-col gap-8 bg-[#1c1b1b] p-12 transition-colors hover:bg-[#201f1f] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]'
             >
               <div className='flex h-12 w-12 items-center justify-center bg-[#131313]'>
                 <span className='material-symbols-outlined !text-[24px] text-[#9accf3]'>
@@ -50,14 +52,11 @@ export function AudienceSection() {
                   ))}
                 </ul>
               </div>
-              <a
-                href={segment.ctaHref}
-                className='mt-auto inline-flex items-center gap-2 font-display font-bold text-[#e5e2e1] transition-colors hover:text-[#FFD79B]'
-              >
+              <span className='mt-auto inline-flex items-center gap-2 font-display font-bold text-[#e5e2e1] transition-colors group-hover:text-[#FFD79B]'>
                 <span aria-hidden='true'>→</span>
                 {segment.ctaLabel}
-              </a>
-            </article>
+              </span>
+            </a>
           ))}
         </div>
       </Container>

@@ -34,8 +34,8 @@ export function StatCounter({ value }: { value: string }) {
   return (
     <div
       ref={ref}
-      className={`text-6xl md:text-7xl font-display font-bold text-accent-amber transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      className={`relative z-10 font-display text-6xl font-bold text-accent-amber transition-opacity duration-700 md:text-7xl ${
+        isVisible ? 'opacity-100' : 'opacity-0'
       }`}
     >
       {value}
