@@ -1,9 +1,10 @@
 'use client'
 
+import type { MouseEvent } from 'react'
 import { useEffect, useState } from 'react'
 
 import { BRAND, NAV } from '@/lib/content'
-import { applyCzechNbsp } from '@/lib/utils'
+import { applyCzechNbsp, scrollToHashWithNavOffset } from '@/lib/utils'
 
 import { MobileMenu } from './MobileMenu'
 
@@ -13,6 +14,18 @@ import { MobileMenu } from './MobileMenu'
  */
 export function Navigation() {
   const [activeHref, setActiveHref] = useState('')
+
+  const handleAnchorNavigation =
+    (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault()
+
+      const didScroll = scrollToHashWithNavOffset(href)
+      if (!didScroll) {
+        return
+      }
+
+      setActiveHref(href === '#top' ? '' : href)
+    }
 
   useEffect(() => {
     const resolveActiveSection = () => {
@@ -75,10 +88,14 @@ export function Navigation() {
   }, [])
 
   return (
-    <nav className="glass-nav fixed top-0 z-50 w-full bg-linear-to-b from-[#131313] to-transparent shadow-[0_20px_40px_rgba(255,186,56,0.05)]">
+    <nav
+      data-nav-root="true"
+      className="glass-nav fixed top-0 z-50 w-full bg-linear-to-b from-[#131313] to-transparent shadow-[0_20px_40px_rgba(255,186,56,0.05)]"
+    >
       <div className="mx-auto flex max-w-360 items-center justify-between px-6 py-6 md:px-8 xl:px-10">
         <a
           href="#top"
+          onClick={handleAnchorNavigation('#top')}
           className="font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors duration-300 hover:text-[#FFD79B]"
           aria-label="Přejít na začátek stránky"
         >
@@ -96,7 +113,7 @@ export function Navigation() {
                   ? 'border-b-2 border-[#FFB300] pb-1 text-[#FFB300] transition-colors duration-300'
                   : 'border-b-2 border-transparent pb-1 text-[#E5E2E1] transition-colors duration-300 hover:text-[#FFD79B]'
               }
-              onClick={() => setActiveHref(link.href)}
+              onClick={handleAnchorNavigation(link.href)}
             >
               {applyCzechNbsp(link.label)}
             </a>
@@ -105,6 +122,7 @@ export function Navigation() {
 
         <a
           href={NAV.ctaHref}
+          onClick={handleAnchorNavigation(NAV.ctaHref)}
           className="ui-cta-primary hidden px-6 py-3 font-bold xl:block"
         >
           {applyCzechNbsp(NAV.ctaLabel)}

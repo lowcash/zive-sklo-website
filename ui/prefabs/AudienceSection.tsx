@@ -21,7 +21,7 @@ export function AudienceSection() {
               key={segment.heading}
               href={segment.ctaHref}
               aria-label={`${segment.heading} – ${segment.ctaLabel}`}
-              className="ui-surface-hover group flex h-full flex-col gap-5 bg-[#1c1b1b] p-8 hover:bg-[#201f1f] focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313] focus-visible:outline-none lg:gap-6 lg:p-10"
+              className="ui-surface-hover group flex h-full flex-col gap-5 bg-[#1c1b1b] p-6 hover:bg-[#201f1f] focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313] focus-visible:outline-none md:p-8 lg:gap-6 lg:p-10"
             >
               <div className="flex h-12 w-12 items-center justify-center bg-[#131313]">
                 <span className="material-symbols-outlined text-[24px] text-[#9accf3]">

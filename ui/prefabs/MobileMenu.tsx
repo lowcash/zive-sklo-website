@@ -1,12 +1,13 @@
 'use client'
 
+import type { MouseEvent } from 'react'
 import { useEffect, useState } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
 import { BRAND, NAV } from '@/lib/content'
-import { applyCzechNbsp } from '@/lib/utils'
+import { applyCzechNbsp, scrollToHashWithNavOffset } from '@/lib/utils'
 
 /**
  * MobileMenu - Client leaf component for mobile navigation
@@ -35,6 +36,16 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
   const toggleMenu = () => setIsOpen(!isOpen)
   const closeMenu = () => setIsOpen(false)
 
+  const handleAnchorNavigation =
+    (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault()
+      closeMenu()
+
+      window.setTimeout(() => {
+        scrollToHashWithNavOffset(href)
+      }, 0)
+    }
+
   const menuOverlay = (
     <AnimatePresence>
       {isOpen && (
@@ -52,7 +63,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
           <div className="absolute inset-x-0 top-0 mx-auto flex max-w-360 items-center justify-between px-6 py-6 md:px-10">
             <a
               href="#top"
-              onClick={closeMenu}
+              onClick={handleAnchorNavigation('#top')}
               className="font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors hover:text-[#FFD79B]"
               aria-label="Přejít na začátek stránky"
             >
@@ -74,7 +85,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               <motion.a
                 key={link.href}
                 href={link.href}
-                onClick={closeMenu}
+                onClick={handleAnchorNavigation(link.href)}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.06, duration: 0.3 }}
@@ -88,7 +99,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
             ))}
             <motion.a
               href={NAV.ctaHref}
-              onClick={closeMenu}
+              onClick={handleAnchorNavigation(NAV.ctaHref)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: NAV.links.length * 0.06, duration: 0.3 }}

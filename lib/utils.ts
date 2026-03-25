@@ -29,3 +29,40 @@ export function applyCzechNbsp(text: string) {
   // Keep numeric values together with short units.
   return withPostalCodes.replace(/(\d+)\s+(%|°C|kg|g|km|m|cm|mm|min|h)\b/gi, '$1\u00A0$2')
 }
+
+type ScrollToHashOptions = {
+  navSelector?: string
+  behavior?: ScrollBehavior
+}
+
+export function scrollToHashWithNavOffset(
+  hash: string,
+  { navSelector = 'nav[data-nav-root="true"]', behavior = 'smooth' }: ScrollToHashOptions = {}
+) {
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return false
+  }
+
+  const normalizedHash = hash.startsWith('#') ? hash : `#${hash}`
+  const targetId = normalizedHash.slice(1)
+  const target = document.getElementById(targetId)
+
+  if (!target) {
+    return false
+  }
+
+  const nav = document.querySelector<HTMLElement>(navSelector)
+  const navHeight = nav?.getBoundingClientRect().height ?? 0
+  const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight
+
+  window.scrollTo({
+    top: Math.max(0, Math.round(targetTop)),
+    behavior,
+  })
+
+  if (window.location.hash !== normalizedHash) {
+    window.history.pushState(null, '', normalizedHash)
+  }
+
+  return true
+}

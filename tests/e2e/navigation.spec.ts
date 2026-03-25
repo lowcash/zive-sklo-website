@@ -29,6 +29,14 @@ test.describe('Desktop navigation', () => {
       const sectionId = href.replace('#', '')
       const section = page.locator(`#${sectionId}`)
       await expect(section).toBeInViewport({ ratio: 0.1 })
+
+      const navBottom = await page
+        .locator('nav[data-nav-root="true"]')
+        .first()
+        .evaluate((element) => element.getBoundingClientRect().bottom)
+      const sectionTop = await section.evaluate((element) => element.getBoundingClientRect().top)
+
+      expect(sectionTop).toBeGreaterThanOrEqual(navBottom - 2)
     })
   }
 

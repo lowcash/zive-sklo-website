@@ -32,7 +32,7 @@ export function ContactSection() {
                   className="flex items-center gap-6 transition-colors hover:text-[#FFD79B]"
                 >
                   <span className="flex h-12 w-12 items-center justify-center bg-[#131313]">
-                    <span className="material-symbols-outlined !text-[24px] text-[#ffbf00]">
+                    <span className="material-symbols-outlined text-[24px]! text-[#ffbf00]">
                       {detail.icon}
                     </span>
                   </span>
@@ -47,7 +47,7 @@ export function ContactSection() {
             </div>
           </div>
 
-          <div className="border border-[#50453226] bg-[#131313] p-8 md:p-12 lg:col-span-3">
+          <div className="border border-[#50453226] bg-[#131313] p-6 md:p-8 lg:col-span-3 lg:p-10">
             <ContactForm />
           </div>
         </div>
