@@ -57,6 +57,18 @@
     scroll-behavior: smooth;
   }
 
+  section[id],
+  header[id] {
+    scroll-margin-top: 5.75rem;
+  }
+
+  @media (min-width: 1280px) {
+    section[id],
+    header[id] {
+      scroll-margin-top: 6.5rem;
+    }
+  }
+
   body {
     @apply font-body bg-[var(--color-surface-dark)] text-[var(--color-text-primary)];
   }
@@ -108,6 +120,36 @@
   .glass-nav {
     background: rgba(28, 27, 27, 0.6);
     backdrop-filter: blur(20px);
+  }
+
+  .ui-motion {
+    transition-property: background-color, color, border-color, filter, opacity, transform;
+    transition-duration: 280ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ui-surface-hover {
+    transition-property: background-color, color, border-color;
+    transition-duration: 280ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ui-cta-primary {
+    background: #ffbf00;
+    color: #402d00;
+    transition-property: background-color, color, transform;
+    transition-duration: 280ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .ui-cta-primary:hover {
+    background: #ffcf42;
+  }
+
+  .ui-hover-media {
+    transition-property: filter, opacity, transform;
+    transition-duration: 280ms;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .scrollbar-hide {

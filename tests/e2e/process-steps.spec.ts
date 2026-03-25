@@ -77,4 +77,35 @@ test.describe('Stats counter animation', () => {
       expect(text).toMatch(/\d+/)
     }
   })
+
+  test('stats counters stay on one line on iPad Air', async ({ page }) => {
+    await page.setViewportSize({ width: 820, height: 1180 })
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+
+    const counters = page.locator('[data-testid="stat-counter"]')
+    await expect(counters).toHaveCount(3)
+
+    await counters.first().scrollIntoViewIfNeeded()
+    await page.waitForTimeout(1200)
+
+    const metrics = await counters.evaluateAll((elements) =>
+      elements.map((element) => ({
+        whiteSpace: getComputedStyle(element).whiteSpace,
+        valueTop: element.querySelector('[data-testid="stat-value"]')?.getBoundingClientRect().top ?? null,
+        suffixTop: element
+          .querySelector('[data-testid="stat-suffix"]')
+          ?.getBoundingClientRect().top ?? null,
+      })),
+    )
+
+    for (const metric of metrics) {
+      expect(metric.whiteSpace).toContain('nowrap')
+      expect(metric.valueTop).not.toBeNull()
+      expect(metric.suffixTop).not.toBeNull()
+      if (metric.valueTop !== null && metric.suffixTop !== null) {
+        expect(Math.abs(metric.valueTop - metric.suffixTop)).toBeLessThanOrEqual(10)
+      }
+    }
+  })
 })

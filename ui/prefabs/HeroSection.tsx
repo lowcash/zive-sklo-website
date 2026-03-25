@@ -56,7 +56,7 @@ export function HeroSection() {
           <div className="flex flex-col gap-4 pt-3 sm:flex-row sm:gap-6 sm:pt-4">
             <a
               href={HERO.ctaHref}
-              className="bg-[#ffbf00] px-8 py-4 text-center font-bold text-[#402d00] transition-colors hover:bg-[#ffcf42] sm:px-10 sm:py-5"
+              className="ui-cta-primary px-8 py-4 text-center font-bold sm:px-10 sm:py-5"
             >
               {applyCzechNbsp(HERO.ctaLabel)}
             </a>

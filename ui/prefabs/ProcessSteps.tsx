@@ -123,14 +123,13 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
             ref={(el) => {
               stepRefs.current[index] = el
             }}
-            tabIndex={0}
             data-testid="process-step"
-            className="group relative flex h-full cursor-pointer flex-col focus-visible:outline-none"
+            className="group relative flex h-full cursor-default flex-col"
           >
             {/* Number overlaps the card edge on all breakpoints. */}
             <span
               aria-hidden="true"
-              className={`font-display pointer-events-none absolute top-0 left-5 z-10 -translate-y-[46%] text-[2.7rem] leading-none font-bold tracking-[-0.05em] whitespace-nowrap drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-colors duration-300 sm:left-6 sm:text-[2.95rem] md:top-0 md:left-6 md:-translate-y-[40%] md:text-[2rem] lg:text-[2.25rem] xl:top-0 xl:left-8 xl:-translate-y-[46%] xl:text-[3.6rem] ${
+              className={`font-display pointer-events-none absolute top-0 left-5 z-10 -translate-y-[46%] text-[3.2rem] leading-none font-bold tracking-[-0.05em] whitespace-nowrap drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-colors duration-300 sm:left-6 sm:text-[3.45rem] md:top-0 md:left-6 md:-translate-y-[44%] md:text-[3.05rem] lg:text-[3rem] xl:top-0 xl:left-8 xl:-translate-y-[46%] xl:text-[3.6rem] ${
                 isActive
                   ? 'text-[#f3cb70]'
                   : 'text-[#c8aa73] group-hover:text-[#d8b878] group-focus-visible:text-[#d8b878]'
@@ -141,10 +140,10 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
 
             {/* Bordered card body */}
             <div
-              className={`flex min-h-53 flex-1 flex-col border bg-[#201f1f] px-6 pt-8 pb-7 shadow-[0_0_0_rgba(255,191,0,0)] transition-[background-color,border-color,box-shadow] duration-300 md:min-h-55 md:px-7 md:pt-10 md:pb-8 xl:min-h-60 xl:px-8 xl:pt-9 ${
+              className={`ui-surface-hover flex min-h-53 flex-1 flex-col border border-[#50453226] bg-[#201f1f] px-6 pt-8 pb-7 md:min-h-55 md:px-7 md:pt-12 md:pb-8 xl:min-h-60 xl:px-8 xl:pt-9 ${
                 isActive
-                  ? 'border-[#ffbf00] bg-[#252320] shadow-[0_16px_38px_rgba(255,191,0,0.12)]'
-                  : 'border-[#50453226] group-hover:border-[#8e7236] group-hover:bg-[#242220] group-hover:shadow-[0_14px_34px_rgba(255,191,0,0.08)] group-focus-visible:border-[#8e7236] group-focus-visible:bg-[#242220] group-focus-visible:shadow-[0_14px_34px_rgba(255,191,0,0.08)]'
+                  ? 'bg-[#252320]'
+                  : 'group-hover:bg-[#242220] group-focus-visible:bg-[#242220]'
               }`}
             >
               <h3

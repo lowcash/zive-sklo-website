@@ -21,7 +21,7 @@ export function AboutSection() {
                 alt="Sklář tvarující skleněnou ozdobu v dílně"
                 width={900}
                 height={1100}
-                className="relative z-10 aspect-4/5 w-full object-cover grayscale transition-all duration-700 hover:grayscale-0"
+                className="ui-hover-media relative z-10 aspect-4/5 w-full object-cover grayscale hover:grayscale-0"
                 quality={85}
               />
             </div>

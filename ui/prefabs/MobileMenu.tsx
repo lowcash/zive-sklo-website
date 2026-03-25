@@ -64,7 +64,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               className="flex h-8 w-8 items-center justify-center text-[#E5E2E1]"
               aria-label="Zavřít navigaci"
             >
-              <span className="material-symbols-outlined !text-[24px] leading-none">close</span>
+              <span className="material-symbols-outlined text-[24px]! leading-none">close</span>
             </button>
           </div>
 
@@ -92,7 +92,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: NAV.links.length * 0.06, duration: 0.3 }}
-              className="font-display mt-4 bg-[#ffbf00] px-8 py-4 font-bold text-[#402d00] transition-colors hover:bg-[#FFB300]/90"
+              className="ui-cta-primary font-display mt-4 px-8 py-4 font-bold"
             >
               {applyCzechNbsp(NAV.ctaLabel)}
             </motion.a>

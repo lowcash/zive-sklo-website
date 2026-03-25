@@ -312,7 +312,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full bg-[#ffbf00] py-5 text-sm font-bold tracking-widest text-[#402d00] uppercase transition-all hover:bg-[#ffbf00e6] disabled:cursor-not-allowed disabled:opacity-70"
+        className="ui-cta-primary w-full py-5 text-sm font-bold tracking-widest uppercase disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isSubmitting ? 'Odesílám...' : CONTACT.submitLabel}
       </button>

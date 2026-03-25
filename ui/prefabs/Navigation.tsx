@@ -105,7 +105,7 @@ export function Navigation() {
 
         <a
           href={NAV.ctaHref}
-          className="hidden bg-[#ffbf00] px-6 py-3 font-bold text-[#402d00] transition-colors duration-300 hover:bg-[#ffbf00e6] xl:block"
+          className="ui-cta-primary hidden px-6 py-3 font-bold xl:block"
         >
           {applyCzechNbsp(NAV.ctaLabel)}
         </a>
