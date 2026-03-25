@@ -106,7 +106,7 @@ export function GallerySection() {
         </div>
       </Container>
 
-      <GalleryScroll images={GALLERY.images} scrollRef={scrollRef} />
+      <GalleryScroll images={GALLERY.images} alts={GALLERY.alts} scrollRef={scrollRef} />
     </Section>
   )
 }

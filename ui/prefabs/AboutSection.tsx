@@ -17,12 +17,11 @@ export function AboutSection() {
               <div className='absolute -inset-4 translate-x-4 translate-y-4 border border-[#50453233]' />
               <Image
                 src={ABOUT.image}
-                alt='Živé Sklo v akci'
+                alt='Sklář tvarující skleněnou ozdobu v dílně'
                 width={900}
                 height={1100}
                 className='relative z-10 aspect-[4/5] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0'
                 quality={85}
-                unoptimized
               />
             </div>
 

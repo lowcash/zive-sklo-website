@@ -85,66 +85,83 @@ export function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-8'>
+    <form
+      onSubmit={handleSubmit}
+      className='space-y-8'
+      aria-label='Formulář pro poptávku sklářské akce'
+      noValidate
+    >
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
         <div className='space-y-2'>
-          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          <label htmlFor='field-name' className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
             {CONTACT.fields.name.label}
           </label>
           <input
+            id='field-name'
             name='name'
             type='text'
             value={formData.name}
             onChange={handleChange}
             placeholder={CONTACT.fields.name.placeholder}
             className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
-            required
+            aria-required
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? 'error-name' : undefined}
           />
-          {errors.name && <p className='text-sm text-red-400'>{errors.name}</p>}
+          {errors.name && <p id='error-name' role='alert' className='text-sm text-red-300'>{errors.name}</p>}
         </div>
 
         <div className='space-y-2'>
-          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          <label htmlFor='field-email' className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
             {CONTACT.fields.email.label}
           </label>
           <input
+            id='field-email'
             name='email'
             type='email'
             value={formData.email}
             onChange={handleChange}
             placeholder={CONTACT.fields.email.placeholder}
             className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
-            required
+            aria-required
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? 'error-email' : undefined}
           />
-          {errors.email && <p className='text-sm text-red-400'>{errors.email}</p>}
+          {errors.email && <p id='error-email' role='alert' className='text-sm text-red-300'>{errors.email}</p>}
         </div>
 
         <div className='space-y-2'>
-          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          <label htmlFor='field-phone' className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
             {CONTACT.fields.phone.label}
           </label>
           <input
+            id='field-phone'
             name='phone'
             type='tel'
             value={formData.phone}
             onChange={handleChange}
             placeholder={CONTACT.fields.phone.placeholder}
             className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
-            required
+            aria-required
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? 'error-phone' : undefined}
           />
-          {errors.phone && <p className='text-sm text-red-400'>{errors.phone}</p>}
+          {errors.phone && <p id='error-phone' role='alert' className='text-sm text-red-300'>{errors.phone}</p>}
         </div>
 
         <div className='space-y-2'>
-          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          <label htmlFor='field-eventType' className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
             {CONTACT.fields.eventType.label}
           </label>
           <select
+            id='field-eventType'
             name='eventType'
             value={formData.eventType}
             onChange={handleChange}
             className='w-full border-b border-[#5045324d] bg-[#131313] px-0 py-3 text-[#e5e2e1] focus:border-[#ffbf00] focus:outline-none'
-            required
+            aria-required
+            aria-invalid={!!errors.eventType}
+            aria-describedby={errors.eventType ? 'error-eventType' : undefined}
           >
             {CONTACT.fields.eventType.options.map((option) => (
               <option key={option.value} value={option.value}>
@@ -153,54 +170,61 @@ export function ContactForm() {
             ))}
           </select>
           {errors.eventType && (
-            <p className='text-sm text-red-400'>{errors.eventType}</p>
+            <p id='error-eventType' role='alert' className='text-sm text-red-300'>{errors.eventType}</p>
           )}
         </div>
       </div>
 
       <div className='grid grid-cols-1 gap-8 md:grid-cols-2'>
         <div className='space-y-2'>
-          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          <label htmlFor='field-datePlace' className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
             {CONTACT.fields.datePlace.label}
           </label>
           <input
+            id='field-datePlace'
             name='datePlace'
             type='text'
             value={formData.datePlace}
             onChange={handleChange}
             placeholder={CONTACT.fields.datePlace.placeholder}
             className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
-            required
+            aria-required
+            aria-invalid={!!errors.datePlace}
+            aria-describedby={errors.datePlace ? 'error-datePlace' : undefined}
           />
           {errors.datePlace && (
-            <p className='text-sm text-red-400'>{errors.datePlace}</p>
+            <p id='error-datePlace' role='alert' className='text-sm text-red-300'>{errors.datePlace}</p>
           )}
         </div>
 
         <div className='space-y-2'>
-          <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+          <label htmlFor='field-participants' className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
             {CONTACT.fields.participants.label}
           </label>
           <input
+            id='field-participants'
             name='participants'
             type='text'
             value={formData.participants}
             onChange={handleChange}
             placeholder={CONTACT.fields.participants.placeholder}
             className='w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none'
-            required
+            aria-required
+            aria-invalid={!!errors.participants}
+            aria-describedby={errors.participants ? 'error-participants' : undefined}
           />
           {errors.participants && (
-            <p className='text-sm text-red-400'>{errors.participants}</p>
+            <p id='error-participants' role='alert' className='text-sm text-red-300'>{errors.participants}</p>
           )}
         </div>
       </div>
 
       <div className='space-y-2'>
-        <label className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
+        <label htmlFor='field-message' className='font-label block text-xs uppercase tracking-widest text-[#e5e2e199]'>
           {CONTACT.fields.message.label}
         </label>
         <textarea
+          id='field-message'
           name='message'
           rows={4}
           value={formData.message}
@@ -221,7 +245,7 @@ export function ContactForm() {
           />
           <span>{CONTACT.fields.gdpr.label}</span>
         </label>
-        {errors.gdpr && <p className='text-sm text-red-400'>{errors.gdpr}</p>}
+        {errors.gdpr && <p id='error-gdpr' role='alert' className='text-sm text-red-300'>{errors.gdpr}</p>}
       </div>
 
       <button

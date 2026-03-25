@@ -19,6 +19,7 @@ export { HeroCarousel } from './HeroCarousel'
 
 export { AboutSection } from './AboutSection'
 export { ProcessSection } from './ProcessSection'
+export { ProcessSteps } from './ProcessSteps'
 export { OfferSection } from './OfferSection'
 export { AudienceSection } from './AudienceSection'
 

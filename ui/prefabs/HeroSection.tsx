@@ -4,11 +4,13 @@ import { HeroCarousel } from './HeroCarousel'
 
 /**
  * HeroSection - RSC (Server Component)
- * Full-height hero with auto-carousel background (client leaf)
+ * Full-height hero with auto-carousel background (client leaf).
+ * Uses min-h-dvh (Dynamic Viewport Height) to prevent content hiding
+ * behind iOS Safari's browser toolbar.
  */
 export function HeroSection() {
   return (
-    <header className='relative flex min-h-screen items-center overflow-hidden pt-20'>
+    <header className='relative flex min-h-dvh items-center overflow-hidden pt-20'>
       <div className='absolute inset-0 z-0'>
         <HeroCarousel images={HERO.backgroundImages} />
         <div className='absolute inset-0 bg-gradient-to-r from-[#131313] via-[#131313cc] to-transparent' />
@@ -17,11 +19,12 @@ export function HeroSection() {
 
       <div className='relative z-10 mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-12 px-6 md:px-20 lg:grid-cols-2'>
         <div className='flex flex-col justify-center space-y-8'>
-          <div className='flex flex-wrap gap-3'>
+          {/* Badges: wrap on mobile, single row on desktop */}
+          <div className='flex flex-wrap gap-2 md:flex-nowrap md:gap-3'>
             {HERO.pills.map((pill, index) => (
               <span
                 key={pill.label}
-                className={`inline-flex items-center border px-4 py-1 text-xs font-medium tracking-widest uppercase ${
+                className={`inline-flex items-center border px-3 py-1 text-[0.65rem] font-medium tracking-widest uppercase md:px-4 md:text-xs ${
                   index === 0 || pill.accent
                     ? 'border-[#5045324d] text-[#9accf3]'
                     : 'border-[#5045324d] text-[#e5e2e199]'
@@ -66,10 +69,12 @@ export function HeroSection() {
         </div>
       </div>
 
+      {/* Scroll cue – offset by safe-area to stay above iOS home indicator */}
       <a
         href='#o-projektu'
         aria-label='Posunout na další sekci'
-        className='group absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-[#e5e2e180] transition-colors hover:text-[#9accf3]'
+        className='group absolute left-1/2 z-10 -translate-x-1/2 text-[#e5e2e180] transition-colors hover:text-[#9accf3]'
+        style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}
       >
         <span className='material-symbols-outlined !text-[30px] motion-safe:animate-bounce'>
           keyboard_arrow_down

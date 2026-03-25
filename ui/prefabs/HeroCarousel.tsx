@@ -38,7 +38,6 @@ export function HeroCarousel({ images }: { images: string[] }) {
             className='object-cover opacity-40'
             priority={index === 0}
             quality={85}
-            unoptimized
           />
         </div>
       ))}

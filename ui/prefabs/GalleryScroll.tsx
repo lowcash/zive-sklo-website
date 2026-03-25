@@ -11,13 +11,15 @@ import Image from 'next/image'
  */
 type GalleryScrollProps = {
   images: string[]
+  alts?: string[]
   scrollRef?: RefObject<HTMLDivElement | null>
 }
 
-export function GalleryScroll({ images, scrollRef }: GalleryScrollProps) {
+export function GalleryScroll({ images, alts = [], scrollRef }: GalleryScrollProps) {
   const internalScrollRef = useRef<HTMLDivElement>(null)
   const containerRef = scrollRef ?? internalScrollRef
-  const widthPattern = ['w-[400px]', 'w-[600px]', 'w-[400px]', 'w-[400px]']
+  // Responsive widths: narrower on mobile to avoid overflow, wider on desktop
+  const widthPattern = ['w-[85vw] md:w-[400px]', 'w-[85vw] md:w-[600px]', 'w-[85vw] md:w-[400px]', 'w-[85vw] md:w-[400px]']
 
   return (
     <div
@@ -31,11 +33,10 @@ export function GalleryScroll({ images, scrollRef }: GalleryScrollProps) {
         >
           <Image
             src={src}
-            alt={`Galerie ${index + 1}`}
+            alt={alts[index] ?? `Galerie živého skla ${index + 1}`}
             width={960}
             height={1200}
             sizes='(max-width: 768px) 80vw, 400px'
-            unoptimized
             className={`object-cover transition-all duration-500 hover:grayscale-0 ${
               index % 2 === 0 ? 'h-full w-full grayscale' : 'h-full w-full'
             }`}

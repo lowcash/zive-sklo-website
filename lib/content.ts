@@ -3,6 +3,28 @@
  * All Czech copy, structured by section
  */
 
+export const SITE_URL = 'https://zivesklo.cz'
+
+export const TITLE = 'Živé Sklo - Mobilní sklářská manufaktura z Vsetína'
+
+export const DESCRIPTION =
+  'Přivezeme živou sklářskou dílnu přímo k vám na firemní akce, školní exkurze i městské slavnosti. Žádné výrobky z krabice. Jen oheň, sklo a lidský dech.'
+
+export const KEYWORDS = [
+  'živé sklo',
+  'sklářská manufaktura',
+  'foukání skla',
+  'Vsetín',
+  'mobilní sklářská dílna',
+  'sklářská show',
+  'firemní akce',
+  'školní exkurze',
+  'vánoční trhy',
+  'teambuilding',
+  'skleněné ozdoby',
+  'sklář',
+]
+
 export const BRAND = {
   name: "ŽIVÉ SKLO",
   tagline: "Vsetínská mobilní manufaktura foukaného skla.",
@@ -21,9 +43,9 @@ export const NAV = {
 
 export const HERO = {
   backgroundImages: [
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuCPv46HEAkeK13i3ks4NUpwZgMfxR3g6nQ1HjEV2R8szvtlGpgXF_JTi-Nv5ouu8Bi4Ka9VM4RmixZB5pKHtGjSuCXgCHm4u-CJjgPKALAzFAkK8Y4mOrlyjYBpYiYp7-klGzPepQfPsqyXMeKqQnhZzIECIKd32yAaibwBoYWMP0DgAeHNlAiIPlUIvjDP4-83MsTdsp2k5uRbbbJm1-2MyBRpJ-KXB0hTwfnjqkcfYQSURNDuraITupZ2yrM0RJH-6qOJtzQ5m48",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuBRtfyewayp5M6M43DiS5g0q6xbvXAEOjtea7Q_v2iU1Ann1byelshZtSHVbQjkEdlKQsl8fo0JxRn_JMCqgckOORyWfvzy-szfkJm12MuU5MNOgl1F2I72NqgmsCpzKYezS1Bq4xZf19V85c2IeUPJ4xx8mHnWqndN3n7EAB0QJ0-D0NOlKMs_cxz0LLFKbsjbJWGV_H8GI8LWbcYYSnwle7eaGyopUs03F-yQcaivd507oB3068z-DzzdtS7i3sH8zurqKDRWAS0",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuCnOFDcu1dmt4pZXk1kk289Ouj8Mtnon0ugA0XWsx2jphLgqQ5yEDp9HdzlJ3YUfJ6vHHX0JXqOpcUQ3nixVF_Zq9f0Yf6LQq1-wiNC30hYL0YNxUvWtgD3ib0bZTQ8hJMCgcHE1Mo9A2p8ITHNlZSqKoUxEL1N-pJmiC7I8jD7v_vVjIoYsItkKBgjZndyOTVc7BA78EkMZnYo2EW5mCmlVGtuKqWju7QO8kCXFx3_PzRu1NJLnB33ztznbszNoPhGUs0QMocrqIU",
+    '/images/hero/hero-flame-glass-01.jpg',
+    '/images/gallery/blowing-technique-06.jpg',
+    '/images/gallery/hands-flame-01.jpg',
   ],
   h1Prefix: "Zažijte kouzlo",
   h1Highlight: "foukaného skla",
@@ -46,8 +68,7 @@ export const HERO = {
 export const ABOUT = {
   heading: "Nepřivezeme jen výrobky. Přivezeme celý příběh jejich vzniku.",
   text: "Živé Sklo je mobilní sklářská dílna z Vsetína — města s dlouhou tradicí výroby skleněných ozdob. Naše dílna se vejde do jedné dodávky a může se rozložit téměř kdekoliv — na náměstí, ve firmě nebo ve škole. Návštěvníci sledují celý proces výroby od zahřátí skleněné trubice v plameni až po vznik hotové ozdoby. Každá ozdoba je originál. A každý zážitek zůstane. Projekt vznikl z více než dvacetileté zkušenosti s výrobou skleněných vánočních ozdob ve Vsetíně.",
-  image:
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuBRtfyewayp5M6M43DiS5g0q6xbvXAEOjtea7Q_v2iU1Ann1byelshZtSHVbQjkEdlKQsl8fo0JxRn_JMCqgckOORyWfvzy-szfkJm12MuU5MNOgl1F2I72NqgmsCpzKYezS1Bq4xZf19V85c2IeUPJ4xx8mHnWqndN3n7EAB0QJ0-D0NOlKMs_cxz0LLFKbsjbJWGV_H8GI8LWbcYYSnwle7eaGyopUs03F-yQcaivd507oB3068z-DzzdtS7i3sH8zurqKDRWAS0",
+  image: '/images/gallery/forming-process-02.jpg',
 };
 
 export const PROCESS = {
@@ -204,29 +225,39 @@ export const AUDIENCE = {
 export const STATS = {
   items: [
     {
-      value: "1 200 °C",
-      label: "Teplota plamene při foukání skla",
+      numericValue: 1200,
+      suffix: ' °C',
+      label: 'Teplota plamene při foukání skla',
     },
     {
-      value: "100 %",
-      label: "Ručně vyrobené, každý kus je originál",
+      numericValue: 100,
+      suffix: ' %',
+      label: 'Ručně vyrobené, každý kus je originál',
     },
     {
-      value: "1 dech",
-      label: "Každá ozdoba vzniká jediným lidským dechem",
+      numericValue: 1,
+      suffix: ' dech',
+      label: 'Každá ozdoba vzniká jediným lidským dechem',
     },
   ],
 };
 
 export const GALLERY = {
-  heading: "Galerie zážitků — Živé sklo v akci",
-  hint: "← přetáhni pro více →",
+  heading: 'Galerie zážitků — Živé sklo v akci',
+  hint: '← přetáhni pro více →',
+  alts: [
+    'Sklář foukající skleněnou ozdobu v plameni',
+    'Detail výroby – ruce umělce nad roztaveným sklem',
+    'Školní exkurze – děti sledují vznik skleněné ozdoby',
+    'Detail skleněné ozdoby – ručně vyrobený originál',
+    'Tváření roztaveného skla – mistr při práci',
+  ],
   images: [
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuD7ZcrjEp2noAffj_xV5nmKW6naEKgPmceA1ksPBFhDA87A4mYrXCB3cAIJwYFTNcO-TN83dcerjKTeY2l3P55SNx5LTl6wOOGkwv5A_nQPfqaZravOiX5sfYPgSAx40g8HYi931cfTKhJBmm5hUWi3PoOWey7ER8jlxkc7RFUq7cHrCiw0CF3H7XWITt4BoycLQ9bSkRH_Wbqfq1ervyIXlsVOUOc9DdkH4pev4hs3fN3SXolM0Mi4Cy0CJUU6R_xMRJ4BH_cStPk",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuDxXFa8yY7_ZWuIcZTjbmVSAKec1SeUyCeMhRwe_dLhY17VnIbvmDm8oBG8gVtng3SZQEkC-5i4X4HxnuubWzeUJpasVviqGBkr0ineqjHg85Hxfi21CV2BjfJuf20GpEz-7IiqeBbJhQCo0FUM6gETq1CWegB70uIM6Wt5m36xeUidgBmlRYUxhBdMQhB0OBchZENfaOA0MYhSTeg7tIirP-tdNu6jCgtD7_Qb8zMq8q75kYZSNQIAQ2I8FNpEA7Na6PROPNAzhT4",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuB7YYq1bWkpWuVruwm8UztdX5f_INz9ZTy_1jwuqkUJ_7p68vf6jHsgsTWquVrS1qYN3KiTfCUPIUl1fkE_Yq738j0QiNtxxUfqkMlXJIIvJ0WNwqI3jMsI0o_MEZw7azs1tbrVT019JNzyUaEqAeWb1lOGqXmMmKryP1UK6exTjHsE6gjrfsnY6eSMxqwnZKxCc1AKxY_D8qbbxfF7EIBWDWuQIXBNwZ0DnFWBUKuFdxXcRLfG4BJTLG9bM-EUeaCxQsUMlPLA6k4",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuCnOFDcu1dmt4pZXk1kk289Ouj8Mtnon0ugA0XWsx2jphLgqQ5yEDp9HdzlJ3YUfJ6vHHX0JXqOpcUQ3nixVF_Zq9f0Yf6LQq1-wiNC30hYL0YNxUvWtgD3ib0bZTQ8hJMCgcHE1Mo9A2p8ITHNlZSqKoUxEL1N-pJmiC7I8jD7v_vVjIoYsItkKBgjZndyOTVc7BA78EkMZnYo2EW5mCmlVGtuKqWju7QO8kCXFx3_PzRu1NJLnB33ztznbszNoPhGUs0QMocrqIU",
-    "https://lh3.googleusercontent.com/aida-public/AB6AXuBRtfyewayp5M6M43DiS5g0q6xbvXAEOjtea7Q_v2iU1Ann1byelshZtSHVbQjkEdlKQsl8fo0JxRn_JMCqgckOORyWfvzy-szfkJm12MuU5MNOgl1F2I72NqgmsCpzKYezS1Bq4xZf19V85c2IeUPJ4xx8mHnWqndN3n7EAB0QJ0-D0NOlKMs_cxz0LLFKbsjbJWGV_H8GI8LWbcYYSnwle7eaGyopUs03F-yQcaivd507oB3068z-DzzdtS7i3sH8zurqKDRWAS0",
+    '/images/gallery/production-01.jpg',
+    '/images/gallery/hands-flame-01.jpg',
+    '/images/gallery/excursion-school-01.jpg',
+    '/images/gallery/glass-detail-01.jpg',
+    '/images/gallery/blowing-technique-06.jpg',
   ],
 };
 

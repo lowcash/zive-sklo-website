@@ -90,6 +90,7 @@ export function Navigation() {
             <a
               key={link.href}
               href={link.href}
+              aria-current={activeHref === link.href ? 'page' : undefined}
               className={
                 activeHref === link.href
                   ? 'border-b-2 border-[#FFB300] pb-1 text-[#FFB300] transition-colors duration-300'

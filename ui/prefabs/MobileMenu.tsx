@@ -37,6 +37,9 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          role='dialog'
+          aria-modal='true'
+          aria-label='Navigace'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -56,7 +59,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
             <button
               onClick={closeMenu}
               className='flex h-8 w-8 items-center justify-center text-[#E5E2E1]'
-              aria-label='Close menu'
+              aria-label='Zavřít navigaci'
             >
               <span className='material-symbols-outlined !text-[24px] leading-none'>
                 close
@@ -64,7 +67,8 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
             </button>
           </div>
 
-          <nav className='flex flex-col items-center gap-10'>
+          {/* mt-16 shifts items below the visual centre – feels more grounded */}
+          <nav className='mt-16 flex flex-col items-center gap-10'>
             {NAV.links.map((link, index) => (
               <motion.a
                 key={link.href}
@@ -73,6 +77,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.06, duration: 0.3 }}
+                aria-current={activeHref === link.href ? 'page' : undefined}
                 className={`font-display text-3xl font-bold transition-colors duration-300 hover:text-[#FFD79B] ${
                   activeHref === link.href ? 'text-[#FFB300]' : 'text-[#E5E2E1]'
                 }`}
@@ -102,7 +107,9 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
       <button
         onClick={toggleMenu}
         className='flex h-8 w-8 flex-col items-center justify-center gap-1.5'
-        aria-label='Toggle menu'
+        aria-label={isOpen ? 'Zavřít navigaci' : 'Otevřít navigaci'}
+        aria-expanded={isOpen}
+        aria-controls='mobile-nav-overlay'
       >
         <span
           className={`h-0.5 w-6 bg-[#E5E2E1] transition-transform duration-300 ${
