@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 /**
  * Floating button tests — ScrollToTop visibility, footer collision, safe-area.

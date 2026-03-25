@@ -18,7 +18,5 @@ export function Center({ children, maxWidth = 'lg' }: CenterProps) {
     xl: 'max-w-5xl',
   }
 
-  return (
-    <div className={`mx-auto ${maxWidthClasses[maxWidth]}`}>{children}</div>
-  )
+  return <div className={`mx-auto ${maxWidthClasses[maxWidth]}`}>{children}</div>
 }

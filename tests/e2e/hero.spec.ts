@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 /**
  * Hero section tests — iOS dvh height, badge layout, CTA accessibility.
@@ -24,14 +24,21 @@ test.describe('Hero section — desktop', () => {
     const badges = page.locator('[data-testid="hero-badges"] span, .hero-badges span').all()
 
     // Simpler: check that no badge wraps to a second line by comparing top offset
-    const badgeEls = page.locator('section#top span').filter({ hasText: /akce|škol|firem|svatebn/i })
+    const badgeEls = page
+      .locator('section#top span')
+      .filter({ hasText: /akce|škol|firem|svatebn/i })
     const count = await badgeEls.count()
     if (count < 2) return // no badges rendered, skip
 
     const boxes = await Promise.all(
       Array.from({ length: count }, (_, i) => badgeEls.nth(i).boundingBox())
     )
-    const validBoxes = boxes.filter(Boolean) as { x: number; y: number; width: number; height: number }[]
+    const validBoxes = boxes.filter(Boolean) as {
+      x: number
+      y: number
+      width: number
+      height: number
+    }[]
     // All badges should share the same top Y (single row)
     const firstY = validBoxes[0].y
     for (const b of validBoxes) {

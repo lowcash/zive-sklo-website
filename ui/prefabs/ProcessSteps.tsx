@@ -20,58 +20,79 @@ interface ProcessStepsProps {
  * On desktop, existing group-hover effects take over.
  */
 export function ProcessSteps({ steps }: ProcessStepsProps) {
-  const [highlightMode, setHighlightMode] = useState<'scroll' | 'tap' | 'hover'>('hover')
+  const [highlightMode, setHighlightMode] = useState<'scroll' | 'hover' | 'none'>('hover')
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
-    let observers: IntersectionObserver[] = []
     const mobileQuery = window.matchMedia('(max-width: 767px)')
-    const tabletTouchQuery = window.matchMedia(
-      '(min-width: 768px) and (max-width: 1279px) and (hover: none) and (pointer: coarse)',
-    )
+    const tabletQuery = window.matchMedia('(min-width: 768px) and (max-width: 1279px)')
+    let rafId = 0
 
-    const clearObservers = () => {
-      observers.forEach((observer) => observer.disconnect())
-      observers = []
+    const clearRaf = () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+      }
+      rafId = 0
+    }
+
+    const resolveActiveByViewport = () => {
+      clearRaf()
+      rafId = requestAnimationFrame(() => {
+        const markerY = window.innerHeight * 0.5
+        const activationRange = window.innerHeight * 0.24
+        let nextIndex: number | null = null
+        let bestDistance = Number.POSITIVE_INFINITY
+
+        stepRefs.current.forEach((element, index) => {
+          if (!element) {
+            return
+          }
+
+          const rect = element.getBoundingClientRect()
+          if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
+            return
+          }
+
+          const centerY = rect.top + rect.height * 0.5
+          const distance = Math.abs(centerY - markerY)
+
+          if (distance > activationRange) {
+            return
+          }
+
+          if (distance < bestDistance) {
+            bestDistance = distance
+            nextIndex = index
+          }
+        })
+
+        setActiveIndex((currentIndex) =>
+          currentIndex === nextIndex ? currentIndex : nextIndex,
+        )
+      })
     }
 
     const setupObservers = () => {
-      clearObservers()
+      clearRaf()
+      window.removeEventListener('scroll', resolveActiveByViewport)
+      window.removeEventListener('resize', resolveActiveByViewport)
 
       if (mobileQuery.matches) {
         setHighlightMode('scroll')
         setActiveIndex((currentIndex) => currentIndex ?? 0)
-
-        stepRefs.current.forEach((el, index) => {
-          if (!el) return
-
-          const observer = new IntersectionObserver(
-            (entries) => {
-              const visibleEntry = entries
-                .filter((entry) => entry.isIntersecting)
-                .sort((entryA, entryB) => entryB.intersectionRatio - entryA.intersectionRatio)[0]
-
-              if (visibleEntry) {
-                setActiveIndex(index)
-              }
-            },
-            {
-              threshold: [0.35, 0.55, 0.75],
-              rootMargin: '-8% 0px -32% 0px',
-            },
-          )
-
-          observer.observe(el)
-          observers.push(observer)
+        resolveActiveByViewport()
+        window.addEventListener('scroll', resolveActiveByViewport, {
+          passive: true,
         })
+        window.addEventListener('resize', resolveActiveByViewport)
 
         return
       }
 
-      if (tabletTouchQuery.matches) {
-        setHighlightMode('tap')
-        setActiveIndex((currentIndex) => currentIndex ?? 0)
+      if (tabletQuery.matches) {
+        setHighlightMode('none')
+        setActiveIndex(null)
         return
       }
 
@@ -81,19 +102,21 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
 
     setupObservers()
     mobileQuery.addEventListener('change', setupObservers)
-    tabletTouchQuery.addEventListener('change', setupObservers)
+    tabletQuery.addEventListener('change', setupObservers)
 
     return () => {
+      window.removeEventListener('scroll', resolveActiveByViewport)
+      window.removeEventListener('resize', resolveActiveByViewport)
       mobileQuery.removeEventListener('change', setupObservers)
-      tabletTouchQuery.removeEventListener('change', setupObservers)
-      clearObservers()
+      tabletQuery.removeEventListener('change', setupObservers)
+      clearRaf()
     }
   }, [])
 
   return (
-    <div className='grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-8 xl:grid-cols-4 xl:gap-10'>
+    <div className="grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10 xl:grid-cols-4 xl:gap-10">
       {steps.map((step, index) => {
-        const isActive = activeIndex === index && highlightMode !== 'hover'
+        const isActive = activeIndex === index && highlightMode === 'scroll'
         return (
           <div
             key={step.number}
@@ -101,26 +124,16 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
               stepRefs.current[index] = el
             }}
             tabIndex={0}
-            data-testid='process-step'
-            className='group relative flex h-full cursor-pointer flex-col focus-visible:outline-none'
-            onPointerDown={() => {
-              if (highlightMode === 'tap') {
-                setActiveIndex(index)
-              }
-            }}
-            onFocus={() => {
-              if (highlightMode === 'tap') {
-                setActiveIndex(index)
-              }
-            }}
+            data-testid="process-step"
+            className="group relative flex h-full cursor-pointer flex-col focus-visible:outline-none"
           >
             {/* Number overlaps the card edge on all breakpoints. */}
             <span
-              aria-hidden='true'
-              className={`pointer-events-none absolute left-5 top-0 z-10 -translate-y-[52%] font-display text-[2.9rem] font-bold leading-none tracking-[-0.05em] whitespace-nowrap drop-shadow-[0_8px_18px_rgba(0,0,0,0.32)] transition-colors duration-300 sm:left-6 sm:text-[3.2rem] md:left-5 md:text-[3rem] lg:text-[3.3rem] xl:left-8 xl:text-[4rem] ${
+              aria-hidden="true"
+              className={`font-display pointer-events-none absolute top-0 left-5 z-10 -translate-y-[46%] text-[2.7rem] leading-none font-bold tracking-[-0.05em] whitespace-nowrap drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-colors duration-300 sm:left-6 sm:text-[2.95rem] md:top-0 md:left-6 md:-translate-y-[40%] md:text-[2rem] lg:text-[2.25rem] xl:top-0 xl:left-8 xl:-translate-y-[46%] xl:text-[3.6rem] ${
                 isActive
-                  ? 'text-[#ffd66f]'
-                  : 'text-[#8f7442] group-hover:text-[#d9bd7c] group-focus-visible:text-[#d9bd7c]'
+                  ? 'text-[#f3cb70]'
+                  : 'text-[#c8aa73] group-hover:text-[#d8b878] group-focus-visible:text-[#d8b878]'
               }`}
             >
               {step.number}
@@ -128,10 +141,10 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
 
             {/* Bordered card body */}
             <div
-              className={`flex min-h-[13.5rem] flex-1 flex-col border-t-2 bg-[#201f1f] px-6 pb-7 pt-8 transition-colors duration-300 md:min-h-[14.25rem] md:px-7 md:pb-8 md:pt-8 xl:min-h-[15.5rem] xl:px-8 xl:pt-9 ${
+              className={`flex min-h-53 flex-1 flex-col border bg-[#201f1f] px-6 pt-8 pb-7 shadow-[0_0_0_rgba(255,191,0,0)] transition-[background-color,border-color,box-shadow] duration-300 md:min-h-55 md:px-7 md:pt-10 md:pb-8 xl:min-h-60 xl:px-8 xl:pt-9 ${
                 isActive
-                  ? 'border-[#ffbf00]'
-                  : 'border-[#5045324d] group-hover:border-[#ffbf00] group-focus-visible:border-[#ffbf00]'
+                  ? 'border-[#ffbf00] bg-[#252320] shadow-[0_16px_38px_rgba(255,191,0,0.12)]'
+                  : 'border-[#50453226] group-hover:border-[#8e7236] group-hover:bg-[#242220] group-hover:shadow-[0_14px_34px_rgba(255,191,0,0.08)] group-focus-visible:border-[#8e7236] group-focus-visible:bg-[#242220] group-focus-visible:shadow-[0_14px_34px_rgba(255,191,0,0.08)]'
               }`}
             >
               <h3
@@ -143,7 +156,7 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
               >
                 {applyCzechNbsp(step.title)}
               </h3>
-              <p className='text-sm leading-relaxed text-[#e5e2e199] md:text-[0.95rem]'>
+              <p className="text-sm leading-relaxed text-[#e5e2e199] md:text-[0.95rem]">
                 {applyCzechNbsp(step.description)}
               </p>
             </div>

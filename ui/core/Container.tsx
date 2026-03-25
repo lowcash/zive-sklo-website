@@ -17,9 +17,5 @@ export function Container({ children, size = 'lg' }: ContainerProps) {
     full: 'max-w-full',
   }
 
-  return (
-    <div className={`mx-auto px-6 md:px-20 ${sizeClasses[size]}`}>
-      {children}
-    </div>
-  )
+  return <div className={`mx-auto px-6 md:px-20 ${sizeClasses[size]}`}>{children}</div>
 }

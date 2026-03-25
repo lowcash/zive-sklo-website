@@ -21,21 +21,21 @@ export function HeroCarousel({ images }: { images: string[] }) {
   }, [images.length])
 
   return (
-    <div className='absolute inset-0'>
+    <div className="absolute inset-0">
       {images.map((src, index) => (
         <div
           key={src}
-          className='absolute inset-0 transition-opacity duration-1000'
+          className="absolute inset-0 transition-opacity duration-1000"
           style={{
             opacity: index === currentIndex ? 1 : 0,
           }}
         >
           <Image
             src={src}
-            alt=''
+            alt=""
             fill
-            sizes='100vw'
-            className='object-cover opacity-40'
+            sizes="100vw"
+            className="object-cover opacity-40"
             priority={index === 0}
             quality={85}
           />

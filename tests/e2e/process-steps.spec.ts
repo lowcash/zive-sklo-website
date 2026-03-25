@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 /**
  * Process section tests — scroll-based step highlighting on mobile.
@@ -34,7 +34,7 @@ test.describe('Process steps — scroll highlight', () => {
 
     const firstStep = page.locator('[data-testid="process-step"]').first()
     const number = firstStep.locator('span[aria-hidden="true"]').first()
-    const card = firstStep.locator('div.border-t-2').first()
+    const card = firstStep.locator(':scope > div').first()
 
     await expect(number).toBeVisible()
     await expect(card).toBeVisible()
@@ -60,13 +60,18 @@ test.describe('Stats counter animation', () => {
 
   test('stats section is present with numeric values', async ({ page }) => {
     // Scroll stats into view
-    const stats = page.locator('section').filter({ hasText: /°C|ručně|dech/i }).first()
+    const stats = page
+      .locator('section')
+      .filter({ hasText: /°C|ručně|dech/i })
+      .first()
     if ((await stats.count()) === 0) return // section not found, skip
     await stats.scrollIntoViewIfNeeded()
     await page.waitForTimeout(1500) // wait for count-up animation
 
     // Should show a non-zero number
-    const numericText = page.locator('[class*="stat"], [class*="counter"], [class*="number"]').first()
+    const numericText = page
+      .locator('[class*="stat"], [class*="counter"], [class*="number"]')
+      .first()
     if ((await numericText.count()) > 0) {
       const text = await numericText.textContent()
       expect(text).toMatch(/\d+/)

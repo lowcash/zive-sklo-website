@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 /**
  * Navigation tests — desktop links, hero CTA, mobile menu open/close, aria-current.

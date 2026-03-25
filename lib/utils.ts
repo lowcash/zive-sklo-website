@@ -8,19 +8,19 @@ export function applyCzechNbsp(text: string) {
   // Keep one-letter Czech prepositions and conjunctions with the following word.
   const withSingleLetterWords = normalizedText.replace(
     /(^|[\s(„"'])([AaIiKkOoSsUuVvZz])\s+/g,
-    '$1$2\u00A0',
+    '$1$2\u00A0'
   )
 
   // Keep common short Czech prepositions and conjunctions with the following word.
   const withShortFunctionWords = withSingleLetterWords.replace(
     /(^|[\s(„"'])(do|na|od|po|za|ve|ze|ke|se|či|že)\s+/gi,
-    '$1$2\u00A0',
+    '$1$2\u00A0'
   )
 
   // Keep common abbreviations and titles with the following word.
   const withAbbreviations = withShortFunctionWords.replace(
     /(^|[\s(„"'])((?:Mgr|Ing|Bc|DiS|MUDr|PhDr|JUDr|RNDr|MVDr|PharmDr|doc|prof|akad|sv|tř|ul|nám|č|čl|např|tj|tzv|atd|apod))\.\s+/giu,
-    '$1$2.\u00A0',
+    '$1$2.\u00A0'
   )
 
   // Keep postal codes together.

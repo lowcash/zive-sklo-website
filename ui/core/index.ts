@@ -1,16 +1,16 @@
 /**
  * Core UI Primitives
- * 
+ *
  * These are unbranded, semantic primitives that provide the foundation
  * for building the application. They contain NO brand-specific styles
  * and should be consumed by prefabs in ui/prefabs.
- * 
+ *
  * Architecture Rules:
  * - NO brand colors, fonts, or visual identity in these components
  * - Pure semantic HTML with minimal, reusable styling
  * - Props should support variant/spacing/alignment but not brand decisions
  * - These components are the "building blocks" layer
- * 
+ *
  * RSC/Client Boundary Conventions:
  * - Most primitives are Server Components by default
  * - Only interactive leaf components (like form fields, buttons with client logic)
@@ -44,12 +44,7 @@ export { Card } from './Card'
 export type { CardProps } from './Card'
 
 export { Input, Textarea, Select, Checkbox } from './Fields'
-export type {
-  InputProps,
-  TextareaProps,
-  SelectProps,
-  CheckboxProps,
-} from './Fields'
+export type { InputProps, TextareaProps, SelectProps, CheckboxProps } from './Fields'
 
 export { ResponsiveVisibility } from './ResponsiveVisibility'
 export type { ResponsiveVisibilityProps } from './ResponsiveVisibility'

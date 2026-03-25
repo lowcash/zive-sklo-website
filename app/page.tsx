@@ -1,23 +1,23 @@
 import {
-  Navigation,
-  HeroSection,
   AboutSection,
-  ProcessSection,
-  OfferSection,
   AudienceSection,
-  StatsSection,
-  GallerySection,
   BenefitsSection,
   ContactSection,
   FooterSection,
+  GallerySection,
+  HeroSection,
+  Navigation,
+  OfferSection,
+  ProcessSection,
   ScrollToTopButton,
-} from "@/ui/prefabs";
+  StatsSection,
+} from '@/ui/prefabs'
 
 export default function HomePage() {
   return (
     <>
       <Navigation />
-      <main id='top'>
+      <main id="top">
         <HeroSection />
         <AboutSection />
         <ProcessSection />
@@ -31,5 +31,5 @@ export default function HomePage() {
       <FooterSection />
       <ScrollToTopButton />
     </>
-  );
+  )
 }

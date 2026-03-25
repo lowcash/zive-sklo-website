@@ -45,7 +45,7 @@ export function StatCounter({ numericValue, suffix = '', durationMs = 1200 }: St
         }
         requestAnimationFrame(frame)
       },
-      { threshold: 0.5 },
+      { threshold: 0.5 }
     )
 
     observer.observe(ref.current)
@@ -55,10 +55,10 @@ export function StatCounter({ numericValue, suffix = '', durationMs = 1200 }: St
   return (
     <div
       ref={ref}
-      className='relative z-10 inline-flex items-baseline whitespace-nowrap font-display text-6xl font-bold text-accent-amber md:text-7xl'
+      className="font-display text-accent-amber relative z-10 inline-flex max-w-full items-baseline justify-center text-[2.45rem] leading-none font-bold whitespace-nowrap sm:text-[2.8rem] md:text-[2.05rem] lg:text-[2.9rem] xl:text-7xl"
     >
       {displayValue.toLocaleString('cs-CZ')}
-      <span className='whitespace-nowrap'>{suffix.replace(/^\s+/, '\u00A0')}</span>
+      <span className="whitespace-nowrap">{suffix.replace(/^\s+/, '\u00A0')}</span>
     </div>
   )
 }

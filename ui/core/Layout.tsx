@@ -10,11 +10,7 @@ export type StackProps = {
  * Stack primitive - vertical flexbox layout with consistent spacing
  * NO BRAND STYLES - purely semantic layout primitive
  */
-export function Stack({
-  children,
-  gap = 'md',
-  align = 'stretch',
-}: StackProps) {
+export function Stack({ children, gap = 'md', align = 'stretch' }: StackProps) {
   const gapClasses = {
     xs: 'gap-2',
     sm: 'gap-4',
@@ -32,11 +28,7 @@ export function Stack({
     stretch: 'items-stretch',
   }
 
-  return (
-    <div className={`flex flex-col ${gapClasses[gap]} ${alignClasses[align]}`}>
-      {children}
-    </div>
-  )
+  return <div className={`flex flex-col ${gapClasses[gap]} ${alignClasses[align]}`}>{children}</div>
 }
 
 export type GridProps = {
@@ -96,9 +88,7 @@ export function Grid({
   }
 
   return (
-    <div
-      className={`grid ${colClasses.join(' ')} ${gapClasses[gap]} ${alignClasses[align]}`}
-    >
+    <div className={`grid ${colClasses.join(' ')} ${gapClasses[gap]} ${alignClasses[align]}`}>
       {children}
     </div>
   )

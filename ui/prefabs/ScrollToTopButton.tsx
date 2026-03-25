@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
 import { motion } from 'framer-motion'
 
 // Hysteresis thresholds to prevent flickering near the show/hide boundary
@@ -20,7 +21,7 @@ export function ScrollToTopButton() {
     const toggleVisibility = () => {
       // Hysteresis: use previous state to pick the right threshold
       setIsVisible((prev) =>
-        prev ? window.scrollY > HIDE_SCROLL_THRESHOLD : window.scrollY > SHOW_SCROLL_THRESHOLD,
+        prev ? window.scrollY > HIDE_SCROLL_THRESHOLD : window.scrollY > SHOW_SCROLL_THRESHOLD
       )
     }
 
@@ -35,7 +36,7 @@ export function ScrollToTopButton() {
 
     const observer = new IntersectionObserver(
       ([entry]) => setIsFooterVisible(entry.isIntersecting),
-      { threshold: 0, rootMargin: '0px 0px -20px 0px' },
+      { threshold: 0, rootMargin: '0px 0px -20px 0px' }
     )
     observer.observe(footerEl)
     return () => observer.disconnect()
@@ -44,10 +45,10 @@ export function ScrollToTopButton() {
   const canShow = isVisible && !isFooterVisible
 
   return (
-    <div className='pointer-events-none fixed inset-x-0 bottom-6 z-40 md:bottom-8'>
-      <div className='mx-auto flex w-full max-w-[1440px] justify-end px-6 md:px-10'>
+    <div className="pointer-events-none fixed inset-x-0 bottom-6 z-40 md:bottom-8">
+      <div className="mx-auto flex w-full max-w-360 justify-end px-6 md:px-10">
         <motion.button
-          type='button'
+          type="button"
           initial={false}
           animate={{
             opacity: canShow ? 1 : 0,
@@ -64,10 +65,10 @@ export function ScrollToTopButton() {
             backfaceVisibility: 'hidden',
             willChange: 'transform, opacity',
           }}
-          aria-label='Posunout na začátek stránky'
+          aria-label="Posunout na začátek stránky"
           tabIndex={canShow ? 0 : -1}
         >
-          <span className='material-symbols-outlined !text-[24px]'>arrow_upward</span>
+          <span className="material-symbols-outlined text-[24px]!">arrow_upward</span>
         </motion.button>
       </div>
     </div>

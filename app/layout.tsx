@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope, Noto_Serif } from 'next/font/google'
-import './globals.css'
 
-import { SITE_URL, TITLE, DESCRIPTION, KEYWORDS } from '@/lib/content'
+import { DESCRIPTION, KEYWORDS, SITE_URL, TITLE } from '@/lib/content'
+
+import './globals.css'
 
 const notoSerif = Noto_Serif({
   subsets: ['latin', 'latin-ext'],
@@ -111,25 +112,22 @@ export default function RootLayout({
   }
 
   return (
-    <html
-      lang='cs'
-      className={`scroll-smooth ${notoSerif.variable} ${manrope.variable}`}
-    >
+    <html lang="cs" className={`scroll-smooth ${notoSerif.variable} ${manrope.variable}`}>
       <head>
         <link
-          rel='stylesheet'
-          href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap'
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         />
         <script
-          type='application/ld+json'
+          type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body className='antialiased'>
+      <body className="antialiased">
         {/* Skip to main content – accessible keyboard entry point */}
         <a
-          href='#top'
-          className='sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-[#ffbf00] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#402d00]'
+          href="#top"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:bg-[#ffbf00] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#402d00]"
         >
           Přeskočit na hlavní obsah
         </a>

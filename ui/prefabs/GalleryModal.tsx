@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
@@ -39,10 +40,10 @@ export function GalleryModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className='fixed inset-0 z-[70] flex cursor-pointer items-center justify-center bg-black/78 p-4 backdrop-blur-md sm:p-6 xl:p-8'
-          role='dialog'
-          aria-modal='true'
-          aria-label='Náhled galerie'
+          className="fixed inset-0 z-70 flex cursor-pointer items-center justify-center bg-black/72 p-4 backdrop-blur-sm sm:p-6 md:p-8"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Náhled galerie"
           onClick={onClose}
         >
           <motion.div
@@ -50,69 +51,54 @@ export function GalleryModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.98, y: 12 }}
             transition={{ duration: 0.24, ease: 'easeOut' }}
-            className='relative flex w-full max-w-6xl cursor-default flex-col gap-3 rounded-[28px] border border-white/10 bg-[#141414]/96 p-3 shadow-[0_30px_90px_rgba(0,0,0,0.55)] sm:gap-4 sm:p-4'
+            className="group relative flex w-full max-w-5xl cursor-default items-center justify-center"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className='flex items-center justify-between gap-4 rounded-[20px] bg-white/4 px-4 py-3'>
-              <div className='min-w-0'>
-                <p className='font-label text-[11px] uppercase tracking-[0.18em] text-white/60'>
-                  Galerie
-                </p>
-                <p className='truncate text-sm text-white/85 sm:text-base'>
-                  {currentImageIndex + 1} / {images.length}
-                </p>
-              </div>
-
-              <button
-                type='button'
-                onClick={onClose}
-                className='flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/8 text-white transition hover:bg-white/16'
-                aria-label='Zavřít náhled'
-              >
-                <X className='h-5 w-5' />
-              </button>
-            </div>
-
             <div
-              className='relative w-full overflow-hidden rounded-[24px] bg-[#0b0b0b]'
+              className="relative w-full overflow-hidden rounded-2xl bg-[#090909] shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
             >
-              <div className='relative h-[58vh] min-h-[280px] w-full sm:h-[64vh] lg:h-[70vh]'>
+              <button
+                type="button"
+                onClick={onClose}
+                className="absolute top-3 right-3 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 lg:opacity-0 lg:group-hover:opacity-100"
+                aria-label="Zavřít náhled"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <button
+                type="button"
+                onClick={onPrevious}
+                className="absolute top-1/2 left-3 z-10 hidden h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 md:flex lg:opacity-0 lg:group-hover:opacity-100"
+                aria-label="Předchozí fotografie"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+
+              <button
+                type="button"
+                onClick={onNext}
+                className="absolute top-1/2 right-3 z-10 hidden h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 md:flex lg:opacity-0 lg:group-hover:opacity-100"
+                aria-label="Další fotografie"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+
+              <div className="relative h-[56vh] min-h-70 w-full sm:h-[62vh] lg:h-[68vh]">
                 <Image
                   src={images[currentImageIndex]}
                   alt={currentAlt}
                   fill
                   quality={90}
-                  className='object-contain p-2 sm:p-4'
-                  sizes='(min-width: 1440px) 1280px, (min-width: 1024px) 88vw, 94vw'
+                  className="object-contain p-2 sm:p-3 md:p-4"
+                  sizes="(min-width: 1280px) 1120px, (min-width: 768px) 88vw, 94vw"
                   priority
                 />
               </div>
-            </div>
 
-            <div className='grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded-[20px] bg-white/4 p-2 sm:gap-3'>
-              <button
-                type='button'
-                onClick={onPrevious}
-                className='flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/8 text-white transition hover:bg-white/16'
-                aria-label='Předchozí fotografie'
-              >
-                <ChevronLeft className='h-5 w-5' />
-              </button>
-
-              <p className='truncate px-2 text-center text-sm text-white/72 sm:text-base'>
-                {currentAlt}
-              </p>
-
-              <button
-                type='button'
-                onClick={onNext}
-                className='flex h-11 w-11 cursor-pointer items-center justify-center rounded-full bg-white/8 text-white transition hover:bg-white/16'
-                aria-label='Další fotografie'
-              >
-                <ChevronRight className='h-5 w-5' />
-              </button>
+              <p className="sr-only">{currentAlt}</p>
             </div>
           </motion.div>
         </motion.div>

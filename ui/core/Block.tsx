@@ -11,11 +11,7 @@ export type BlockProps = {
  * Used for simple wrapper divs and heading/content groups
  * NO BRAND STYLES - purely semantic layout block
  */
-export function Block({
-  children,
-  spacing = 'md',
-  textAlign = 'left',
-}: BlockProps) {
+export function Block({ children, spacing = 'md', textAlign = 'left' }: BlockProps) {
   const spacingClasses = {
     xs: 'space-y-2',
     sm: 'space-y-4',
@@ -32,9 +28,5 @@ export function Block({
     right: 'text-right',
   }
 
-  return (
-    <div className={`${spacingClasses[spacing]} ${alignClasses[textAlign]}`}>
-      {children}
-    </div>
-  )
+  return <div className={`${spacingClasses[spacing]} ${alignClasses[textAlign]}`}>{children}</div>
 }
