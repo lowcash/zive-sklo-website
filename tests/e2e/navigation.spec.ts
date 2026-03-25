@@ -134,3 +134,19 @@ test.describe('Mobile menu', () => {
     await expect(page.locator('#kontakt')).toBeInViewport({ ratio: 0.1 })
   })
 })
+
+test.describe('Tablet navigation', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 820, height: 1180 })
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+  })
+
+  test('uses hamburger navigation on iPad-sized viewport', async ({ page }) => {
+    const hamburger = page.locator('button[aria-controls="mobile-nav-overlay"]')
+    await expect(hamburger).toBeVisible()
+
+    const desktopLink = page.locator('nav a[href="#nabidka"]').first()
+    await expect(desktopLink).not.toBeVisible()
+  })
+})

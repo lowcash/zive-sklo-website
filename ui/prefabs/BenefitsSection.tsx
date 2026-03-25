@@ -19,7 +19,7 @@ export function BenefitsSection() {
           </h2>
         </div>
 
-        <div className='grid grid-cols-1 gap-16 md:grid-cols-4'>
+        <div className='grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 xl:grid-cols-4'>
           {BENEFITS.items.map((benefit) => (
             <div key={benefit.title} className='space-y-4'>
               <span className='material-symbols-outlined !text-[28px] text-[#9accf3]'>

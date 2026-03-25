@@ -20,13 +20,16 @@ interface ProcessStepsProps {
  * On desktop, existing group-hover effects take over.
  */
 export function ProcessSteps({ steps }: ProcessStepsProps) {
-  const [isMobileViewport, setIsMobileViewport] = useState(false)
+  const [highlightMode, setHighlightMode] = useState<'scroll' | 'tap' | 'hover'>('hover')
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     let observers: IntersectionObserver[] = []
-    const mediaQuery = window.matchMedia('(max-width: 1023px)')
+    const mobileQuery = window.matchMedia('(max-width: 767px)')
+    const tabletTouchQuery = window.matchMedia(
+      '(min-width: 768px) and (max-width: 1279px) and (hover: none) and (pointer: coarse)',
+    )
 
     const clearObservers = () => {
       observers.forEach((observer) => observer.disconnect())
@@ -36,47 +39,61 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
     const setupObservers = () => {
       clearObservers()
 
-      const isMobile = mediaQuery.matches
-      setIsMobileViewport(isMobile)
+      if (mobileQuery.matches) {
+        setHighlightMode('scroll')
+        setActiveIndex((currentIndex) => currentIndex ?? 0)
 
-      if (!isMobile) {
-        setActiveIndex(null)
+        stepRefs.current.forEach((el, index) => {
+          if (!el) return
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              const visibleEntry = entries
+                .filter((entry) => entry.isIntersecting)
+                .sort((entryA, entryB) => entryB.intersectionRatio - entryA.intersectionRatio)[0]
+
+              if (visibleEntry) {
+                setActiveIndex(index)
+              }
+            },
+            {
+              threshold: [0.35, 0.55, 0.75],
+              rootMargin: '-8% 0px -32% 0px',
+            },
+          )
+
+          observer.observe(el)
+          observers.push(observer)
+        })
+
         return
       }
 
-      stepRefs.current.forEach((el, index) => {
-        if (!el) return
+      if (tabletTouchQuery.matches) {
+        setHighlightMode('tap')
+        setActiveIndex((currentIndex) => currentIndex ?? 0)
+        return
+      }
 
-        const observer = new IntersectionObserver(
-          ([entry]) => {
-            if (entry.isIntersecting) {
-              setActiveIndex(index)
-            }
-          },
-          {
-            threshold: 0.55,
-            rootMargin: '-5% 0px -30% 0px',
-          },
-        )
-
-        observer.observe(el)
-        observers.push(observer)
-      })
+      setHighlightMode('hover')
+      setActiveIndex(null)
     }
 
     setupObservers()
-    mediaQuery.addEventListener('change', setupObservers)
+    mobileQuery.addEventListener('change', setupObservers)
+    tabletTouchQuery.addEventListener('change', setupObservers)
 
     return () => {
-      mediaQuery.removeEventListener('change', setupObservers)
+      mobileQuery.removeEventListener('change', setupObservers)
+      tabletTouchQuery.removeEventListener('change', setupObservers)
       clearObservers()
     }
   }, [])
 
   return (
-    <div className='grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-10 xl:grid-cols-4 xl:gap-12'>
+    <div className='grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-8 xl:grid-cols-4 xl:gap-10'>
       {steps.map((step, index) => {
-        const isActive = isMobileViewport && activeIndex === index
+        const isActive = activeIndex === index && highlightMode !== 'hover'
         return (
           <div
             key={step.number}
@@ -85,15 +102,25 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
             }}
             tabIndex={0}
             data-testid='process-step'
-            className='group relative flex h-full flex-col focus-visible:outline-none'
+            className='group relative flex h-full cursor-pointer flex-col focus-visible:outline-none'
+            onPointerDown={() => {
+              if (highlightMode === 'tap') {
+                setActiveIndex(index)
+              }
+            }}
+            onFocus={() => {
+              if (highlightMode === 'tap') {
+                setActiveIndex(index)
+              }
+            }}
           >
             {/* Number overlaps the card edge on all breakpoints. */}
             <span
               aria-hidden='true'
-              className={`pointer-events-none absolute left-6 top-0 z-10 -translate-y-1/2 font-display text-5xl font-bold leading-none whitespace-nowrap transition-colors duration-300 md:left-8 md:text-6xl ${
+              className={`pointer-events-none absolute left-5 top-0 z-10 -translate-y-[52%] font-display text-[2.9rem] font-bold leading-none tracking-[-0.05em] whitespace-nowrap drop-shadow-[0_8px_18px_rgba(0,0,0,0.32)] transition-colors duration-300 sm:left-6 sm:text-[3.2rem] md:left-5 md:text-[3rem] lg:text-[3.3rem] xl:left-8 xl:text-[4rem] ${
                 isActive
-                  ? 'text-[#ffdf8a99]'
-                  : 'text-[#e5e2e10f] group-hover:text-[#ffdf8a80] group-focus-visible:text-[#ffdf8a80]'
+                  ? 'text-[#ffd66f]'
+                  : 'text-[#8f7442] group-hover:text-[#d9bd7c] group-focus-visible:text-[#d9bd7c]'
               }`}
             >
               {step.number}
@@ -101,14 +128,14 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
 
             {/* Bordered card body */}
             <div
-              className={`flex min-h-[16rem] flex-1 flex-col border-t-2 bg-[#201f1f] px-8 pb-8 pt-10 transition-colors duration-300 lg:min-h-[17rem] xl:min-h-[18rem] ${
+              className={`flex min-h-[13.5rem] flex-1 flex-col border-t-2 bg-[#201f1f] px-6 pb-7 pt-8 transition-colors duration-300 md:min-h-[14.25rem] md:px-7 md:pb-8 md:pt-8 xl:min-h-[15.5rem] xl:px-8 xl:pt-9 ${
                 isActive
                   ? 'border-[#ffbf00]'
                   : 'border-[#5045324d] group-hover:border-[#ffbf00] group-focus-visible:border-[#ffbf00]'
               }`}
             >
               <h3
-                className={`pb-4 text-xl font-bold transition-colors duration-300 ${
+                className={`pb-3 text-xl font-bold transition-colors duration-300 ${
                   isActive
                     ? 'text-[#ffdf8a]'
                     : 'group-hover:text-[#ffdf8a] group-focus-visible:text-[#ffdf8a]'
@@ -116,7 +143,7 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
               >
                 {applyCzechNbsp(step.title)}
               </h3>
-              <p className='leading-relaxed text-[#e5e2e199]'>
+              <p className='text-sm leading-relaxed text-[#e5e2e199] md:text-[0.95rem]'>
                 {applyCzechNbsp(step.description)}
               </p>
             </div>
