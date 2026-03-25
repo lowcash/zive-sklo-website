@@ -14,35 +14,41 @@ test.describe('Process steps — scroll highlight', () => {
 
   test('first step is highlighted when section enters view', async ({ page }) => {
     // Scroll to process section
-    const section = page.locator('#postup, section').filter({ hasText: /jak to funguje/i }).first()
+    const section = page.locator('#jak-to-funguje')
     await section.scrollIntoViewIfNeeded()
     await page.waitForTimeout(600)
 
     // First step border should have amber colour (border-[#ffbf00])
     const firstStep = page.locator('[data-testid="process-step"]').first()
-    if ((await firstStep.count()) === 0) {
-      // No data-testid — locate by the ordered list / numbered steps
-      const steps = page.locator('ol li, [class*="process"] li, [class*="step"]')
-      const count = await steps.count()
-      if (count === 0) {
-        test.skip()
-        return
-      }
-    }
+    await expect(firstStep).toBeVisible()
+
     // Verify at least one active step is present (amber border applied)
     const activeStep = page.locator('[class*="border-[#ffbf00]"], [class*="border-amber"]')
     await expect(activeStep.first()).toBeVisible()
   })
 
   test('step numbers are visible above step content', async ({ page }) => {
-    const section = page.locator('#postup, section').filter({ hasText: /jak to funguje/i }).first()
+    const section = page.locator('#jak-to-funguje')
     await section.scrollIntoViewIfNeeded()
     await page.waitForTimeout(600)
 
-    // Each step should have a visible number (01, 02, 03…)
-    const stepNumbers = page.locator('text=/^0[1-9]$/')
-    const count = await stepNumbers.count()
-    expect(count).toBeGreaterThan(0)
+    const firstStep = page.locator('[data-testid="process-step"]').first()
+    const number = firstStep.locator('span[aria-hidden="true"]').first()
+    const card = firstStep.locator('div.border-t-2').first()
+
+    await expect(number).toBeVisible()
+    await expect(card).toBeVisible()
+
+    const numberBox = await number.boundingBox()
+    const cardBox = await card.boundingBox()
+    expect(numberBox).not.toBeNull()
+    expect(cardBox).not.toBeNull()
+
+    if (numberBox && cardBox) {
+      // Number should overlap the top edge of the card.
+      expect(numberBox.y).toBeLessThan(cardBox.y)
+      expect(numberBox.y + numberBox.height).toBeGreaterThan(cardBox.y)
+    }
   })
 })
 

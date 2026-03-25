@@ -16,6 +16,7 @@ export { MobileMenu } from './MobileMenu'
 
 export { HeroSection } from './HeroSection'
 export { HeroCarousel } from './HeroCarousel'
+export { HeroScrollCue } from './HeroScrollCue'
 
 export { AboutSection } from './AboutSection'
 export { ProcessSection } from './ProcessSection'
@@ -28,6 +29,7 @@ export { StatCounter } from './StatCounter'
 
 export { GallerySection } from './GallerySection'
 export { GalleryScroll } from './GalleryScroll'
+export { GalleryModal } from './GalleryModal'
 
 export { BenefitsSection } from './BenefitsSection'
 export { DownloadLink } from './DownloadLink'

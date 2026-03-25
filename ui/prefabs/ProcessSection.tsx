@@ -1,4 +1,5 @@
 import { PROCESS } from '@/lib/content'
+import { applyCzechNbsp } from '@/lib/utils'
 import { Container, Section } from '@/ui/core'
 
 import { ProcessSteps } from './ProcessSteps'
@@ -11,14 +12,14 @@ export function ProcessSection() {
   return (
     <Section id='jak-to-funguje' spacing='xl'>
       <Container>
-        <h2 className='mb-24 text-center font-display text-4xl font-bold tracking-tight'>
-          {PROCESS.heading}
+        <h2 className='mb-14 text-center font-display text-4xl font-bold tracking-tight md:mb-24'>
+          {applyCzechNbsp(PROCESS.heading)}
         </h2>
 
         <ProcessSteps steps={PROCESS.steps} />
 
         <p className='mx-auto mt-12 max-w-3xl text-center text-sm leading-relaxed text-[#e5e2e180] md:text-base'>
-          {PROCESS.trustLine}
+          {applyCzechNbsp(PROCESS.trustLine)}
         </p>
       </Container>
     </Section>

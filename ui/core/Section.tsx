@@ -19,10 +19,10 @@ export function Section({
   surface = 'none',
 }: SectionProps) {
   const spacingClasses = {
-    sm: 'py-12',
-    md: 'py-16',
-    lg: 'py-24',
-    xl: 'py-32',
+    sm: 'py-10 md:py-12',
+    md: 'py-12 md:py-16',
+    lg: 'py-16 md:py-24',
+    xl: 'py-20 md:py-32',
   }
 
   const surfaceClasses = {

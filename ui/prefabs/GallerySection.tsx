@@ -5,7 +5,9 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Container, Section } from '@/ui/core'
 
 import { GALLERY } from '@/lib/content'
+import { applyCzechNbsp } from '@/lib/utils'
 
+import { GalleryModal } from './GalleryModal'
 import { GalleryScroll } from './GalleryScroll'
 
 /**
@@ -14,8 +16,10 @@ import { GalleryScroll } from './GalleryScroll'
  */
 export function GallerySection() {
   const scrollRef = useRef<HTMLDivElement>(null)
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
   const [canScrollPrev, setCanScrollPrev] = useState(false)
   const [canScrollNext, setCanScrollNext] = useState(true)
+  const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
 
   const updateScrollState = useCallback(() => {
     const element = scrollRef.current
@@ -51,6 +55,97 @@ export function GallerySection() {
     }
   }, [updateScrollState])
 
+  useEffect(() => {
+    if (activeImageIndex === null) {
+      return
+    }
+
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = document.documentElement.style.overflow
+
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
+    }
+  }, [activeImageIndex])
+
+  const showPreviousImage = useCallback(() => {
+    setActiveImageIndex((prev) => {
+      if (prev === null) {
+        return prev
+      }
+
+      return prev === 0 ? GALLERY.images.length - 1 : prev - 1
+    })
+  }, [])
+
+  const showNextImage = useCallback(() => {
+    setActiveImageIndex((prev) => {
+      if (prev === null) {
+        return prev
+      }
+
+      return prev === GALLERY.images.length - 1 ? 0 : prev + 1
+    })
+  }, [])
+
+  useEffect(() => {
+    if (activeImageIndex === null) {
+      return
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setActiveImageIndex(null)
+      }
+
+      if (event.key === 'ArrowLeft') {
+        showPreviousImage()
+      }
+
+      if (event.key === 'ArrowRight') {
+        showNextImage()
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [activeImageIndex, showNextImage, showPreviousImage])
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0]
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY }
+  }
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (!touchStartRef.current) {
+      return
+    }
+
+    const touch = event.changedTouches[0]
+    const dx = touch.clientX - touchStartRef.current.x
+    const dy = touch.clientY - touchStartRef.current.y
+
+    touchStartRef.current = null
+
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.2) {
+      return
+    }
+
+    if (dx < 0) {
+      showNextImage()
+      return
+    }
+
+    showPreviousImage()
+  }
+
   const scrollGallery = (direction: 'prev' | 'next') => {
     const element = scrollRef.current
 
@@ -73,10 +168,10 @@ export function GallerySection() {
         <div className='mb-12 flex items-end justify-between'>
           <div className='space-y-3'>
             <h2 className='font-display text-4xl font-bold tracking-tight'>
-              {GALLERY.heading}
+              {applyCzechNbsp(GALLERY.heading)}
             </h2>
             <p className='font-label text-xs uppercase tracking-[0.18em] text-[#e5e2e180]'>
-              {GALLERY.hint}
+              {applyCzechNbsp(GALLERY.hint)}
             </p>
           </div>
           <div className='flex gap-4'>
@@ -85,7 +180,7 @@ export function GallerySection() {
               onClick={() => scrollGallery('prev')}
               disabled={!canScrollPrev}
               aria-label='Posunout galerii doleva'
-              className='flex h-12 w-12 items-center justify-center border border-border transition-colors duration-300 hover:bg-[#ffbf00] hover:text-[#402d00] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit'
+              className='flex h-12 w-12 cursor-pointer items-center justify-center border border-border transition-colors duration-300 hover:bg-[#ffbf00] hover:text-[#402d00] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit'
             >
               <span className='material-symbols-outlined !text-[24px]'>
                 arrow_back
@@ -96,7 +191,7 @@ export function GallerySection() {
               onClick={() => scrollGallery('next')}
               disabled={!canScrollNext}
               aria-label='Posunout galerii doprava'
-              className='flex h-12 w-12 items-center justify-center border border-border transition-colors duration-300 hover:bg-[#ffbf00] hover:text-[#402d00] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit'
+              className='flex h-12 w-12 cursor-pointer items-center justify-center border border-border transition-colors duration-300 hover:bg-[#ffbf00] hover:text-[#402d00] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit'
             >
               <span className='material-symbols-outlined !text-[24px]'>
                 arrow_forward
@@ -106,7 +201,25 @@ export function GallerySection() {
         </div>
       </Container>
 
-      <GalleryScroll images={GALLERY.images} alts={GALLERY.alts} scrollRef={scrollRef} />
+      <Container>
+        <GalleryScroll
+          images={GALLERY.images}
+          alts={GALLERY.alts}
+          scrollRef={scrollRef}
+          onImageClick={setActiveImageIndex}
+        />
+      </Container>
+
+      <GalleryModal
+        images={GALLERY.images}
+        alts={GALLERY.alts}
+        activeImageIndex={activeImageIndex}
+        onClose={() => setActiveImageIndex(null)}
+        onPrevious={showPreviousImage}
+        onNext={showNextImage}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      />
     </Section>
   )
 }

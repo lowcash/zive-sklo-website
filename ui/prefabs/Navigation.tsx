@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { NAV, BRAND } from '@/lib/content'
+import { applyCzechNbsp } from '@/lib/utils'
 
 import { MobileMenu } from './MobileMenu'
 
@@ -82,7 +83,7 @@ export function Navigation() {
           className='font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors duration-300 hover:text-[#FFD79B]'
           aria-label='Přejít na začátek stránky'
         >
-          {BRAND.name}
+          {applyCzechNbsp(BRAND.name)}
         </a>
 
         <div className='hidden items-center gap-8 font-display text-lg font-bold tracking-tight md:flex'>
@@ -98,7 +99,7 @@ export function Navigation() {
               }
               onClick={() => setActiveHref(link.href)}
             >
-              {link.label}
+              {applyCzechNbsp(link.label)}
             </a>
           ))}
         </div>
@@ -107,7 +108,7 @@ export function Navigation() {
           href={NAV.ctaHref}
           className='hidden bg-[#ffbf00] px-6 py-3 font-bold text-[#402d00] transition-colors duration-300 hover:bg-[#ffbf00e6] md:block'
         >
-          {NAV.ctaLabel}
+          {applyCzechNbsp(NAV.ctaLabel)}
         </a>
 
         <div className='md:hidden'>

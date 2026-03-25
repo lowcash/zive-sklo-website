@@ -12,7 +12,7 @@ test.describe('ScrollToTop button', () => {
   })
 
   test('is hidden on initial load (tabindex=-1)', async ({ page }) => {
-    const btn = page.getByRole('button', { name: /zpět nahoru/i })
+    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
     await expect(btn).toHaveAttribute('tabindex', '-1')
   })
 
@@ -20,7 +20,7 @@ test.describe('ScrollToTop button', () => {
     await page.evaluate(() => window.scrollTo({ top: 400, behavior: 'instant' }))
     await page.waitForTimeout(400)
 
-    const btn = page.getByRole('button', { name: /zpět nahoru/i })
+    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
     await expect(btn).toHaveAttribute('tabindex', '0')
   })
 
@@ -31,7 +31,7 @@ test.describe('ScrollToTop button', () => {
     await page.evaluate(() => window.scrollTo({ top: 100, behavior: 'instant' }))
     await page.waitForTimeout(400)
 
-    const btn = page.getByRole('button', { name: /zpět nahoru/i })
+    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
     await expect(btn).toHaveAttribute('tabindex', '-1')
   })
 
@@ -39,7 +39,7 @@ test.describe('ScrollToTop button', () => {
     await page.evaluate(() => window.scrollTo({ top: 600, behavior: 'instant' }))
     await page.waitForTimeout(400)
 
-    const btn = page.getByRole('button', { name: /zpět nahoru/i })
+    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
     await expect(btn).toHaveAttribute('tabindex', '0')
     await btn.click()
     await page.waitForTimeout(800)
@@ -50,7 +50,7 @@ test.describe('ScrollToTop button', () => {
 
   test('is not keyboard-focusable when hidden', async ({ page }) => {
     // At top of page, button should be hidden — pressing Tab should not focus it
-    const btn = page.getByRole('button', { name: /zpět nahoru/i })
+    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
     await expect(btn).toHaveAttribute('tabindex', '-1')
 
     // Inspect pointer-events via computed style workaround

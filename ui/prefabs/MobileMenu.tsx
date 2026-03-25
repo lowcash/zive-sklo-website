@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
 import { BRAND, NAV } from '@/lib/content'
+import { applyCzechNbsp } from '@/lib/utils'
 
 /**
  * MobileMenu - Client leaf component for mobile navigation
@@ -37,6 +38,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
+          id='mobile-nav-overlay'
           role='dialog'
           aria-modal='true'
           aria-label='Navigace'
@@ -53,7 +55,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               className='font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors hover:text-[#FFD79B]'
               aria-label='Přejít na začátek stránky'
             >
-              {BRAND.name}
+              {applyCzechNbsp(BRAND.name)}
             </a>
 
             <button
@@ -82,7 +84,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
                   activeHref === link.href ? 'text-[#FFB300]' : 'text-[#E5E2E1]'
                 }`}
               >
-                {link.label}
+                {applyCzechNbsp(link.label)}
               </motion.a>
             ))}
             <motion.a
@@ -93,7 +95,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               transition={{ delay: NAV.links.length * 0.06, duration: 0.3 }}
               className='mt-4 bg-[#ffbf00] px-8 py-4 font-display font-bold text-[#402d00] transition-colors hover:bg-[#FFB300]/90'
             >
-              {NAV.ctaLabel}
+              {applyCzechNbsp(NAV.ctaLabel)}
             </motion.a>
           </nav>
         </motion.div>

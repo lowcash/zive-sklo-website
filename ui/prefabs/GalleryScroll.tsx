@@ -13,9 +13,15 @@ type GalleryScrollProps = {
   images: string[]
   alts?: string[]
   scrollRef?: RefObject<HTMLDivElement | null>
+  onImageClick?: (index: number) => void
 }
 
-export function GalleryScroll({ images, alts = [], scrollRef }: GalleryScrollProps) {
+export function GalleryScroll({
+  images,
+  alts = [],
+  scrollRef,
+  onImageClick,
+}: GalleryScrollProps) {
   const internalScrollRef = useRef<HTMLDivElement>(null)
   const containerRef = scrollRef ?? internalScrollRef
   // Responsive widths: narrower on mobile to avoid overflow, wider on desktop
@@ -24,12 +30,15 @@ export function GalleryScroll({ images, alts = [], scrollRef }: GalleryScrollPro
   return (
     <div
       ref={containerRef}
-      className='scroll-smooth flex gap-8 overflow-x-auto overflow-y-hidden px-6 pb-6 scrollbar-hide md:px-20'
+      className='scroll-smooth flex gap-8 overflow-x-auto overflow-y-hidden pb-6 scrollbar-hide'
     >
       {images.map((src, index) => (
-        <div
+        <button
+          type='button'
           key={`${src}-${index}`}
-          className={`relative h-[500px] flex-none ${widthPattern[index % widthPattern.length]}`}
+          onClick={() => onImageClick?.(index)}
+          aria-label={`Zobrazit fotografii: ${alts[index] ?? `Galerie živého skla ${index + 1}`}`}
+          className={`group relative h-[500px] flex-none cursor-pointer overflow-hidden text-left ${widthPattern[index % widthPattern.length]}`}
         >
           <Image
             src={src}
@@ -37,12 +46,10 @@ export function GalleryScroll({ images, alts = [], scrollRef }: GalleryScrollPro
             width={960}
             height={1200}
             sizes='(max-width: 768px) 80vw, 400px'
-            className={`object-cover transition-all duration-500 hover:grayscale-0 ${
-              index % 2 === 0 ? 'h-full w-full grayscale' : 'h-full w-full'
-            }`}
+            className='h-full w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.02] group-hover:grayscale-0'
             quality={85}
           />
-        </div>
+        </button>
       ))}
     </div>
   )

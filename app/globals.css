@@ -75,6 +75,15 @@
     color: #402d00;
     background: #ffbf00;
   }
+
+  a[href],
+  button:not(:disabled),
+  [role='button'],
+  summary,
+  input[type='submit'],
+  input[type='button'] {
+    cursor: pointer;
+  }
 }
 
 @layer utilities {

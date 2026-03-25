@@ -1,6 +1,7 @@
 import { Container, Section } from '@/ui/core'
 
 import { BENEFITS } from '@/lib/content'
+import { applyCzechNbsp } from '@/lib/utils'
 
 import { DownloadLink } from './DownloadLink'
 
@@ -14,7 +15,7 @@ export function BenefitsSection() {
       <Container>
         <div className='mb-20 max-w-3xl'>
           <h2 className='font-display text-4xl font-bold tracking-tight'>
-            {BENEFITS.heading}
+            {applyCzechNbsp(BENEFITS.heading)}
           </h2>
         </div>
 
@@ -25,10 +26,10 @@ export function BenefitsSection() {
                 {benefit.icon}
               </span>
               <h3 className='font-display text-xl font-bold'>
-                {benefit.title}
+                {applyCzechNbsp(benefit.title)}
               </h3>
               <p className='text-sm leading-relaxed text-[#e5e2e180]'>
-                {benefit.description}
+                {applyCzechNbsp(benefit.description)}
               </p>
             </div>
           ))}
@@ -37,7 +38,7 @@ export function BenefitsSection() {
         <div className='mt-16'>
           <DownloadLink
             href={BENEFITS.downloadHref}
-            label={BENEFITS.downloadLabel}
+            label={applyCzechNbsp(BENEFITS.downloadLabel)}
           />
         </div>
       </Container>

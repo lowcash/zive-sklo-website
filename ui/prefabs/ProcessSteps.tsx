@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { applyCzechNbsp } from '@/lib/utils'
+
 type Step = {
   number: string
   title: string
@@ -18,40 +20,63 @@ interface ProcessStepsProps {
  * On desktop, existing group-hover effects take over.
  */
 export function ProcessSteps({ steps }: ProcessStepsProps) {
+  const [isMobileViewport, setIsMobileViewport] = useState(false)
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const stepRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
-    const observers: IntersectionObserver[] = []
+    let observers: IntersectionObserver[] = []
+    const mediaQuery = window.matchMedia('(max-width: 1023px)')
 
-    stepRefs.current.forEach((el, index) => {
-      if (!el) return
+    const clearObservers = () => {
+      observers.forEach((observer) => observer.disconnect())
+      observers = []
+    }
 
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setActiveIndex(index)
-          }
-        },
-        {
-          threshold: 0.55,
-          // On desktop the grid shows all cards at once – only scroll-trigger on mobile (narrow viewport)
-          rootMargin: '-5% 0px -30% 0px',
-        },
-      )
-      observer.observe(el)
-      observers.push(observer)
-    })
+    const setupObservers = () => {
+      clearObservers()
+
+      const isMobile = mediaQuery.matches
+      setIsMobileViewport(isMobile)
+
+      if (!isMobile) {
+        setActiveIndex(null)
+        return
+      }
+
+      stepRefs.current.forEach((el, index) => {
+        if (!el) return
+
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              setActiveIndex(index)
+            }
+          },
+          {
+            threshold: 0.55,
+            rootMargin: '-5% 0px -30% 0px',
+          },
+        )
+
+        observer.observe(el)
+        observers.push(observer)
+      })
+    }
+
+    setupObservers()
+    mediaQuery.addEventListener('change', setupObservers)
 
     return () => {
-      observers.forEach((obs) => obs.disconnect())
+      mediaQuery.removeEventListener('change', setupObservers)
+      clearObservers()
     }
   }, [])
 
   return (
-    <div className='grid grid-cols-1 gap-12 md:grid-cols-4'>
+    <div className='grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-10 xl:grid-cols-4 xl:gap-12'>
       {steps.map((step, index) => {
-        const isActive = activeIndex === index
+        const isActive = isMobileViewport && activeIndex === index
         return (
           <div
             key={step.number}
@@ -59,15 +84,16 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
               stepRefs.current[index] = el
             }}
             tabIndex={0}
-            className='group flex flex-col focus-visible:outline-none'
+            data-testid='process-step'
+            className='group relative flex h-full flex-col focus-visible:outline-none'
           >
-            {/* Number sits above the bordered box – never crossed by the border line */}
+            {/* Number overlaps the card edge on all breakpoints. */}
             <span
               aria-hidden='true'
-              className={`block pb-2 pl-8 font-display text-6xl font-bold leading-none transition-colors duration-300 ${
+              className={`pointer-events-none absolute left-6 top-0 z-10 -translate-y-1/2 font-display text-5xl font-bold leading-none whitespace-nowrap transition-colors duration-300 md:left-8 md:text-6xl ${
                 isActive
-                  ? 'text-[#ffbf0033]'
-                  : 'text-[#e5e2e10d] group-hover:text-[#ffbf0033] group-focus-visible:text-[#ffbf0033]'
+                  ? 'text-[#ffdf8a99]'
+                  : 'text-[#e5e2e10f] group-hover:text-[#ffdf8a80] group-focus-visible:text-[#ffdf8a80]'
               }`}
             >
               {step.number}
@@ -75,7 +101,7 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
 
             {/* Bordered card body */}
             <div
-              className={`border-t-2 bg-[#201f1f] p-8 transition-colors duration-300 ${
+              className={`flex min-h-[16rem] flex-1 flex-col border-t-2 bg-[#201f1f] px-8 pb-8 pt-10 transition-colors duration-300 lg:min-h-[17rem] xl:min-h-[18rem] ${
                 isActive
                   ? 'border-[#ffbf00]'
                   : 'border-[#5045324d] group-hover:border-[#ffbf00] group-focus-visible:border-[#ffbf00]'
@@ -88,9 +114,11 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
                     : 'group-hover:text-[#ffdf8a] group-focus-visible:text-[#ffdf8a]'
                 }`}
               >
-                {step.title}
+                {applyCzechNbsp(step.title)}
               </h3>
-              <p className='leading-relaxed text-[#e5e2e199]'>{step.description}</p>
+              <p className='leading-relaxed text-[#e5e2e199]'>
+                {applyCzechNbsp(step.description)}
+              </p>
             </div>
           </div>
         )

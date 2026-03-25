@@ -55,10 +55,10 @@ export function StatCounter({ numericValue, suffix = '', durationMs = 1200 }: St
   return (
     <div
       ref={ref}
-      className='relative z-10 font-display text-6xl font-bold text-accent-amber md:text-7xl'
+      className='relative z-10 inline-flex items-baseline whitespace-nowrap font-display text-6xl font-bold text-accent-amber md:text-7xl'
     >
       {displayValue.toLocaleString('cs-CZ')}
-      {suffix}
+      <span className='whitespace-nowrap'>{suffix.replace(/^\s+/, '\u00A0')}</span>
     </div>
   )
 }

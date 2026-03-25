@@ -1,6 +1,7 @@
 import Image from 'next/image'
 
 import { ABOUT } from '@/lib/content'
+import { applyCzechNbsp } from '@/lib/utils'
 import { Container, Section } from '@/ui/core'
 
 /**
@@ -12,9 +13,8 @@ export function AboutSection() {
     <div className='overflow-hidden'>
       <Section id='o-projektu' spacing='xl' surface='subtle'>
         <Container>
-          <div className='grid grid-cols-1 items-center gap-20 lg:grid-cols-2'>
-            <div className='relative'>
-              <div className='absolute -inset-4 translate-x-4 translate-y-4 border border-[#50453233]' />
+          <div className='grid grid-cols-1 items-center gap-12 md:gap-16 lg:grid-cols-2 lg:gap-20'>
+            <div className='relative mx-auto w-full max-w-lg md:max-w-xl lg:max-w-none'>
               <Image
                 src={ABOUT.image}
                 alt='Sklář tvarující skleněnou ozdobu v dílně'
@@ -27,11 +27,11 @@ export function AboutSection() {
 
             <div className='space-y-10'>
               <h2 className='font-display text-4xl font-bold tracking-tight md:text-5xl'>
-                {ABOUT.heading}
+                {applyCzechNbsp(ABOUT.heading)}
               </h2>
 
               <div className='max-w-2xl text-lg leading-relaxed text-[#e5e2e1b3]'>
-                <p>{ABOUT.text}</p>
+                <p>{applyCzechNbsp(ABOUT.text)}</p>
               </div>
             </div>
           </div>

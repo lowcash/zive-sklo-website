@@ -1,6 +1,7 @@
 import { Container } from '@/ui/core'
 
 import { FOOTER } from '@/lib/content'
+import { applyCzechNbsp } from '@/lib/utils'
 
 /**
  * FooterSection - RSC (Server Component)
@@ -13,10 +14,10 @@ export function FooterSection() {
         <div className='grid gap-12 md:grid-cols-[1.2fr_1fr_1fr_1fr]'>
           <div className='space-y-4'>
             <p className='font-display text-2xl text-[#E5E2E1]'>
-              {FOOTER.brand.name}
+              {applyCzechNbsp(FOOTER.brand.name)}
             </p>
             <p className='max-w-xs text-sm leading-relaxed text-[#E5E2E199]'>
-              {FOOTER.brand.tagline}
+              {applyCzechNbsp(FOOTER.brand.tagline)}
             </p>
           </div>
 
@@ -31,7 +32,7 @@ export function FooterSection() {
                   href={item.href}
                   className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
                 >
-                  {item.label}
+                  {applyCzechNbsp(item.label)}
                 </a>
               ))}
             </div>
@@ -48,7 +49,7 @@ export function FooterSection() {
                   href={item.href}
                   className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
                 >
-                  {item.label}
+                  {applyCzechNbsp(item.label)}
                 </a>
               ))}
             </div>
@@ -65,7 +66,7 @@ export function FooterSection() {
                   href={item.href}
                   className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
                 >
-                  {item.label} {item.value}
+                  {applyCzechNbsp(`${item.label} ${item.value}`)}
                 </a>
               ))}
             </div>
@@ -74,7 +75,7 @@ export function FooterSection() {
 
         <div className='mt-12 border-t border-[#51453226] pt-8'>
           <p className='font-label text-xs uppercase tracking-widest text-[#E5E2E166]'>
-            {FOOTER.copyright}
+            {applyCzechNbsp(FOOTER.copyright)}
           </p>
         </div>
       </Container>
