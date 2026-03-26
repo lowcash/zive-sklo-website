@@ -56,7 +56,7 @@ export function StatCounter({ numericValue, suffix = '', durationMs = 1200 }: St
     <div
       ref={ref}
       data-testid="stat-counter"
-      className="font-display text-accent-amber relative z-10 inline-flex max-w-full items-baseline justify-center text-[3rem] leading-none font-bold tracking-tight whitespace-nowrap sm:text-[3.25rem] md:text-[2.2rem] lg:text-[3rem] xl:text-7xl"
+      className="font-display text-accent-amber relative z-10 inline-flex max-w-full items-baseline justify-center text-[3rem] leading-none font-bold tracking-tight whitespace-nowrap sm:text-[3.25rem] md:text-[3rem] lg:text-[3rem] xl:text-7xl"
     >
       <span data-testid="stat-value">{displayValue.toLocaleString('cs-CZ')}</span>
       <span data-testid="stat-suffix" className="whitespace-nowrap text-[0.82em]">
