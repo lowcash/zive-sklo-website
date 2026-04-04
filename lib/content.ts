@@ -3,12 +3,12 @@
  * All Czech copy, structured by section
  */
 
-export const SITE_URL = 'https://zivesklo.cz'
+export const SITE_URL = 'https://akce.zivesklo.cz'
 
 export const TITLE = 'Živé Sklo | Mobilní sklářská dílna pro akce, školy a firmy'
 
 export const DESCRIPTION =
-  'Přivezeme živou sklářskou dílnu přímo k vám na firemní akce, školní programy i městské slavnosti. Žádné výrobky z krabice - jen oheň, sklo a lidský dech.'
+  'Mobilní sklářská dílna, která přijede až za vámi. Foukání skla naživo pro firemní akce, školy i městské slavnosti - hosté sledují práci skláře zblízka a odnášejí si vlastní skleněný výrobek.'
 
 export const KEYWORDS = [
   'živé sklo',

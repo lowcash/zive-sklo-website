@@ -55,7 +55,7 @@ export default function OpenGraphImage() {
           opacity: 0.95,
         }}
       >
-        <div>zivesklo.cz</div>
+        <div>akce.zivesklo.cz</div>
         <div style={{ color: '#ffbf00', fontWeight: 700 }}>VSETIN</div>
       </div>
     </div>,
