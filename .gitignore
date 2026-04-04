@@ -8,6 +8,8 @@
 
 # testing
 /coverage
+/playwright-report/
+/test-results/
 
 # next.js
 /.next/
@@ -34,11 +36,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
-# test output (HTML reports, browser profiles — keep *-desktop.json and *-mobile.json for baseline tracking)
-/test-results/*.html
-/test-results/.chromium-*/
-/test-results/deletion-summary.json
 
 # local plans and notes
 /local/
