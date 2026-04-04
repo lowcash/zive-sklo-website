@@ -12,12 +12,26 @@ export type ContactActionState = {
   fieldErrors: Record<string, string>
 }
 
-function getSendFailureMessage(reason: 'missing-env' | 'transport-error') {
-  if (reason === 'missing-env') {
-    return 'Formulář je dočasně nedostupný. Kontaktujte nás prosím telefonicky.'
+function getPublicRequestCode(requestId: string) {
+  if (!requestId || requestId === 'unknown') {
+    return null
   }
 
-  return 'Odeslání se nepodařilo. Kontaktujte nás prosím telefonicky.'
+  return requestId.slice(0, 36)
+}
+
+function getSendFailureMessage(reason: 'missing-env' | 'transport-error', requestId: string) {
+  const publicCode = getPublicRequestCode(requestId)
+
+  if (reason === 'missing-env') {
+    return publicCode
+      ? `Formulář je dočasně nedostupný. Kontaktujte nás prosím telefonicky. Kód: ${publicCode}`
+      : 'Formulář je dočasně nedostupný. Kontaktujte nás prosím telefonicky.'
+  }
+
+  return publicCode
+    ? `Odeslání se nepodařilo. Kontaktujte nás prosím telefonicky. Kód: ${publicCode}`
+    : 'Odeslání se nepodařilo. Kontaktujte nás prosím telefonicky.'
 }
 
 function logSendFailure(input: {
@@ -148,7 +162,7 @@ export async function submitContactAction(
 
     return {
       status: 'error',
-      message: getSendFailureMessage(sendResult.reason),
+      message: getSendFailureMessage(sendResult.reason, requestId),
       fieldErrors: {},
     }
   }

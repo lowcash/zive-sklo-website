@@ -16,16 +16,19 @@ If the key is not set, GA scripts are not loaded.
 The contact form uses a Server Action running on Vercel functions with [Resend](https://resend.com) for email delivery.
 
 Required variables (set in Vercel → Project Settings → Environment Variables):
+
 - `RESEND_API_KEY` – API key from https://resend.com/api-keys
 - `RESEND_FROM` – verified sender address, e.g. `Živé Sklo <no-reply@zivesklo.cz>`
 - `CONTACT_TO` – recipient address for incoming inquiries
 
 Production checklist for `akce.zivesklo.cz`:
+
 1. Confirm these variables are set for the exact deployment environment target (Production or custom production-like target), not only Preview.
 2. Confirm `RESEND_FROM` uses a domain/address that is verified in Resend.
 3. Deploy and submit the form once.
 4. Open Vercel runtime logs and search for `[contact-form] failed to send inquiry`.
 5. If present, use logged `reason`, `details`, and `requestId` to resolve provider/env issues in Resend or Vercel.
+6. If a user sees an error with `Kód: ...`, match this code to `requestId` in logs for fast traceability.
 
 ## Security Baseline for Contact Form
 

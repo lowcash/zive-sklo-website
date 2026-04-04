@@ -18,6 +18,16 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const phonePattern = /^\+?[\d\s]{8,20}$/
 const participantPattern = /^\d{1,4}$/
 
+function sanitizeParticipantsValue(value: string) {
+  return value.replace(/\D/g, '').slice(0, 4)
+}
+
+function sanitizePhoneValue(value: string) {
+  const compact = value.replace(/[^\d+\s]/g, '')
+  const normalizedPlus = compact.replace(/(?!^)\+/g, '')
+  return normalizedPlus.slice(0, 20)
+}
+
 /**
  * ContactForm - Client leaf component for form validation
  * Handles form state and client-side validation
@@ -71,16 +81,22 @@ export function ContactForm() {
     if (!formData.name.trim()) newErrors.name = 'Jméno je povinné'
     if (!formData.email.trim()) {
       newErrors.email = 'E-mail je povinný'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+    } else if (!emailPattern.test(formData.email.trim())) {
       newErrors.email = 'Zadejte platný e-mail'
     }
-    if (!formData.phone.trim()) newErrors.phone = 'Telefon je povinný'
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Telefon je povinný'
+    } else if (!phonePattern.test(formData.phone.trim())) {
+      newErrors.phone = 'Zadejte platné telefonní číslo'
+    }
     if (!formData.eventType) newErrors.eventType = 'Typ akce je povinný'
     if (!formData.datePlace.trim()) newErrors.datePlace = 'Datum a místo jsou povinné'
     if (!formData.participants.trim()) {
       newErrors.participants = 'Počet účastníků je povinný'
-    } else if (!/^\d{1,4}$/.test(formData.participants.trim())) {
+    } else if (!participantPattern.test(formData.participants.trim())) {
       newErrors.participants = 'Počet účastníků musí být číslo'
+    } else if (Number(formData.participants.trim()) <= 0) {
+      newErrors.participants = 'Počet účastníků musí být větší než 0'
     }
     if (!formData.gdpr) newErrors.gdpr = 'Souhlas se zpracováním je povinný'
 
@@ -110,7 +126,18 @@ export function ContactForm() {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target
-    const nextValue = type === 'checkbox' && 'checked' in e.target ? e.target.checked : value
+    let nextValue: string | boolean =
+      type === 'checkbox' && 'checked' in e.target ? e.target.checked : value
+
+    if (typeof nextValue === 'string') {
+      if (name === 'participants') {
+        nextValue = sanitizeParticipantsValue(nextValue)
+      }
+
+      if (name === 'phone') {
+        nextValue = sanitizePhoneValue(nextValue)
+      }
+    }
 
     setFormData((prev) => ({
       ...prev,
@@ -124,16 +151,6 @@ export function ContactForm() {
 
   const getFieldError = (field: string) => errors[field] || actionState.fieldErrors[field]
 
-  const isSubmittable =
-    formData.name.trim().length > 0 &&
-    emailPattern.test(formData.email.trim()) &&
-    phonePattern.test(formData.phone.trim()) &&
-    formData.eventType.length > 0 &&
-    formData.datePlace.trim().length > 0 &&
-    participantPattern.test(formData.participants.trim()) &&
-    Number(formData.participants.trim()) > 0 &&
-    formData.gdpr
-
   return (
     <form
       onSubmit={handleSubmit}
@@ -141,23 +158,27 @@ export function ContactForm() {
       aria-label="Formulář pro poptávku sklářské akce"
       noValidate
     >
+      <p className="text-xs tracking-wide text-[#e5e2e199]">Pole označená * jsou povinná.</p>
+
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="space-y-2">
           <label
             htmlFor="field-name"
             className="font-label block text-xs tracking-widest text-[#e5e2e199] uppercase"
           >
-            {CONTACT.fields.name.label}
+            {CONTACT.fields.name.label} *
           </label>
           <input
             id="field-name"
             name="name"
             type="text"
+            autoComplete="name"
             value={formData.name}
             onChange={handleChange}
             placeholder={CONTACT.fields.name.placeholder}
             className="w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none"
             aria-required
+            required
             aria-invalid={!!getFieldError('name')}
             aria-describedby={getFieldError('name') ? 'error-name' : undefined}
           />
@@ -173,17 +194,20 @@ export function ContactForm() {
             htmlFor="field-email"
             className="font-label block text-xs tracking-widest text-[#e5e2e199] uppercase"
           >
-            {CONTACT.fields.email.label}
+            {CONTACT.fields.email.label} *
           </label>
           <input
             id="field-email"
             name="email"
             type="email"
+            inputMode="email"
+            autoComplete="email"
             value={formData.email}
             onChange={handleChange}
             placeholder={CONTACT.fields.email.placeholder}
             className="w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none"
             aria-required
+            required
             aria-invalid={!!getFieldError('email')}
             aria-describedby={getFieldError('email') ? 'error-email' : undefined}
           />
@@ -199,17 +223,22 @@ export function ContactForm() {
             htmlFor="field-phone"
             className="font-label block text-xs tracking-widest text-[#e5e2e199] uppercase"
           >
-            {CONTACT.fields.phone.label}
+            {CONTACT.fields.phone.label} *
           </label>
           <input
             id="field-phone"
             name="phone"
             type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            pattern="^\+?[0-9 ]{8,20}$"
+            maxLength={20}
             value={formData.phone}
             onChange={handleChange}
             placeholder={CONTACT.fields.phone.placeholder}
             className="w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none"
             aria-required
+            required
             aria-invalid={!!getFieldError('phone')}
             aria-describedby={getFieldError('phone') ? 'error-phone' : undefined}
           />
@@ -225,7 +254,7 @@ export function ContactForm() {
             htmlFor="field-eventType"
             className="font-label block text-xs tracking-widest text-[#e5e2e199] uppercase"
           >
-            {CONTACT.fields.eventType.label}
+            {CONTACT.fields.eventType.label} *
           </label>
           <select
             id="field-eventType"
@@ -234,6 +263,7 @@ export function ContactForm() {
             onChange={handleChange}
             className="w-full border-b border-[#5045324d] bg-[#131313] px-0 py-3 text-[#e5e2e1] focus:border-[#ffbf00] focus:outline-none"
             aria-required
+            required
             aria-invalid={!!getFieldError('eventType')}
             aria-describedby={getFieldError('eventType') ? 'error-eventType' : undefined}
           >
@@ -257,17 +287,19 @@ export function ContactForm() {
             htmlFor="field-datePlace"
             className="font-label block text-xs tracking-widest text-[#e5e2e199] uppercase"
           >
-            {CONTACT.fields.datePlace.label}
+            {CONTACT.fields.datePlace.label} *
           </label>
           <input
             id="field-datePlace"
             name="datePlace"
             type="text"
+            autoComplete="off"
             value={formData.datePlace}
             onChange={handleChange}
             placeholder={CONTACT.fields.datePlace.placeholder}
             className="w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none"
             aria-required
+            required
             aria-invalid={!!getFieldError('datePlace')}
             aria-describedby={getFieldError('datePlace') ? 'error-datePlace' : undefined}
           />
@@ -283,17 +315,21 @@ export function ContactForm() {
             htmlFor="field-participants"
             className="font-label block text-xs tracking-widest text-[#e5e2e199] uppercase"
           >
-            {CONTACT.fields.participants.label}
+            {CONTACT.fields.participants.label} *
           </label>
           <input
             id="field-participants"
             name="participants"
             type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            maxLength={4}
             value={formData.participants}
             onChange={handleChange}
             placeholder={CONTACT.fields.participants.placeholder}
             className="w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none"
             aria-required
+            required
             aria-invalid={!!getFieldError('participants')}
             aria-describedby={getFieldError('participants') ? 'error-participants' : undefined}
           />
@@ -382,7 +418,7 @@ export function ContactForm() {
 
       <button
         type="submit"
-        disabled={isSubmitting || !isSubmittable}
+        disabled={isSubmitting}
         className="ui-cta-primary w-full py-5 text-sm font-bold tracking-widest uppercase disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isSubmitting ? 'Odesílám...' : CONTACT.submitLabel}
