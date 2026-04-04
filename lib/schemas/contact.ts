@@ -22,7 +22,7 @@ const contactSchema = z.object({
   name: z
     .string()
     .transform(sanitizeText)
-    .pipe(z.string().min(2, 'Jméno je povinné').max(100, 'Jméno je příliš dlouhé')),
+    .pipe(z.string().min(2, 'Jméno a příjmení je povinné').max(100, 'Jméno je příliš dlouhé')),
   email: z
     .string()
     .transform((value) => value.trim().toLowerCase())
