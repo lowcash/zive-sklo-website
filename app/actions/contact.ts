@@ -12,6 +12,35 @@ export type ContactActionState = {
   fieldErrors: Record<string, string>
 }
 
+function getSendFailureMessage(reason: 'missing-env' | 'transport-error') {
+  if (reason === 'missing-env') {
+    return 'Formulář je dočasně nedostupný. Kontaktujte nás prosím telefonicky.'
+  }
+
+  return 'Odeslání se nepodařilo. Kontaktujte nás prosím telefonicky.'
+}
+
+function logSendFailure(input: {
+  reason: 'missing-env' | 'transport-error'
+  details?: {
+    missingEnv?: Array<'RESEND_API_KEY' | 'RESEND_FROM' | 'CONTACT_TO'>
+    providerError?: {
+      name?: string
+      message?: string
+      statusCode?: number
+    }
+  }
+  requestId: string
+}) {
+  console.error('[contact-form] failed to send inquiry', {
+    reason: input.reason,
+    requestId: input.requestId,
+    details: input.details,
+    deploymentEnv: process.env.VERCEL_ENV ?? 'local',
+    targetEnv: process.env.VERCEL_TARGET_ENV ?? null,
+  })
+}
+
 function toStringValue(value: FormDataEntryValue | null) {
   return typeof value === 'string' ? value : ''
 }
@@ -91,6 +120,11 @@ export async function submitContactAction(
 
   const requestHeaders = await headers()
   const clientIp = requestHeaders.get('x-forwarded-for') ?? ''
+  const requestId =
+    requestHeaders.get('x-vercel-id') ??
+    requestHeaders.get('x-request-id') ??
+    requestHeaders.get('x-amzn-trace-id') ??
+    'unknown'
   const identifier = getClientIdentifier(clientIp, validation.data.email)
 
   const rateLimit = checkContactRateLimit(identifier)
@@ -106,9 +140,15 @@ export async function submitContactAction(
   const sendResult = await sendContactMail(validation.data)
 
   if (!sendResult.ok) {
+    logSendFailure({
+      reason: sendResult.reason,
+      details: sendResult.details,
+      requestId,
+    })
+
     return {
       status: 'error',
-      message: 'Odeslání se nepodařilo. Kontaktujte nás prosím telefonicky.',
+      message: getSendFailureMessage(sendResult.reason),
       fieldErrors: {},
     }
   }

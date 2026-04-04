@@ -14,6 +14,10 @@ const initialContactActionState: ContactActionState = {
   fieldErrors: {},
 }
 
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const phonePattern = /^\+?[\d\s]{8,20}$/
+const participantPattern = /^\d{1,4}$/
+
 /**
  * ContactForm - Client leaf component for form validation
  * Handles form state and client-side validation
@@ -119,6 +123,16 @@ export function ContactForm() {
   }
 
   const getFieldError = (field: string) => errors[field] || actionState.fieldErrors[field]
+
+  const isSubmittable =
+    formData.name.trim().length > 0 &&
+    emailPattern.test(formData.email.trim()) &&
+    phonePattern.test(formData.phone.trim()) &&
+    formData.eventType.length > 0 &&
+    formData.datePlace.trim().length > 0 &&
+    participantPattern.test(formData.participants.trim()) &&
+    Number(formData.participants.trim()) > 0 &&
+    formData.gdpr
 
   return (
     <form
@@ -368,7 +382,7 @@ export function ContactForm() {
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isSubmitting || !isSubmittable}
         className="ui-cta-primary w-full py-5 text-sm font-bold tracking-widest uppercase disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isSubmitting ? 'Odesílám...' : CONTACT.submitLabel}

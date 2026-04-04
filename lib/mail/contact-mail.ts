@@ -2,11 +2,21 @@ import { Resend } from 'resend'
 
 import type { ContactSubmission } from '@/lib/schemas/contact'
 
+type MissingEnvKey = 'RESEND_API_KEY' | 'RESEND_FROM' | 'CONTACT_TO'
+
 type MailResult =
   | { ok: true }
   | {
       ok: false
       reason: 'missing-env' | 'transport-error'
+      details?: {
+        missingEnv?: MissingEnvKey[]
+        providerError?: {
+          name?: string
+          message?: string
+          statusCode?: number
+        }
+      }
     }
 
 function escapeHtml(value: string) {
@@ -57,30 +67,77 @@ export async function sendContactMail(data: ContactSubmission): Promise<MailResu
   const from = process.env.RESEND_FROM
   const to = process.env.CONTACT_TO
 
+  const missingEnv: MissingEnvKey[] = []
+
+  if (!apiKey) {
+    missingEnv.push('RESEND_API_KEY')
+  }
+
+  if (!from) {
+    missingEnv.push('RESEND_FROM')
+  }
+
+  if (!to) {
+    missingEnv.push('CONTACT_TO')
+  }
+
   if (!apiKey || !from || !to) {
     return {
       ok: false,
       reason: 'missing-env',
+      details: {
+        missingEnv,
+      },
     }
   }
 
   const resend = new Resend(apiKey)
 
-  const { error } = await resend.emails.send({
-    from,
-    to,
-    replyTo: data.email,
-    subject: `Poptavka: ${data.eventType} (${data.name})`,
-    text: formatMessageBody(data),
-    html: formatHtmlBody(data),
-  })
+  try {
+    const { error } = await resend.emails.send({
+      from,
+      to,
+      replyTo: data.email,
+      subject: `Poptavka: ${data.eventType} (${data.name})`,
+      text: formatMessageBody(data),
+      html: formatHtmlBody(data),
+    })
 
-  if (error) {
+    if (error) {
+      return {
+        ok: false,
+        reason: 'transport-error',
+        details: {
+          providerError: {
+            name: error.name,
+            message: error.message,
+            statusCode:
+              'statusCode' in error && typeof error.statusCode === 'number'
+                ? error.statusCode
+                : undefined,
+          },
+        },
+      }
+    }
+
+    return { ok: true }
+  } catch (error) {
+    const maybeError = error as {
+      name?: string
+      message?: string
+      statusCode?: number
+    }
+
     return {
       ok: false,
       reason: 'transport-error',
+      details: {
+        providerError: {
+          name: maybeError.name,
+          message: maybeError.message,
+          statusCode: maybeError.statusCode,
+        },
+      },
     }
   }
-
-  return { ok: true }
 }
