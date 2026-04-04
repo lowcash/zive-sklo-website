@@ -1,7 +1,3 @@
-'use client'
-
-import { Text } from '@/ui/core'
-
 /**
  * DownloadLink - Client leaf component for download link with interaction
  */
@@ -10,12 +6,10 @@ export function DownloadLink({ href, label }: { href: string; label: string }) {
     return (
       <span
         aria-disabled="true"
-        className="inline-flex cursor-not-allowed items-center gap-2 text-[#e5e2e180]"
+        className="inline-flex cursor-not-allowed items-center gap-2 rounded-lg border border-[#50453244] bg-[#1c1b1b] px-4 py-2 text-[#e5e2e180]"
       >
         <span aria-hidden="true">📄</span>
-        <Text size="base" as="span">
-          {label}
-        </Text>
+        <span className="text-base leading-normal">{label}</span>
       </span>
     )
   }
@@ -23,16 +17,10 @@ export function DownloadLink({ href, label }: { href: string; label: string }) {
   return (
     <a
       href={href}
-      className="group text-accent-ice hover:text-accent-amber inline-flex items-center gap-2 transition-colors duration-200"
+      className="inline-flex items-center gap-2 rounded-lg border border-[#50453266] bg-[#1c1b1b] px-4 py-2 text-[#e5e2e1b3] transition-colors hover:bg-[#201f1f] hover:text-[#e5e2e1]"
     >
-      <span aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-y-0.5">
-        📄
-      </span>
-      <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-        <Text size="base" as="span">
-          {label}
-        </Text>
-      </span>
+      <span aria-hidden="true">📄</span>
+      <span className="text-base leading-normal">{label}</span>
     </a>
   )
 }
