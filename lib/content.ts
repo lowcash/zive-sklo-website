@@ -5,10 +5,10 @@
 
 export const SITE_URL = 'https://zivesklo.cz'
 
-export const TITLE = 'Živé Sklo - Mobilní sklářská manufaktura z Vsetína'
+export const TITLE = 'Živé Sklo | Mobilní sklářská dílna pro akce, školy a firmy'
 
 export const DESCRIPTION =
-  'Přivezeme živou sklářskou dílnu přímo k vám na firemní akce, školní exkurze i městské slavnosti. Žádné výrobky z krabice. Jen oheň, sklo a lidský dech.'
+  'Přivezeme živou sklářskou dílnu přímo k vám na firemní akce, školní programy i městské slavnosti. Žádné výrobky z krabice - jen oheň, sklo a lidský dech.'
 
 export const KEYWORDS = [
   'živé sklo',
@@ -67,7 +67,7 @@ export const HERO = {
 
 export const ABOUT = {
   heading: 'Nepřivezeme jen výrobky. Přivezeme celý příběh jejich vzniku.',
-  text: 'Živé Sklo je mobilní sklářská dílna z Vsetína — města s dlouhou tradicí výroby skleněných ozdob. Naše dílna se vejde do jedné dodávky a může se rozložit téměř kdekoliv — na náměstí, ve firmě nebo ve škole. Návštěvníci sledují celý proces výroby od zahřátí skleněné trubice v plameni až po vznik hotové ozdoby. Každá ozdoba je originál. A každý zážitek zůstane. Projekt vznikl z více než dvacetileté zkušenosti s výrobou skleněných vánočních ozdob ve Vsetíně.',
+  text: 'Živé Sklo je mobilní sklářská dílna z Vsetína - města s dlouhou tradicí výroby skleněných ozdob. Naše dílna se vejde do jedné dodávky a může se rozložit téměř kdekoliv - na náměstí, ve firmě nebo ve škole. Návštěvníci sledují celý proces výroby od zahřátí skleněné trubice v plameni až po vznik hotové ozdoby. Každá ozdoba je originál. A každý zážitek zůstane. Projekt vznikl z více než dvacetileté zkušenosti s výrobou skleněných vánočních ozdob ve Vsetíně.',
   image: '/images/gallery/forming-process-02.jpg',
 }
 
@@ -77,7 +77,7 @@ export const PROCESS = {
     {
       number: '01',
       title: 'Poptávka',
-      description: 'Pošlete nám základní informace o akci — termín, místo a přibližný počet hostů.',
+      description: 'Pošlete nám základní informace o akci - termín, místo a přibližný počet hostů.',
     },
     {
       number: '02',
@@ -97,7 +97,7 @@ export const PROCESS = {
         'Hosté si odnesou nezapomenutelný zážitek a často i vlastnoručně vyrobenou ozdobu.',
     },
   ],
-  trustLine: 'Program je vhodný pro malé i velké akce — od školních skupin po městské slavnosti.',
+  trustLine: 'Program je vhodný pro malé i velké akce - od školních skupin po městské slavnosti.',
 }
 
 export const OFFER = {
@@ -118,10 +118,10 @@ export const OFFER = {
       icon: 'groups',
       title: 'Týmový rituál – Firemní event',
       description:
-        'Neobvyklý zážitek pro firmy a týmy. Foukání skla vyžaduje soustředění a preciznost — přesně to, na čem stojí dobrá spolupráce ve vašem týmu. Každý odchází s vlastnoručně vyrobenou ozdobou.',
+        'Neobvyklý zážitek pro firmy a týmy. Foukání skla vyžaduje soustředění a preciznost - přesně to, na čem stojí dobrá spolupráce ve vašem týmu. Každý odchází s vlastnoručně vyrobenou ozdobou.',
       suitableFor: 'Firmy, teambuildingy, firemní večírky',
       duration: '2–4 hodiny / Min. 10 osob',
-      price: 'Od 8 000 Kč',
+      price: 'Od 20 000 Kč',
       ctaLabel: 'Nezávazně poptat',
       ctaHref: '#kontakt',
     },
@@ -141,7 +141,7 @@ export const OFFER = {
     {
       title: 'Kreativní dílna',
       description:
-        'Malování a zdobení vlastní ozdoby barvami, glitry, zdobicími technikami. Žádné dvě nejsou stejné. Bezpečná alternativa bez ohně — ideální pro nejmenší děti nebo velké skupiny.',
+        'Malování a zdobení vlastní ozdoby, glitry, zdobicími technikami. Žádné dvě nejsou stejné. Bezpečná alternativa bez ohně - ideální pro nejmenší děti nebo velké skupiny.',
       price: 'Od 100 Kč/osoba',
       ctaLabel: 'Nezávazně poptat',
       ctaHref: '#kontakt',
@@ -188,7 +188,7 @@ export const AUDIENCE = {
       title: 'Města, obce a kulturní akce',
       heading: 'Živá sklářská dílna jako kulturní atrakce',
       description:
-        'Hledáte program, který přitáhne pozornost na vašem trhu nebo slavnosti? Mobilní sklářská dílna zastaví každého kolemjdoucího. Není to stánek — je to živé divadlo řemesla.',
+        'Hledáte program, který přitáhne pozornost na vašem trhu nebo slavnosti? Mobilní sklářská dílna zastaví každého kolemjdoucího. Není to stánek - je to živé divadlo řemesla.',
       bullets: [
         'Vhodné pro vánoční trhy, slavnosti a festivaly',
         'Samostatná instalace bez velkých nároků na zázemí',
@@ -204,7 +204,7 @@ export const AUDIENCE = {
       title: 'Firmy a firemní akce',
       heading: 'Zážitek, který spojuje tým',
       description:
-        'Foukání skla vyžaduje soustředění a preciznost — přesně to, na čem stojí dobrá spolupráce v týmu. Navíc si každý účastník odnese vlastnoručně vyrobenou ozdobu.',
+        'Foukání skla vyžaduje soustředění a preciznost - přesně to, na čem stojí dobrá spolupráce v týmu. Navíc si každý účastník odnese vlastnoručně vyrobenou ozdobu.',
       bullets: [
         'Teambuilding pro 10–50 osob',
         'Možnost živé ukázky na firemním večírku',
@@ -239,7 +239,7 @@ export const STATS = {
 }
 
 export const GALLERY = {
-  heading: 'Galerie zážitků — Živé sklo v akci',
+  heading: 'Galerie zážitků - Živé sklo v akci',
   hint: '← přetáhni pro více →',
   alts: [
     'Sklář foukající skleněnou ozdobu v plameni',
@@ -281,11 +281,11 @@ export const BENEFITS = {
     {
       icon: 'description',
       title: 'Profesionální komunikace',
-      description: 'Komunikujeme profesionálně — smlouva, faktura, pojištění.',
+      description: 'Komunikujeme profesionálně - smlouva, faktura, pojištění.',
     },
   ],
   downloadLabel: 'Stáhnout informační list pro pořadatele',
-  downloadHref: '#', // Placeholder - not ready yet
+  downloadHref: '/informacni-list',
 }
 
 export const CONTACT = {
@@ -332,7 +332,6 @@ export const CONTACT = {
         { value: 'school', label: 'Škola' },
         { value: 'city-market', label: 'Město – trh' },
         { value: 'creative-workshop', label: 'Kreativní dílna' },
-        { value: 'corporate-gifts', label: 'Firemní dárky' },
         { value: 'other', label: 'Jiné' },
       ],
     },
@@ -370,13 +369,14 @@ export const FOOTER = {
     {
       label: 'Instagram',
       value: '@zivesklo',
-      href: 'https://instagram.com/zivesklo',
+      href: 'https://www.instagram.com/zivesklo/',
     },
     {
       label: 'Facebook',
       value: 'Živé Sklo',
-      href: 'https://facebook.com/zivesklo',
+      href: 'https://www.facebook.com/profile.php?id=61585612643034',
     },
   ],
-  copyright: '© 2026 Živé Sklo – Vlastimil Juřička. Všechna práva vyhrazena.',
+  copyrightOwner: 'Živé Sklo - Vlastimil Juřička',
+  copyrightRights: 'Všechna práva vyhrazena.',
 }

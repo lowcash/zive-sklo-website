@@ -23,12 +23,16 @@ export function DownloadLink({ href, label }: { href: string; label: string }) {
   return (
     <a
       href={href}
-      className="text-accent-ice hover:text-accent-amber inline-flex items-center gap-2 transition-colors"
+      className="group text-accent-ice hover:text-accent-amber inline-flex items-center gap-2 transition-colors duration-200"
     >
-      <span aria-hidden="true">📄</span>
-      <Text size="base" as="span">
-        {label}
-      </Text>
+      <span aria-hidden="true" className="transition-transform duration-200 group-hover:-translate-y-0.5">
+        📄
+      </span>
+      <span className="transition-transform duration-200 group-hover:translate-x-0.5">
+        <Text size="base" as="span">
+          {label}
+        </Text>
+      </span>
     </a>
   )
 }

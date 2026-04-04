@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Živé Sklo ikonka">
+  <defs>
+    <linearGradient id="glassBody" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#9ACCF3" />
+      <stop offset="100%" stop-color="#6FA4D0" />
+    </linearGradient>
+    <linearGradient id="flame" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#FFD36A" />
+      <stop offset="100%" stop-color="#FF9C2A" />
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="#131313" />
+  <path d="M128 38c16 14 26 29 26 43 0 15-11 26-26 26s-26-11-26-26c0-14 10-29 26-43z" fill="url(#flame)" />
+  <path
+    d="M76 82h104c0 33-17 61-52 76-35-15-52-43-52-76zm43 81v18h18v-18h-18zm-28 26h74v21H91v-21z"
+    fill="url(#glassBody)"
+  />
+  <path d="M98 92h14c0 20 8 37 24 52-18-8-34-25-38-52z" fill="#D9EEFF" opacity="0.72" />
+</svg>

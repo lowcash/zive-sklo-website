@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope, Noto_Serif } from 'next/font/google'
+import Script from 'next/script'
 
 import { DESCRIPTION, KEYWORDS, SITE_URL, TITLE } from '@/lib/content'
 
@@ -27,10 +28,13 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
+  applicationName: 'Živé Sklo',
+  category: 'arts',
   keywords: KEYWORDS,
   authors: [{ name: 'Živé Sklo' }],
   creator: 'Živé Sklo',
   metadataBase: new URL(SITE_URL),
+  manifest: '/manifest.webmanifest',
   alternates: {
     canonical: '/',
   },
@@ -43,18 +47,12 @@ export const metadata: Metadata = {
     siteName: 'Živé Sklo',
     images: [
       {
-        url: '/og-image.png',
+        url: '/opengraph-image',
         width: 1200,
         height: 630,
         alt: 'Živé Sklo - Mobilní sklářská manufaktura z Vsetína',
       },
     ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: TITLE,
-    description: DESCRIPTION,
-    images: ['/og-image.png'],
   },
   robots: {
     index: true,
@@ -74,6 +72,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const gaTrackingId = process.env.NEXT_PUBLIC_GA_TRACKING_ID
+
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
@@ -90,7 +90,10 @@ export default function RootLayout({
     },
     areaServed: 'CZ',
     priceRange: '$$',
-    sameAs: ['https://instagram.com/zivesklo', 'https://facebook.com/zivesklo'],
+    sameAs: [
+      'https://www.instagram.com/zivesklo/',
+      'https://www.facebook.com/profile.php?id=61585612643034',
+    ],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Sklářské programy Živého Skla',
@@ -132,6 +135,22 @@ export default function RootLayout({
           Přeskočit na hlavní obsah
         </a>
         {children}
+        {gaTrackingId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="gtag-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaTrackingId}');
+              `}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   )

@@ -8,6 +8,8 @@ import { applyCzechNbsp } from '@/lib/utils'
  * Footer with brand, navigation, contact, and social links
  */
 export function FooterSection() {
+  const currentYear = new Date().getFullYear()
+
   return (
     <footer className="w-full border-t border-[#51453226] bg-[#0E0E0E] py-20">
       <Container>
@@ -64,6 +66,8 @@ export function FooterSection() {
                 <a
                   key={item.label}
                   href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-[#E5E2E199] transition-colors hover:text-[#FFD79B]"
                 >
                   {applyCzechNbsp(`${item.label} ${item.value}`)}
@@ -75,7 +79,7 @@ export function FooterSection() {
 
         <div className="mt-12 border-t border-[#51453226] pt-8">
           <p className="font-label text-xs tracking-widest text-[#E5E2E166] uppercase">
-            {applyCzechNbsp(FOOTER.copyright)}
+            {applyCzechNbsp(`© ${currentYear} ${FOOTER.copyrightOwner}. ${FOOTER.copyrightRights}`)}
           </p>
         </div>
       </Container>
