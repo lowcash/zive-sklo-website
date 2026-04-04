@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope, Noto_Serif } from 'next/font/google'
 import Script from 'next/script'
+import { Analytics } from '@vercel/analytics/next'
 
 import { DESCRIPTION, KEYWORDS, SITE_URL, TITLE } from '@/lib/content'
 
@@ -151,6 +152,7 @@ export default function RootLayout({
             </Script>
           </>
         ) : null}
+        <Analytics />
       </body>
     </html>
   )
