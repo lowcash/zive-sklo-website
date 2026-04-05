@@ -1,6 +1,45 @@
 # Živé Sklo Website
 
-Next.js 16 one-page site for Živé Sklo.
+One-page marketing site for Živé Sklo — a Czech interactive glass-art experience for corporate events, schools, and private celebrations.
+
+## Tech Stack
+
+| Tool          | Version         | Purpose                            |
+| ------------- | --------------- | ---------------------------------- |
+| Next.js       | 16 (App Router) | SSR framework                      |
+| React         | 19              | UI layer                           |
+| TypeScript    | 5               | Type safety                        |
+| Tailwind CSS  | 3               | Utility-first styling              |
+| Framer Motion | 12              | Scroll-reveal & micro-animations   |
+| shadcn/ui     | latest          | Headless component primitives      |
+| Zod           | 3               | Schema validation (contact form)   |
+| Resend        | 4               | Transactional email (contact form) |
+| Playwright    | 1               | End-to-end tests                   |
+
+## Project Structure
+
+```
+app/               # Next.js App Router (pages, layout, route handlers)
+  actions/         # Server Actions (contact form, validation)
+  assets/          # Static assets bundled by Next.js
+lib/               # Shared utilities (content, Zod schemas, security helpers)
+  schemas/         # Zod contact schema
+  security/        # Rate-limiter, honeypot helpers
+ui/                # Component library
+  components/      # General reusable components
+  prefabs/         # Page-section components (Hero, Gallery, ContactForm …)
+  layout/          # Header, Footer, MobileMenu
+public/images/     # Optimised static images
+tests/e2e/         # Playwright end-to-end tests
+```
+
+## Development Setup
+
+```bash
+cp .env.example .env.local   # fill in RESEND_API_KEY, RESEND_FROM, CONTACT_TO
+npm install
+npm run dev                  # http://localhost:3000
+```
 
 ## Environment Variables
 

@@ -1,10 +1,11 @@
 export default {
   semi: false,
   singleQuote: true,
-  printWidth: 100,
+  jsxSingleQuote: true,
+  printWidth: 120,
   tabWidth: 2,
   useTabs: false,
-  trailingComma: 'es5',
+  trailingComma: 'all',
   plugins: ['@trivago/prettier-plugin-sort-imports', 'prettier-plugin-tailwindcss'],
   importOrder: [
     '^(react/(.*)$)|^(react$)',

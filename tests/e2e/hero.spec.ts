@@ -21,8 +21,6 @@ test.describe('Hero section — desktop', () => {
 
   test('badges fit in a single row on desktop', async ({ page }) => {
     // Locate all badge elements (spans inside the badges container)
-    const badges = page.locator('[data-testid="hero-badges"] span, .hero-badges span').all()
-
     // Simpler: check that no badge wraps to a second line by comparing top offset
     const badgeEls = page
       .locator('section#top span')

@@ -12,10 +12,13 @@ const participantPattern = /^\d{1,4}$/
 const phonePattern = /^\+?[\d\s]{8,20}$/
 
 function sanitizeText(value: string) {
-  return value
-    .replace(/[\u0000-\u001F\u007F]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
+  return (
+    value
+      // eslint-disable-next-line no-control-regex
+      .replace(/[\u0000-\u001F\u007F]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+  )
 }
 
 const contactSchema = z.object({

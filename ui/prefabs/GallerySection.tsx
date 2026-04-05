@@ -161,35 +161,33 @@ export function GallerySection() {
   }
 
   return (
-    <Section id="galerie" spacing="xl" surface="subtle">
+    <Section id='galerie' spacing='xl' surface='subtle'>
       <Container>
-        <div className="mb-12 flex items-end justify-between">
-          <div className="space-y-3">
-            <h2 className="font-display text-4xl font-bold tracking-tight">
-              {applyCzechNbsp(GALLERY.heading)}
-            </h2>
-            <p className="font-label text-xs tracking-[0.18em] text-[#e5e2e180] uppercase">
+        <div className='mb-12 flex items-end justify-between'>
+          <div className='space-y-3'>
+            <h2 className='font-display text-4xl font-bold tracking-tight'>{applyCzechNbsp(GALLERY.heading)}</h2>
+            <p className='font-label text-xs tracking-[0.18em] text-[#e5e2e180] uppercase'>
               {applyCzechNbsp(GALLERY.hint)}
             </p>
           </div>
-          <div className="flex gap-4">
+          <div className='flex gap-4'>
             <button
-              type="button"
+              type='button'
               onClick={() => scrollGallery('prev')}
               disabled={!canScrollPrev}
-              aria-label="Posunout galerii doleva"
-              className="border-border flex h-12 w-12 cursor-pointer items-center justify-center border transition-colors duration-300 hover:bg-[#ffbf00] hover:text-[#402d00] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit"
+              aria-label='Posunout galerii doleva'
+              className='border-border text-text-primary flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 hover:bg-[#1f1f1f] focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit'
             >
-              <span className="material-symbols-outlined !text-[24px]">arrow_back</span>
+              <span className='material-symbols-outlined text-[24px]!'>arrow_back</span>
             </button>
             <button
-              type="button"
+              type='button'
               onClick={() => scrollGallery('next')}
               disabled={!canScrollNext}
-              aria-label="Posunout galerii doprava"
-              className="border-border flex h-12 w-12 cursor-pointer items-center justify-center border transition-colors duration-300 hover:bg-[#ffbf00] hover:text-[#402d00] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit"
+              aria-label='Posunout galerii doprava'
+              className='border-border text-text-primary flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 hover:bg-[#1f1f1f] focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit'
             >
-              <span className="material-symbols-outlined !text-[24px]">arrow_forward</span>
+              <span className='material-symbols-outlined text-[24px]!'>arrow_forward</span>
             </button>
           </div>
         </div>

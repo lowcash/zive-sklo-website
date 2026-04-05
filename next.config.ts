@@ -13,7 +13,8 @@ const nextConfig: NextConfig = {
       },
     ],
     // Local images in public/ are optimised by default (no unoptimized flag needed)
-    qualities: [75, 85],
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75, 85, 90],
   },
 }
 

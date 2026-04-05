@@ -6,8 +6,16 @@ export default defineConfig({
   retries: 0,
   reporter: 'list',
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://127.0.0.1:3102',
     trace: 'on-first-retry',
+  },
+  webServer: {
+    command: 'npm run build && npm run preview:e2e',
+    url: 'http://127.0.0.1:3102',
+    reuseExistingServer: !process.env.CI,
+    stdout: 'ignore',
+    stderr: 'pipe',
+    timeout: 240000,
   },
   projects: [
     {
