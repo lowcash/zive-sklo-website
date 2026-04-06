@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope, Noto_Serif } from 'next/font/google'
 import Script from 'next/script'
+
 import { Analytics } from '@vercel/analytics/next'
 
 import { DESCRIPTION, KEYWORDS, SITE_URL, TITLE } from '@/lib/content'
@@ -74,6 +75,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const gaTrackingId = process.env.NEXT_PUBLIC_GA_TRACKING_ID
+  const enableVercelAnalytics = Boolean(process.env.VERCEL || process.env.VERCEL_ENV || process.env.VERCEL_URL)
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -91,10 +93,7 @@ export default function RootLayout({
     },
     areaServed: 'CZ',
     priceRange: '$$',
-    sameAs: [
-      'https://www.instagram.com/zivesklo/',
-      'https://www.facebook.com/profile.php?id=61585612643034',
-    ],
+    sameAs: ['https://www.instagram.com/zivesklo/', 'https://www.facebook.com/profile.php?id=61585612643034'],
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Sklářské programy Živého Skla',
@@ -116,33 +115,27 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="cs" className={`scroll-smooth ${notoSerif.variable} ${manrope.variable}`}>
+    <html lang='cs' className={`scroll-smooth ${notoSerif.variable} ${manrope.variable}`}>
       <head>
         <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel='stylesheet'
+          href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap'
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
+        <script type='application/ld+json' dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
       </head>
-      <body className="antialiased">
+      <body className='antialiased'>
         {/* Skip to main content – accessible keyboard entry point */}
         <a
-          href="#top"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:bg-[#ffbf00] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#402d00]"
+          href='#top'
+          className='sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:bg-[#ffbf00] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#402d00]'
         >
           Přeskočit na hlavní obsah
         </a>
         {children}
         {gaTrackingId ? (
           <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="gtag-init" strategy="afterInteractive">
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`} strategy='afterInteractive' />
+            <Script id='gtag-init' strategy='afterInteractive'>
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
@@ -152,7 +145,7 @@ export default function RootLayout({
             </Script>
           </>
         ) : null}
-        <Analytics />
+        {enableVercelAnalytics ? <Analytics /> : null}
       </body>
     </html>
   )
