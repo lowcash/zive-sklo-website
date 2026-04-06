@@ -13,7 +13,7 @@ One-page marketing site for Živé Sklo — a Czech interactive glass-art experi
 | Framer Motion | 12              | Scroll-reveal & micro-animations   |
 | shadcn/ui     | latest          | Headless component primitives      |
 | Zod           | 3               | Schema validation (contact form)   |
-| Resend        | 4               | Transactional email (contact form) |
+| Brevo         | 5               | Transactional email (contact form) |
 | Playwright    | 1               | End-to-end tests                   |
 
 ## Project Structure
@@ -36,7 +36,7 @@ tests/e2e/         # Playwright end-to-end tests
 ## Development Setup
 
 ```bash
-cp .env.example .env.local   # fill in RESEND_API_KEY, RESEND_FROM, CONTACT_TO
+cp .env.example .env.local   # fill in BREVO_API_KEY, BREVO_FROM_EMAIL, CONTACT_TO
 npm install
 npm run dev                  # http://localhost:3000
 ```
@@ -52,21 +52,22 @@ If the key is not set, GA scripts are not loaded.
 
 ### Contact Form Email
 
-The contact form uses a Server Action running on Vercel functions with [Resend](https://resend.com) for email delivery.
+The contact form uses a Server Action running on Vercel functions with [Brevo](https://www.brevo.com) for email delivery.
 
 Required variables (set in Vercel → Project Settings → Environment Variables):
 
-- `RESEND_API_KEY` – API key from https://resend.com/api-keys
-- `RESEND_FROM` – verified sender address, e.g. `Živé Sklo <no-reply@zivesklo.cz>`
+- `BREVO_API_KEY` – API key from Brevo SMTP/API settings
+- `BREVO_FROM_EMAIL` – verified sender address, e.g. `info@mail.akce.zivesklo.cz`
+- `BREVO_FROM_NAME` – optional sender display name, e.g. `Živé Sklo`
 - `CONTACT_TO` – recipient address for incoming inquiries
 
 Production checklist for `akce.zivesklo.cz`:
 
 1. Confirm these variables are set for the exact deployment environment target (Production or custom production-like target), not only Preview.
-2. Confirm `RESEND_FROM` uses a domain/address that is verified in Resend.
+2. Confirm `BREVO_FROM_EMAIL` uses a domain/address that is verified in Brevo.
 3. Deploy and submit the form once.
 4. Open Vercel runtime logs and search for `[contact-form] failed to send inquiry`.
-5. If present, use logged `reason`, `details`, and `requestId` to resolve provider/env issues in Resend or Vercel.
+5. If present, use logged `reason`, `details`, and `requestId` to resolve provider/env issues in Brevo or Vercel.
 6. If a user sees an error with `Kód: ...`, match this code to `requestId` in logs for fast traceability.
 
 ## Security Baseline for Contact Form

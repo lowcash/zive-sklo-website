@@ -37,7 +37,7 @@ function getSendFailureMessage(reason: 'missing-env' | 'transport-error', reques
 function logSendFailure(input: {
   reason: 'missing-env' | 'transport-error'
   details?: {
-    missingEnv?: Array<'RESEND_API_KEY' | 'RESEND_FROM' | 'CONTACT_TO'>
+    missingEnv?: Array<'BREVO_API_KEY' | 'BREVO_FROM_EMAIL' | 'CONTACT_TO'>
     providerError?: {
       name?: string
       message?: string
@@ -85,7 +85,7 @@ function getClientIdentifier(value: string, fallbackEmail: string) {
 
 export async function submitContactAction(
   _previous: ContactActionState,
-  formData: FormData
+  formData: FormData,
 ): Promise<ContactActionState> {
   const honeypot = toStringValue(formData.get('companyName'))
 
@@ -122,7 +122,7 @@ export async function submitContactAction(
 
   if (!validation.success) {
     const fieldErrors = Object.fromEntries(
-      Object.entries(validation.errors).filter(([, value]) => typeof value === 'string')
+      Object.entries(validation.errors).filter(([, value]) => typeof value === 'string'),
     ) as Record<string, string>
 
     return {

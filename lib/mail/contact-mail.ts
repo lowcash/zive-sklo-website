@@ -1,8 +1,8 @@
-import { Resend } from 'resend'
+import { BrevoClient } from '@getbrevo/brevo'
 
 import type { ContactSubmission } from '@/lib/schemas/contact'
 
-type MissingEnvKey = 'RESEND_API_KEY' | 'RESEND_FROM' | 'CONTACT_TO'
+type MissingEnvKey = 'BREVO_API_KEY' | 'BREVO_FROM_EMAIL' | 'CONTACT_TO'
 
 type MailResult =
   | { ok: true }
@@ -63,25 +63,26 @@ function formatHtmlBody(data: ContactSubmission) {
 }
 
 export async function sendContactMail(data: ContactSubmission): Promise<MailResult> {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.RESEND_FROM
+  const apiKey = process.env.BREVO_API_KEY
+  const fromEmail = process.env.BREVO_FROM_EMAIL
+  const fromName = process.env.BREVO_FROM_NAME || 'Zive Sklo'
   const to = process.env.CONTACT_TO
 
   const missingEnv: MissingEnvKey[] = []
 
   if (!apiKey) {
-    missingEnv.push('RESEND_API_KEY')
+    missingEnv.push('BREVO_API_KEY')
   }
 
-  if (!from) {
-    missingEnv.push('RESEND_FROM')
+  if (!fromEmail) {
+    missingEnv.push('BREVO_FROM_EMAIL')
   }
 
   if (!to) {
     missingEnv.push('CONTACT_TO')
   }
 
-  if (!apiKey || !from || !to) {
+  if (!apiKey || !fromEmail || !to) {
     return {
       ok: false,
       reason: 'missing-env',
@@ -91,42 +92,39 @@ export async function sendContactMail(data: ContactSubmission): Promise<MailResu
     }
   }
 
-  const resend = new Resend(apiKey)
+  const client = new BrevoClient({
+    apiKey,
+  })
 
   try {
-    const { error } = await resend.emails.send({
-      from,
-      to,
-      replyTo: data.email,
+    await client.transactionalEmails.sendTransacEmail({
+      sender: {
+        email: fromEmail,
+        name: fromName,
+      },
+      to: [{ email: to }],
+      replyTo: {
+        email: data.email,
+        name: data.name,
+      },
       subject: `Poptavka: ${data.eventType} (${data.name})`,
-      text: formatMessageBody(data),
-      html: formatHtmlBody(data),
+      textContent: formatMessageBody(data),
+      htmlContent: formatHtmlBody(data),
     })
-
-    if (error) {
-      return {
-        ok: false,
-        reason: 'transport-error',
-        details: {
-          providerError: {
-            name: error.name,
-            message: error.message,
-            statusCode:
-              'statusCode' in error && typeof error.statusCode === 'number'
-                ? error.statusCode
-                : undefined,
-          },
-        },
-      }
-    }
 
     return { ok: true }
   } catch (error) {
     const maybeError = error as {
       name?: string
       message?: string
+      code?: number
       statusCode?: number
+      response?: {
+        statusCode?: number
+      }
     }
+
+    const providerStatusCode = maybeError.statusCode ?? maybeError.response?.statusCode ?? maybeError.code
 
     return {
       ok: false,
@@ -135,7 +133,7 @@ export async function sendContactMail(data: ContactSubmission): Promise<MailResu
         providerError: {
           name: maybeError.name,
           message: maybeError.message,
-          statusCode: maybeError.statusCode,
+          statusCode: providerStatusCode,
         },
       },
     }
