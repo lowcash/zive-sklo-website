@@ -1,7 +1,7 @@
 'use client'
 
 import type { ChangeEvent, FormEvent } from 'react'
-import { useActionState, useEffect, useRef, useState } from 'react'
+import { startTransition, useActionState, useEffect, useRef, useState } from 'react'
 
 import { CONTACT } from '@/lib/content'
 
@@ -49,13 +49,22 @@ export function ContactForm() {
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [startedAt, setStartedAt] = useState(() => Date.now().toString())
-  const submitLockRef = useRef(false)
+  const [isSubmitLocked, setIsSubmitLocked] = useState(false)
+  const [showActionMessage, setShowActionMessage] = useState(true)
+  const submitGuardRef = useRef(false)
 
   useEffect(() => {
     if (!isSubmitting) {
-      submitLockRef.current = false
+      submitGuardRef.current = false
+      setIsSubmitLocked(false)
     }
   }, [isSubmitting])
+
+  useEffect(() => {
+    if (actionState.message) {
+      setShowActionMessage(true)
+    }
+  }, [actionState.message, actionState.status])
 
   useEffect(() => {
     if (actionState.status !== 'success') {
@@ -80,7 +89,7 @@ export function ContactForm() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    if (submitLockRef.current || isSubmitting) {
+    if (submitGuardRef.current || isSubmitLocked || isSubmitting) {
       return
     }
 
@@ -110,6 +119,7 @@ export function ContactForm() {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors)
+      setShowActionMessage(false)
       return
     }
 
@@ -127,8 +137,12 @@ export function ContactForm() {
     payload.set('companyName', formData.companyName)
     payload.set('startedAt', startedAt)
 
-    submitLockRef.current = true
-    submitAction(payload)
+    submitGuardRef.current = true
+    setIsSubmitLocked(true)
+    setShowActionMessage(true)
+    startTransition(() => {
+      submitAction(payload)
+    })
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -149,6 +163,8 @@ export function ContactForm() {
       ...prev,
       [name]: nextValue,
     }))
+
+    setShowActionMessage(false)
 
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: '' }))
@@ -349,7 +365,7 @@ export function ContactForm() {
       </div>
 
       <div className='space-y-3'>
-        <label className='group flex items-start gap-3 text-sm text-[#e5e2e1cc]'>
+        <label className='group flex cursor-pointer items-start gap-3 text-sm text-[#e5e2e1cc]'>
           <input
             name='gdpr'
             type='checkbox'
@@ -359,7 +375,7 @@ export function ContactForm() {
             aria-describedby={getFieldError('gdpr') ? 'error-gdpr' : undefined}
             className='peer sr-only'
           />
-          <span className='mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-[#6c5a38] bg-[#171717] transition-colors duration-300 peer-checked:border-[#ffbf00] peer-checked:bg-[#ffbf00] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#ffbf00]'>
+          <span className='mt-0.5 flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center border border-[#6c5a38] bg-[#171717] transition-colors duration-300 peer-checked:border-[#ffbf00] peer-checked:bg-[#ffbf00] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#ffbf00]'>
             <svg
               viewBox='0 0 20 20'
               aria-hidden='true'
@@ -403,13 +419,13 @@ export function ContactForm() {
 
       <button
         type='submit'
-        disabled={isSubmitting}
-        className='ui-cta-primary w-full py-5 text-sm font-bold tracking-widest uppercase disabled:cursor-not-allowed disabled:opacity-70'
+        disabled={isSubmitting || isSubmitLocked}
+        className='ui-cta-primary w-full py-5 text-sm font-bold tracking-widest uppercase disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70'
       >
         {isSubmitting ? 'Odesílám...' : CONTACT.submitLabel}
       </button>
 
-      {actionState.message ? (
+      {showActionMessage && actionState.message ? (
         <p
           role={actionState.status === 'error' ? 'alert' : 'status'}
           className={actionState.status === 'error' ? 'text-sm text-red-300' : 'text-sm text-emerald-300'}

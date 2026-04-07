@@ -19,6 +19,18 @@ type MailResult =
       }
     }
 
+const EVENT_TYPE_LABELS: Record<string, string> = {
+  teambuilding: 'Teambuilding',
+  school: 'Škola',
+  'city-market': 'Město - trh',
+  'creative-workshop': 'Kreativní dílna',
+  other: 'Jiné',
+}
+
+function getEventTypeLabel(eventType: string) {
+  return EVENT_TYPE_LABELS[eventType] ?? eventType
+}
+
 function escapeHtml(value: string) {
   return value
     .replace(/&/g, '&amp;')
@@ -29,68 +41,86 @@ function escapeHtml(value: string) {
 }
 
 function formatMessageBody(data: ContactSubmission) {
+  const eventTypeLabel = getEventTypeLabel(data.eventType)
+
   return [
-    'Nova poptavka z webu zivesklo.cz',
+    'Nová poptávka z webu zivesklo.cz',
     '',
-    `Jmeno: ${data.name}`,
+    `Jméno: ${data.name}`,
     `E-mail: ${data.email}`,
     `Telefon: ${data.phone}`,
-    `Typ akce: ${data.eventType}`,
-    `Datum a misto: ${data.datePlace}`,
-    `Pocet ucastniku: ${data.participants}`,
+    `Typ akce: ${eventTypeLabel}`,
+    `Datum a místo: ${data.datePlace}`,
+    `Počet účastníků: ${data.participants}`,
     `GDPR souhlas: ${data.gdpr ? 'ano' : 'ne'}`,
     '',
-    'Zprava:',
+    'Zpráva:',
     data.message || '(bez zpravy)',
   ].join('\n')
 }
 
 function formatHtmlBody(data: ContactSubmission) {
+  const eventTypeLabel = getEventTypeLabel(data.eventType)
+
   return `
-    <h2>Nova poptavka z webu zivesklo.cz</h2>
-    <table cellpadding="8" cellspacing="0" border="0">
-      <tr><td><strong>Jmeno</strong></td><td>${escapeHtml(data.name)}</td></tr>
-      <tr><td><strong>E-mail</strong></td><td>${escapeHtml(data.email)}</td></tr>
-      <tr><td><strong>Telefon</strong></td><td>${escapeHtml(data.phone)}</td></tr>
-      <tr><td><strong>Typ akce</strong></td><td>${escapeHtml(data.eventType)}</td></tr>
-      <tr><td><strong>Datum a misto</strong></td><td>${escapeHtml(data.datePlace)}</td></tr>
-      <tr><td><strong>Pocet ucastniku</strong></td><td>${escapeHtml(data.participants)}</td></tr>
-      <tr><td><strong>GDPR souhlas</strong></td><td>${data.gdpr ? 'ano' : 'ne'}</td></tr>
-    </table>
-    <h3>Zprava</h3>
-    <p>${escapeHtml(data.message || '(bez zpravy)')}</p>
+    <div style="font-family:Arial,Helvetica,sans-serif;background:#f6f7f8;padding:24px;color:#121212;line-height:1.55;">
+      <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e7e7e7;padding:24px;">
+        <h2 style="margin:0 0 16px 0;font-size:22px;">Nová poptávka z webu zivesklo.cz</h2>
+        <table cellpadding="8" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;">
+          <tr><td style="width:180px;border-bottom:1px solid #efefef;"><strong>Jméno</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(data.name)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>E-mail</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(data.email)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>Telefon</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(data.phone)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>Typ akce</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(eventTypeLabel)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>Datum a místo</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(data.datePlace)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>Počet účastníků</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(data.participants)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>GDPR souhlas</strong></td><td style="border-bottom:1px solid #efefef;">${data.gdpr ? 'ano' : 'ne'}</td></tr>
+        </table>
+        <h3 style="margin:20px 0 8px 0;font-size:18px;">Zpráva</h3>
+        <p style="margin:0;white-space:pre-line;">${escapeHtml(data.message || '(bez zprávy)')}</p>
+      </div>
+    </div>
   `
 }
 
 function formatConfirmationTextBody(data: ContactSubmission) {
+  const eventTypeLabel = getEventTypeLabel(data.eventType)
+
   return [
-    `Dobry den, ${data.name},`,
+    `Dobrý den, ${data.name},`,
     '',
-    'dekujeme za poptavku pro Zive Sklo.',
-    'Vasi zpravu jsme prijali a ozveme se vam co nejdrive.',
+    'děkujeme za poptávku pro Živé Sklo.',
+    'Vaši zprávu jsme přijali a ozveme se vám co nejdříve.',
     '',
-    'Shrnuti poptavky:',
-    `Typ akce: ${data.eventType}`,
-    `Datum a misto: ${data.datePlace}`,
-    `Pocet ucastniku: ${data.participants}`,
+    'Shrnutí poptávky:',
+    `Typ akce: ${eventTypeLabel}`,
+    `Datum a místo: ${data.datePlace}`,
+    `Počet účastníků: ${data.participants}`,
+    `Telefon: ${data.phone}`,
     '',
     'S pozdravem',
-    'Zive Sklo',
+    'Živé Sklo',
   ].join('\n')
 }
 
 function formatConfirmationHtmlBody(data: ContactSubmission) {
+  const eventTypeLabel = getEventTypeLabel(data.eventType)
+
   return `
-    <h2>Dekuji, poptavku jsme prijali</h2>
-    <p>Dobry den, ${escapeHtml(data.name)},</p>
-    <p>dekujeme za poptavku pro Zive Sklo. Ozveme se vam co nejdrive.</p>
-    <h3>Shrnuti poptavky</h3>
-    <table cellpadding="8" cellspacing="0" border="0">
-      <tr><td><strong>Typ akce</strong></td><td>${escapeHtml(data.eventType)}</td></tr>
-      <tr><td><strong>Datum a misto</strong></td><td>${escapeHtml(data.datePlace)}</td></tr>
-      <tr><td><strong>Pocet ucastniku</strong></td><td>${escapeHtml(data.participants)}</td></tr>
-    </table>
-    <p>S pozdravem<br/>Zive Sklo</p>
+    <div style="font-family:Arial,Helvetica,sans-serif;background:#f6f7f8;padding:24px;color:#121212;line-height:1.55;">
+      <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #e7e7e7;padding:24px;">
+        <h2 style="margin:0 0 16px 0;font-size:22px;">Děkujeme, poptávku jsme přijali</h2>
+        <p style="margin:0 0 12px 0;">Dobrý den, ${escapeHtml(data.name)},</p>
+        <p style="margin:0 0 16px 0;">děkujeme za poptávku pro Živé Sklo. Ozveme se vám co nejdříve.</p>
+        <h3 style="margin:0 0 8px 0;font-size:18px;">Shrnutí poptávky</h3>
+        <table cellpadding="8" cellspacing="0" border="0" style="width:100%;border-collapse:collapse;">
+          <tr><td style="width:180px;border-bottom:1px solid #efefef;"><strong>Typ akce</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(eventTypeLabel)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>Datum a místo</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(data.datePlace)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>Počet účastníků</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(data.participants)}</td></tr>
+          <tr><td style="border-bottom:1px solid #efefef;"><strong>Telefon</strong></td><td style="border-bottom:1px solid #efefef;">${escapeHtml(data.phone)}</td></tr>
+        </table>
+        <p style="margin:16px 0 0 0;">S pozdravem<br/>Živé Sklo</p>
+      </div>
+    </div>
   `
 }
 
@@ -139,7 +169,7 @@ export async function sendContactMail(data: ContactSubmission): Promise<MailResu
         email: data.email,
         name: data.name,
       },
-      subject: `Poptavka: ${data.eventType} (${data.name})`,
+      subject: `Poptávka: ${getEventTypeLabel(data.eventType)} (${data.name})`,
       textContent: formatMessageBody(data),
       htmlContent: formatHtmlBody(data),
     })
@@ -158,7 +188,7 @@ export async function sendContactMail(data: ContactSubmission): Promise<MailResu
           email: to,
           name: fromName,
         },
-        subject: 'Potvrzeni prijeti poptavky - Zive Sklo',
+        subject: 'Potvrzení přijetí poptávky - Živé Sklo',
         textContent: formatConfirmationTextBody(data),
         htmlContent: formatConfirmationHtmlBody(data),
       })

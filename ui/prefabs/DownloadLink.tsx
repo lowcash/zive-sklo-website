@@ -5,11 +5,11 @@ export function DownloadLink({ href, label }: { href: string; label: string }) {
   if (href === '#') {
     return (
       <span
-        aria-disabled="true"
-        className="inline-flex cursor-not-allowed items-center gap-2 rounded-lg bg-[#1c1b1b] px-4 py-2 text-[#e5e2e180]"
+        aria-disabled='true'
+        className='inline-flex cursor-not-allowed items-center gap-2 border border-[#3b3b3b] bg-[#141414] px-4 py-2 text-[#e5e2e180]'
       >
-        <span aria-hidden="true">📄</span>
-        <span className="text-base leading-normal">{label}</span>
+        <span aria-hidden='true'>📄</span>
+        <span className='text-base leading-normal'>{label}</span>
       </span>
     )
   }
@@ -17,10 +17,10 @@ export function DownloadLink({ href, label }: { href: string; label: string }) {
   return (
     <a
       href={href}
-      className="inline-flex items-center gap-2 rounded-lg bg-[#1c1b1b] px-4 py-2 text-[#e5e2e1b3] transition-colors hover:bg-[#201f1f] hover:text-[#e5e2e1]"
+      className='inline-flex items-center gap-2 border border-[#3b3b3b] bg-[#141414] px-4 py-2 text-[#e5e2e1] transition-colors duration-300 hover:bg-[#1f1f1f] focus:outline-none focus-visible:ring-0 focus-visible:outline-none'
     >
-      <span aria-hidden="true">📄</span>
-      <span className="text-base leading-normal">{label}</span>
+      <span aria-hidden='true'>📄</span>
+      <span className='text-base leading-normal'>{label}</span>
     </a>
   )
 }
