@@ -176,7 +176,7 @@ export function GallerySection() {
               onClick={() => scrollGallery('prev')}
               disabled={!canScrollPrev}
               aria-label='Posunout galerii doleva'
-              className='border-border text-text-primary flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent ring-0 transition-colors duration-300 hover:bg-[#1f1f1f] focus:ring-0 focus-visible:ring-0 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit'
+              className='flex h-12 w-12 cursor-pointer items-center justify-center border border-[#3b3b3b] bg-[#141414] text-[#e5e2e1] ring-0 transition-colors duration-300 hover:bg-[#1f1f1f] focus:ring-0 focus-visible:ring-0 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#141414] disabled:hover:text-[#e5e2e1]'
             >
               <span className='material-symbols-outlined text-[24px]!'>arrow_back</span>
             </button>
@@ -185,7 +185,7 @@ export function GallerySection() {
               onClick={() => scrollGallery('next')}
               disabled={!canScrollNext}
               aria-label='Posunout galerii doprava'
-              className='border-border text-text-primary flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent ring-0 transition-colors duration-300 hover:bg-[#1f1f1f] focus:ring-0 focus-visible:ring-0 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent disabled:hover:text-inherit'
+              className='flex h-12 w-12 cursor-pointer items-center justify-center border border-[#3b3b3b] bg-[#141414] text-[#e5e2e1] ring-0 transition-colors duration-300 hover:bg-[#1f1f1f] focus:ring-0 focus-visible:ring-0 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#141414] disabled:hover:text-[#e5e2e1]'
             >
               <span className='material-symbols-outlined text-[24px]!'>arrow_forward</span>
             </button>

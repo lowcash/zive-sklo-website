@@ -62,6 +62,38 @@ function formatHtmlBody(data: ContactSubmission) {
   `
 }
 
+function formatConfirmationTextBody(data: ContactSubmission) {
+  return [
+    `Dobry den, ${data.name},`,
+    '',
+    'dekujeme za poptavku pro Zive Sklo.',
+    'Vasi zpravu jsme prijali a ozveme se vam co nejdrive.',
+    '',
+    'Shrnuti poptavky:',
+    `Typ akce: ${data.eventType}`,
+    `Datum a misto: ${data.datePlace}`,
+    `Pocet ucastniku: ${data.participants}`,
+    '',
+    'S pozdravem',
+    'Zive Sklo',
+  ].join('\n')
+}
+
+function formatConfirmationHtmlBody(data: ContactSubmission) {
+  return `
+    <h2>Dekuji, poptavku jsme prijali</h2>
+    <p>Dobry den, ${escapeHtml(data.name)},</p>
+    <p>dekujeme za poptavku pro Zive Sklo. Ozveme se vam co nejdrive.</p>
+    <h3>Shrnuti poptavky</h3>
+    <table cellpadding="8" cellspacing="0" border="0">
+      <tr><td><strong>Typ akce</strong></td><td>${escapeHtml(data.eventType)}</td></tr>
+      <tr><td><strong>Datum a misto</strong></td><td>${escapeHtml(data.datePlace)}</td></tr>
+      <tr><td><strong>Pocet ucastniku</strong></td><td>${escapeHtml(data.participants)}</td></tr>
+    </table>
+    <p>S pozdravem<br/>Zive Sklo</p>
+  `
+}
+
 export async function sendContactMail(data: ContactSubmission): Promise<MailResult> {
   const apiKey = process.env.BREVO_API_KEY
   const fromEmail = process.env.BREVO_FROM_EMAIL
@@ -111,6 +143,26 @@ export async function sendContactMail(data: ContactSubmission): Promise<MailResu
       textContent: formatMessageBody(data),
       htmlContent: formatHtmlBody(data),
     })
+
+    const normalizedContactTo = to.trim().toLowerCase()
+    const normalizedSubmitterEmail = data.email.trim().toLowerCase()
+
+    if (normalizedSubmitterEmail !== normalizedContactTo) {
+      await client.transactionalEmails.sendTransacEmail({
+        sender: {
+          email: fromEmail,
+          name: fromName,
+        },
+        to: [{ email: data.email, name: data.name }],
+        replyTo: {
+          email: to,
+          name: fromName,
+        },
+        subject: 'Potvrzeni prijeti poptavky - Zive Sklo',
+        textContent: formatConfirmationTextBody(data),
+        htmlContent: formatConfirmationHtmlBody(data),
+      })
+    }
 
     return { ok: true }
   } catch (error) {
