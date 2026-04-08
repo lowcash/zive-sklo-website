@@ -15,17 +15,16 @@ import { MobileMenu } from './MobileMenu'
 export function Navigation() {
   const [activeHref, setActiveHref] = useState('')
 
-  const handleAnchorNavigation =
-    (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
-      event.preventDefault()
+  const handleAnchorNavigation = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
 
-      const didScroll = scrollToHashWithNavOffset(href)
-      if (!didScroll) {
-        return
-      }
-
-      setActiveHref(href === '#top' ? '' : href)
+    const didScroll = scrollToHashWithNavOffset(href)
+    if (!didScroll) {
+      return
     }
+
+    setActiveHref(href === '#top' ? '' : href)
+  }
 
   useEffect(() => {
     const resolveActiveSection = () => {
@@ -62,8 +61,7 @@ export function Navigation() {
         return
       }
 
-      const atPageBottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
+      const atPageBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
 
       if (atPageBottom) {
         const lastHref = sections[sections.length - 1].href
@@ -106,20 +104,20 @@ export function Navigation() {
 
   return (
     <nav
-      data-nav-root="true"
-      className="glass-nav fixed top-0 z-50 w-full bg-linear-to-b from-[#131313] to-transparent shadow-[0_20px_40px_rgba(255,186,56,0.05)]"
+      data-nav-root='true'
+      className='glass-nav fixed top-0 z-50 w-full bg-linear-to-b from-[#131313] to-transparent shadow-[0_20px_40px_rgba(255,186,56,0.05)]'
     >
-      <div className="mx-auto flex max-w-360 items-center justify-between px-6 py-6 md:px-8 xl:px-10">
+      <div className='mx-auto flex max-w-360 items-center justify-between px-6 py-6 md:px-8 xl:px-10'>
         <a
-          href="#top"
+          href='#top'
           onClick={handleAnchorNavigation('#top')}
-          className="font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors duration-300 hover:text-[#FFD79B]"
-          aria-label="Přejít na začátek stránky"
+          className='font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors duration-300 hover:text-[#FFD79B]'
+          aria-label='Přejít na začátek stránky'
         >
           {applyCzechNbsp(BRAND.name)}
         </a>
 
-        <div className="font-display hidden items-center gap-7 text-base font-bold tracking-tight xl:flex">
+        <div className='font-display hidden items-center gap-7 text-base font-bold tracking-tight xl:flex'>
           {NAV.links.map((link) => (
             <a
               key={link.href}
@@ -140,12 +138,12 @@ export function Navigation() {
         <a
           href={NAV.ctaHref}
           onClick={handleAnchorNavigation(NAV.ctaHref)}
-          className="ui-cta-primary hidden px-6 py-3 font-bold xl:block"
+          className='ui-cta-primary hidden px-6 py-3 font-bold xl:block'
         >
           {applyCzechNbsp(NAV.ctaLabel)}
         </a>
 
-        <div className="xl:hidden">
+        <div className='xl:hidden'>
           <MobileMenu activeHref={activeHref} />
         </div>
       </div>
