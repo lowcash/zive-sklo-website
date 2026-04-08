@@ -10,6 +10,7 @@ import Image from 'next/image'
  */
 export function HeroCarousel({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const previousIndex = (currentIndex - 1 + images.length) % images.length
 
   // Auto-advance carousel
   useEffect(() => {
@@ -21,26 +22,32 @@ export function HeroCarousel({ images }: { images: string[] }) {
   }, [images.length])
 
   return (
-    <div className="absolute inset-0">
-      {images.map((src, index) => (
-        <div
-          key={src}
-          className="absolute inset-0 transition-opacity duration-1000"
-          style={{
-            opacity: index === currentIndex ? 1 : 0,
-          }}
-        >
-          <Image
-            src={src}
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover opacity-40"
-            priority={index === 0}
-            quality={85}
-          />
-        </div>
-      ))}
+    <div className='absolute inset-0'>
+      {images.map((src, index) => {
+        if (index !== currentIndex && index !== previousIndex) {
+          return null
+        }
+
+        return (
+          <div
+            key={src}
+            className='absolute inset-0 transition-opacity duration-1000'
+            style={{
+              opacity: index === currentIndex ? 1 : 0,
+            }}
+          >
+            <Image
+              src={src}
+              alt=''
+              fill
+              sizes='100vw'
+              className='object-cover opacity-40'
+              priority={index === 0}
+              quality={80}
+            />
+          </div>
+        )
+      })}
     </div>
   )
 }
