@@ -158,3 +158,54 @@ test.describe('Tablet navigation', () => {
     await expect(desktopLink).not.toBeVisible()
   })
 })
+
+test.describe('URL hash sync on scroll', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 })
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+  })
+
+  test('URL hash updates to active section on manual scroll', async ({ page }) => {
+    await page.evaluate(() => {
+      const section = document.getElementById('nabidka')
+      if (!section) return
+      const navEl = document.querySelector('nav[data-nav-root="true"]') as HTMLElement | null
+      const offset = navEl ? navEl.getBoundingClientRect().height : 80
+      window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - offset + 4, behavior: 'instant' })
+    })
+
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#nabidka')
+  })
+
+  test('URL hash clears when scrolled back above all sections', async ({ page }) => {
+    // First scroll into a section
+    await page.evaluate(() => {
+      const section = document.getElementById('nabidka')
+      if (!section) return
+      window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY, behavior: 'instant' })
+    })
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#nabidka')
+
+    // Scroll back to top
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('')
+  })
+
+  test('URL hash does not use pushState on scroll (history length unchanged)', async ({ page }) => {
+    const historyLengthBefore = await page.evaluate(() => window.history.length)
+
+    await page.evaluate(() => {
+      const section = document.getElementById('galerie')
+      if (!section) return
+      const navEl = document.querySelector('nav[data-nav-root="true"]') as HTMLElement | null
+      const offset = navEl ? navEl.getBoundingClientRect().height : 80
+      window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - offset + 4, behavior: 'instant' })
+    })
+
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#galerie')
+
+    const historyLengthAfter = await page.evaluate(() => window.history.length)
+    expect(historyLengthAfter).toBe(historyLengthBefore)
+  })
+})

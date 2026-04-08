@@ -56,6 +56,9 @@ export function Navigation() {
 
       if (marker < firstSectionTop) {
         setActiveHref('')
+        if (window.location.hash) {
+          window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
+        }
         return
       }
 
@@ -63,7 +66,12 @@ export function Navigation() {
         window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
 
       if (atPageBottom) {
-        setActiveHref(sections[sections.length - 1].href)
+        const lastHref = sections[sections.length - 1].href
+        setActiveHref(lastHref)
+        const lastUrl = `${window.location.pathname}${window.location.search}${lastHref}`
+        if (`${window.location.pathname}${window.location.search}${window.location.hash}` !== lastUrl) {
+          window.history.replaceState(null, '', lastUrl)
+        }
         return
       }
 
@@ -75,6 +83,15 @@ export function Navigation() {
       }
 
       setActiveHref(nextActiveHref)
+
+      // Sync URL hash with active section on organic scroll
+      const nextUrl = nextActiveHref
+        ? `${window.location.pathname}${window.location.search}${nextActiveHref}`
+        : `${window.location.pathname}${window.location.search}`
+      const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`
+      if (currentUrl !== nextUrl) {
+        window.history.replaceState(null, '', nextUrl)
+      }
     }
 
     resolveActiveSection()
