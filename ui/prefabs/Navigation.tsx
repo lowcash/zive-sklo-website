@@ -4,6 +4,7 @@ import type { MouseEvent } from 'react'
 import { useEffect, useState } from 'react'
 
 import { BRAND, NAV } from '@/lib/content'
+import { resolveActiveHref, setSectionHash } from '@/lib/navigation-core-adapter'
 import { applyCzechNbsp, scrollToHashWithNavOffset } from '@/lib/utils'
 
 import { MobileMenu } from './MobileMenu'
@@ -27,78 +28,36 @@ export function Navigation() {
   }
 
   useEffect(() => {
+    let frameId: number | null = null
+
     const resolveActiveSection = () => {
-      if (!NAV.links.length) {
+      const nextActiveHref = resolveActiveHref()
+      setActiveHref((current) => (current === nextActiveHref ? current : nextActiveHref))
+      setSectionHash(nextActiveHref || '#top', 'replace')
+    }
+
+    const scheduleResolveActiveSection = () => {
+      if (frameId !== null) {
         return
       }
 
-      const sections = NAV.links
-        .map((link) => {
-          const sectionId = link.href.replace('#', '')
-          const section = document.getElementById(sectionId)
-          return section
-            ? {
-                href: link.href,
-                offsetTop: section.offsetTop,
-              }
-            : null
-        })
-        .filter((section): section is { href: string; offsetTop: number } => Boolean(section))
-
-      if (!sections.length) {
-        setActiveHref('')
-        return
-      }
-
-      const marker = window.scrollY + window.innerHeight * 0.45
-      const firstSectionTop = sections[0].offsetTop
-
-      if (marker < firstSectionTop) {
-        setActiveHref('')
-        if (window.location.hash) {
-          window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
-        }
-        return
-      }
-
-      const atPageBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
-
-      if (atPageBottom) {
-        const lastHref = sections[sections.length - 1].href
-        setActiveHref(lastHref)
-        const lastUrl = `${window.location.pathname}${window.location.search}${lastHref}`
-        if (`${window.location.pathname}${window.location.search}${window.location.hash}` !== lastUrl) {
-          window.history.replaceState(null, '', lastUrl)
-        }
-        return
-      }
-
-      let nextActiveHref = ''
-      for (const section of sections) {
-        if (section.offsetTop <= marker) {
-          nextActiveHref = section.href
-        }
-      }
-
-      setActiveHref(nextActiveHref)
-
-      // Sync URL hash with active section on organic scroll
-      const nextUrl = nextActiveHref
-        ? `${window.location.pathname}${window.location.search}${nextActiveHref}`
-        : `${window.location.pathname}${window.location.search}`
-      const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`
-      if (currentUrl !== nextUrl) {
-        window.history.replaceState(null, '', nextUrl)
-      }
+      frameId = window.requestAnimationFrame(() => {
+        frameId = null
+        resolveActiveSection()
+      })
     }
 
     resolveActiveSection()
-    window.addEventListener('scroll', resolveActiveSection, { passive: true })
-    window.addEventListener('resize', resolveActiveSection)
+    window.addEventListener('scroll', scheduleResolveActiveSection, { passive: true })
+    window.addEventListener('resize', scheduleResolveActiveSection)
 
     return () => {
-      window.removeEventListener('scroll', resolveActiveSection)
-      window.removeEventListener('resize', resolveActiveSection)
+      window.removeEventListener('scroll', scheduleResolveActiveSection)
+      window.removeEventListener('resize', scheduleResolveActiveSection)
+
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
     }
   }, [])
 

@@ -1,3 +1,5 @@
+import { scrollToHashWithOffset } from '@/lib/navigation-core-adapter'
+
 export function applyCzechNbsp(text: string) {
   if (!text) {
     return text
@@ -39,30 +41,9 @@ export function scrollToHashWithNavOffset(
   hash: string,
   { navSelector = 'nav[data-nav-root="true"]', behavior = 'smooth' }: ScrollToHashOptions = {}
 ) {
-  if (typeof window === 'undefined' || typeof document === 'undefined') {
-    return false
-  }
-
-  const normalizedHash = hash.startsWith('#') ? hash : `#${hash}`
-  const targetId = normalizedHash.slice(1)
-  const target = document.getElementById(targetId)
-
-  if (!target) {
-    return false
-  }
-
-  const nav = document.querySelector<HTMLElement>(navSelector)
-  const navHeight = nav?.getBoundingClientRect().height ?? 0
-  const targetTop = target.getBoundingClientRect().top + window.scrollY - navHeight
-
-  window.scrollTo({
-    top: Math.max(0, Math.round(targetTop)),
+  return scrollToHashWithOffset(hash, {
+    navSelector,
     behavior,
+    updateHash: true,
   })
-
-  if (window.location.hash !== normalizedHash) {
-    window.history.pushState(null, '', normalizedHash)
-  }
-
-  return true
 }

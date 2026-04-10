@@ -16,6 +16,9 @@ export default defineConfig({
     stdout: 'ignore',
     stderr: 'pipe',
     timeout: 240000,
+    env: {
+      E2E_MOCK_CONTACT: 'true',
+    },
   },
   projects: [
     {

@@ -87,6 +87,16 @@ export async function submitContactAction(
   _previous: ContactActionState,
   formData: FormData,
 ): Promise<ContactActionState> {
+  // In E2E test runs (E2E_MOCK_CONTACT=true) skip all side-effects so tests
+  // are deterministic and don't require real Brevo credentials.
+  if (process.env.E2E_MOCK_CONTACT === 'true') {
+    return {
+      status: 'success',
+      message: 'Děkujeme za poptávku. Ozveme se vám co nejdříve.',
+      fieldErrors: {},
+    }
+  }
+
   const honeypot = toStringValue(formData.get('companyName'))
 
   if (honeypot.trim()) {
