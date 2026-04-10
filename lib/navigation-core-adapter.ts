@@ -1,4 +1,3 @@
-import { NAV } from '@/lib/content'
 import {
   buildSectionBoundaries,
   buildSectionUrl,
@@ -9,6 +8,8 @@ import {
   shouldWriteSectionUrl,
 } from '@/packages/navigation-core'
 import type { HashWriteMode, ScrollTargetOptions } from '@/packages/navigation-core'
+
+import { NAV } from '@/lib/content'
 
 const TOP_SECTION_ID = 'top'
 const NAV_SECTION_IDS = NAV.links.map((link) => link.href.replace('#', ''))
