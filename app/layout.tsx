@@ -112,6 +112,16 @@ export default function RootLayout({
         },
       ],
     },
+    knowsAbout: [
+      'Foukání skla',
+      'Sklářské řemeslo',
+      'Firemní eventy',
+      'Teambuilding akce',
+      'Školní programy',
+      'Ručně vyráběné sklo',
+      'Skleněné předměty',
+      'Manufaktura',
+    ],
   }
 
   return (
