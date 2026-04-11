@@ -4,33 +4,34 @@ One-page marketing site for Živé Sklo — a Czech interactive glass-art experi
 
 ## Tech Stack
 
-| Tool          | Version         | Purpose                            |
-| ------------- | --------------- | ---------------------------------- |
-| Next.js       | 16 (App Router) | SSR framework                      |
-| React         | 19              | UI layer                           |
-| TypeScript    | 5               | Type safety                        |
-| Tailwind CSS  | 3               | Utility-first styling              |
-| Framer Motion | 12              | Scroll-reveal & micro-animations   |
-| shadcn/ui     | latest          | Headless component primitives      |
-| Zod           | 3               | Schema validation (contact form)   |
-| Brevo         | 5               | Transactional email (contact form) |
-| Playwright    | 1               | End-to-end tests                   |
+| Tool          | Version | Purpose                            |
+| ------------- | ------- | ---------------------------------- |
+| Next.js       | 16      | SSR framework (App Router)         |
+| React         | 19      | UI layer                           |
+| TypeScript    | 5       | Type safety                        |
+| Tailwind CSS  | 4       | Utility-first styling              |
+| Framer Motion | 12      | Scroll-reveal and micro-animations |
+| Zod           | 4       | Schema validation (contact form)   |
+| Brevo         | 5       | Transactional email (contact form) |
+| Playwright    | 1       | End-to-end tests                   |
+| Lighthouse    | 12      | Performance baseline               |
 
 ## Project Structure
 
 ```
-app/               # Next.js App Router (pages, layout, route handlers)
-  actions/         # Server Actions (contact form, validation)
-  assets/          # Static assets bundled by Next.js
-lib/               # Shared utilities (content, Zod schemas, security helpers)
-  schemas/         # Zod contact schema
-  security/        # Rate-limiter, honeypot helpers
-ui/                # Component library
-  components/      # General reusable components
-  prefabs/         # Page-section components (Hero, Gallery, ContactForm …)
-  layout/          # Header, Footer, MobileMenu
-public/images/     # Optimised static images
-tests/e2e/         # Playwright end-to-end tests
+app/                    # Next.js App Router (pages, layout, route handlers)
+  actions/              # Server Actions (contact form, validation)
+  assets/               # Static assets bundled by Next.js
+lib/                    # Shared utilities (content, Zod schemas, security helpers)
+  schemas/              # Zod contact schema
+  security/             # Rate-limiter, honeypot helpers
+  mail/                 # Brevo email client
+ui/                     # Component library
+  components/           # General reusable components
+  prefabs/              # Page-section components (Hero, Gallery, ContactForm …)
+  layout/               # Header, Footer, MobileMenu
+public/images/          # Optimised static images
+tests/e2e/              # Playwright end-to-end tests
 ```
 
 ## Development Setup
@@ -47,12 +48,12 @@ Copy `.env.example` to `.env.local` for local development.
 
 ### Google Analytics
 
-Set `NEXT_PUBLIC_GA_TRACKING_ID` in Vercel.
+Set `NEXT_PUBLIC_GA_TRACKING_ID` in Vercel (e.g. `G-XXXXXXXXXX`).
 If the key is not set, GA scripts are not loaded.
 
 ### Contact Form Email
 
-The contact form uses a Server Action running on Vercel functions with [Brevo](https://www.brevo.com) for email delivery.
+The contact form uses a Server Action with [Brevo](https://www.brevo.com) for email delivery.
 
 Required variables (set in Vercel → Project Settings → Environment Variables):
 
@@ -61,27 +62,43 @@ Required variables (set in Vercel → Project Settings → Environment Variables
 - `BREVO_FROM_NAME` – optional sender display name, e.g. `Živé Sklo`
 - `CONTACT_TO` – recipient address for incoming inquiries
 
-Production checklist for `akce.zivesklo.cz`:
+## Commands
 
-1. Confirm these variables are set for the exact deployment environment target (Production or custom production-like target), not only Preview.
-2. Confirm `BREVO_FROM_EMAIL` uses a domain/address that is verified in Brevo.
-3. Deploy and submit the form once.
-4. Open Vercel runtime logs and search for `[contact-form] failed to send inquiry`.
-5. If present, use logged `reason`, `details`, and `requestId` to resolve provider/env issues in Brevo or Vercel.
-6. If a user sees an error with `Kód: ...`, match this code to `requestId` in logs for fast traceability.
+| Command                            | Purpose                              |
+| ---------------------------------- | ------------------------------------ |
+| `npm run dev`                      | Start dev server (port 3000)         |
+| `npm run build`                    | Production build                     |
+| `npm run preview`                  | Serve production build locally       |
+| `npm run lint`                     | ESLint                               |
+| `npm run typecheck`                | TypeScript check                     |
+| `npm run format`                   | Prettier                             |
+| `npm run test:e2e`                 | Run all Playwright tests             |
+| `npm run test:e2e:baseline`        | Smoke + navigation tests (CI subset) |
+| `npm run perf:lighthouse:baseline` | Build + Lighthouse + threshold check |
+
+## Testing
+
+Three Playwright projects: `desktop-chrome`, `mobile-safari`, `mobile-chrome`.
+Tests run against a production preview build on port 3102 to avoid port conflicts.
+The `E2E_MOCK_CONTACT` env var is set automatically by the webServer config to bypass real email sending during tests.
+
+```bash
+npm run test:e2e
+npm run test:e2e:ui   # interactive UI mode
+```
 
 ## Security Baseline for Contact Form
 
-- Server-side validation with Zod.
-- Honeypot hidden field.
-- Minimum dwell time check.
-- Basic per-identifier rate limit in server runtime memory.
+- Server-side validation with Zod
+- Honeypot hidden field
+- Minimum dwell time check
+- Basic per-identifier rate limit in server runtime memory
 
-## Commands
+## Deployment
 
-- `npm run dev`
-- `npm run lint`
-- `npm run typecheck`
-- `npm run build`
-- `npm run test:e2e:baseline`
-- `npm run perf:lighthouse:baseline`
+Deployed on Vercel. Push to `main` triggers automatic deployment.
+
+---
+
+**Author**: Lowcash  
+**License**: MIT

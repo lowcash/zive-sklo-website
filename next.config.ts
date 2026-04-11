@@ -1,19 +1,10 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  reactStrictMode: true,
   images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'lh3.googleusercontent.com',
-      },
-    ],
-    // Local images in public/ are optimised by default (no unoptimized flag needed)
     formats: ['image/avif', 'image/webp'],
+    // Components use quality={80}, ={85}, ={90} — all must be listed here
     qualities: [75, 80, 85, 90],
   },
 }
