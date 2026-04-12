@@ -1,7 +1,7 @@
-import { Container, Section } from '@/ui/core'
-
 import { AUDIENCE } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
+
+import { Container, Section } from '@/ui/core'
 
 /**
  * AudienceSection - RSC (Server Component)
@@ -29,9 +29,6 @@ export function AudienceSection() {
               <div className='space-y-5'>
                 <div className='space-y-2.5'>
                   <p className='font-label text-xs tracking-[0.18em] text-[#9accf3] uppercase'>
-                    {applyCzechNbsp(segment.label)}
-                  </p>
-                  <p className='font-label text-sm tracking-[0.18em] text-[#e5e2e1b3] uppercase'>
                     {applyCzechNbsp(segment.title)}
                   </p>
                   <h3 className='font-display text-2xl font-bold tracking-tight'>{applyCzechNbsp(segment.heading)}</h3>

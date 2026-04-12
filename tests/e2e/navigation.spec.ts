@@ -147,7 +147,7 @@ test.describe('Tablet navigation', () => {
   test.beforeEach(async ({ page }) => {
     await page.setViewportSize({ width: 820, height: 1180 })
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
   })
 
   test('uses hamburger navigation on iPad-sized viewport', async ({ page }) => {

@@ -69,9 +69,7 @@ test.describe('Stats counter animation', () => {
     await page.waitForTimeout(1500) // wait for count-up animation
 
     // Should show a non-zero number
-    const numericText = page
-      .locator('[class*="stat"], [class*="counter"], [class*="number"]')
-      .first()
+    const numericText = page.locator('[class*="stat"], [class*="counter"], [class*="number"]').first()
     if ((await numericText.count()) > 0) {
       const text = await numericText.textContent()
       expect(text).toMatch(/\d+/)
@@ -81,7 +79,7 @@ test.describe('Stats counter animation', () => {
   test('stats counters stay on one line on iPad Air', async ({ page }) => {
     await page.setViewportSize({ width: 820, height: 1180 })
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
+    await page.waitForLoadState('load')
 
     const counters = page.locator('[data-testid="stat-counter"]')
     await expect(counters).toHaveCount(3)
@@ -93,9 +91,7 @@ test.describe('Stats counter animation', () => {
       elements.map((element) => ({
         whiteSpace: getComputedStyle(element).whiteSpace,
         valueTop: element.querySelector('[data-testid="stat-value"]')?.getBoundingClientRect().top ?? null,
-        suffixTop: element
-          .querySelector('[data-testid="stat-suffix"]')
-          ?.getBoundingClientRect().top ?? null,
+        suffixTop: element.querySelector('[data-testid="stat-suffix"]')?.getBoundingClientRect().top ?? null,
       })),
     )
 

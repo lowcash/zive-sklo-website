@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-export type ContainerProps = {
+type ContainerProps = {
   children: ReactNode
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
 }

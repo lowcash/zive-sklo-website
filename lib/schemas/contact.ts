@@ -1,12 +1,6 @@
 import { z } from 'zod'
 
-const allowedEventTypes = [
-  'teambuilding',
-  'school',
-  'city-market',
-  'creative-workshop',
-  'other',
-] as const
+const allowedEventTypes = ['teambuilding', 'school', 'city-market', 'creative-workshop', 'other'] as const
 
 const participantPattern = /^\d{1,4}$/
 const phonePattern = /^\+?[\d\s]{8,20}$/
@@ -30,10 +24,7 @@ const contactSchema = z.object({
     .string()
     .transform((value) => value.trim().toLowerCase())
     .pipe(z.email('Zadejte platný e-mail')),
-  phone: z
-    .string()
-    .transform(sanitizeText)
-    .pipe(z.string().regex(phonePattern, 'Zadejte platné telefonní číslo')),
+  phone: z.string().transform(sanitizeText).pipe(z.string().regex(phonePattern, 'Zadejte platné telefonní číslo')),
   eventType: z.enum(allowedEventTypes, {
     error: 'Vyberte typ akce',
   }),
@@ -48,19 +39,15 @@ const contactSchema = z.object({
       z
         .string()
         .regex(participantPattern, 'Počet účastníků musí být číslo')
-        .refine((value) => Number(value) > 0, 'Počet účastníků musí být větší než 0')
+        .refine((value) => Number(value) > 0, 'Počet účastníků musí být větší než 0'),
     ),
-  message: z
-    .string()
-    .transform(sanitizeText)
-    .pipe(z.string().max(1200, 'Zpráva je příliš dlouhá'))
-    .optional(),
+  message: z.string().transform(sanitizeText).pipe(z.string().max(1200, 'Zpráva je příliš dlouhá')).optional(),
   gdpr: z.boolean().refine((value) => value, 'Souhlas se zpracováním je povinný'),
 })
 
 export type ContactSubmission = z.infer<typeof contactSchema>
 
-export type ContactFieldErrors = Partial<Record<keyof ContactSubmission, string>>
+type ContactFieldErrors = Partial<Record<keyof ContactSubmission, string>>
 
 export function validateContactSubmission(input: {
   name: string

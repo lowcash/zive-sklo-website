@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-export type SectionProps = {
+type SectionProps = {
   children: ReactNode
   id?: string
   'aria-labelledby'?: string

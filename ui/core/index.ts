@@ -20,31 +20,5 @@
  */
 
 export { Container } from './Container'
-export type { ContainerProps } from './Container'
-
-export { Stack, Grid } from './Layout'
-export type { StackProps, GridProps } from './Layout'
-
-export { Block } from './Block'
-export type { BlockProps } from './Block'
-
-export { Center } from './Center'
-export type { CenterProps } from './Center'
-
-export { Text, Heading } from './Typography'
-export type { TextProps, HeadingProps } from './Typography'
-
-export { Button } from './Button'
-export type { ButtonProps } from './Button'
 
 export { Section } from './Section'
-export type { SectionProps } from './Section'
-
-export { Card } from './Card'
-export type { CardProps } from './Card'
-
-export { Input, Textarea, Select, Checkbox } from './Fields'
-export type { InputProps, TextareaProps, SelectProps, CheckboxProps } from './Fields'
-
-export { ResponsiveVisibility } from './ResponsiveVisibility'
-export type { ResponsiveVisibilityProps } from './ResponsiveVisibility'

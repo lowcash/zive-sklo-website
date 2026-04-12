@@ -1,11 +1,11 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
-
-import { Container, Section } from '@/ui/core'
+import { useEffect, useRef, useState } from 'react'
 
 import { GALLERY } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
+
+import { Container, Section } from '@/ui/core'
 
 import { GalleryModal } from './GalleryModal'
 import { GalleryScroll } from './GalleryScroll'
@@ -21,18 +21,6 @@ export function GallerySection() {
   const [canScrollNext, setCanScrollNext] = useState(true)
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
 
-  const updateScrollState = useCallback(() => {
-    const element = scrollRef.current
-
-    if (!element) {
-      return
-    }
-
-    const threshold = 4
-    setCanScrollPrev(element.scrollLeft > threshold)
-    setCanScrollNext(element.scrollLeft + element.clientWidth < element.scrollWidth - threshold)
-  }, [])
-
   useEffect(() => {
     const element = scrollRef.current
 
@@ -40,18 +28,22 @@ export function GallerySection() {
       return
     }
 
+    const updateScrollState = () => {
+      const threshold = 4
+      setCanScrollPrev(element.scrollLeft > threshold)
+      setCanScrollNext(element.scrollLeft + element.clientWidth < element.scrollWidth - threshold)
+    }
+
     updateScrollState()
 
-    const handleResize = () => updateScrollState()
-
     element.addEventListener('scroll', updateScrollState, { passive: true })
-    window.addEventListener('resize', handleResize)
+    window.addEventListener('resize', updateScrollState)
 
     return () => {
       element.removeEventListener('scroll', updateScrollState)
-      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('resize', updateScrollState)
     }
-  }, [updateScrollState])
+  }, [])
 
   useEffect(() => {
     if (activeImageIndex === null) {
@@ -70,7 +62,7 @@ export function GallerySection() {
     }
   }, [activeImageIndex])
 
-  const showPreviousImage = useCallback(() => {
+  const showPreviousImage = () => {
     setActiveImageIndex((prev) => {
       if (prev === null) {
         return prev
@@ -78,9 +70,9 @@ export function GallerySection() {
 
       return prev === 0 ? GALLERY.images.length - 1 : prev - 1
     })
-  }, [])
+  }
 
-  const showNextImage = useCallback(() => {
+  const showNextImage = () => {
     setActiveImageIndex((prev) => {
       if (prev === null) {
         return prev
@@ -88,7 +80,7 @@ export function GallerySection() {
 
       return prev === GALLERY.images.length - 1 ? 0 : prev + 1
     })
-  }, [])
+  }
 
   useEffect(() => {
     if (activeImageIndex === null) {
@@ -101,11 +93,11 @@ export function GallerySection() {
       }
 
       if (event.key === 'ArrowLeft') {
-        showPreviousImage()
+        setActiveImageIndex((prev) => (prev === null ? prev : prev === 0 ? GALLERY.images.length - 1 : prev - 1))
       }
 
       if (event.key === 'ArrowRight') {
-        showNextImage()
+        setActiveImageIndex((prev) => (prev === null ? prev : prev === GALLERY.images.length - 1 ? 0 : prev + 1))
       }
     }
 
@@ -114,7 +106,7 @@ export function GallerySection() {
     return () => {
       window.removeEventListener('keydown', onKeyDown)
     }
-  }, [activeImageIndex, showNextImage, showPreviousImage])
+  }, [activeImageIndex])
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     const touch = event.touches[0]
