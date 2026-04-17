@@ -16,23 +16,9 @@ One-page marketing site for Živé Sklo — a Czech interactive glass-art experi
 | Playwright    | 1       | End-to-end tests                   |
 | Lighthouse    | 12      | Performance baseline               |
 
-## Project Structure
+## Architecture
 
-```
-app/                    # Next.js App Router (pages, layout, route handlers)
-  actions/              # Server Actions (contact form, validation)
-  assets/               # Static assets bundled by Next.js
-lib/                    # Shared utilities (content, Zod schemas, security helpers)
-  schemas/              # Zod contact schema
-  security/             # Rate-limiter, honeypot helpers
-  mail/                 # Brevo email client
-ui/                     # Component library
-  components/           # General reusable components
-  prefabs/              # Page-section components (Hero, Gallery, ContactForm …)
-  layout/               # Header, Footer, MobileMenu
-public/images/          # Optimised static images
-tests/e2e/              # Playwright end-to-end tests
-```
+High-level structure, component organization, and key systems live in [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Development Setup
 
