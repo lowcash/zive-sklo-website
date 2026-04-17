@@ -48,14 +48,14 @@ Copy `.env.example` to `.env.local` for local development.
 
 ### Google Analytics
 
-Set `NEXT_PUBLIC_GA_TRACKING_ID` in Vercel (e.g. `G-XXXXXXXXXX`).
+Set `NEXT_PUBLIC_GA_TRACKING_ID` to enable Google Analytics (e.g. `G-XXXXXXXXXX`).
 If the key is not set, GA scripts are not loaded.
 
 ### Contact Form Email
 
 The contact form uses a Server Action with [Brevo](https://www.brevo.com) for email delivery.
 
-Required variables (set in Vercel → Project Settings → Environment Variables):
+Required variables:
 
 - `BREVO_API_KEY` – API key from Brevo SMTP/API settings
 - `BREVO_FROM_EMAIL` – verified sender address, e.g. `info@mail.akce.zivesklo.cz`
@@ -94,9 +94,10 @@ npm run test:e2e:ui   # interactive UI mode
 - Minimum dwell time check
 - Basic per-identifier rate limit in server runtime memory
 
-## Deployment
+## Production
 
-Deployed on Vercel. Push to `main` triggers automatic deployment.
+Canonical URL: [https://akce.zivesklo.cz](https://akce.zivesklo.cz)
+Current production deployment target: Vercel
 
 ---
 
