@@ -27,3 +27,4 @@ Current versions in use (update line items as your project upgrades):
 - Components live in `ui/` (root level), not in `src/`. The `ui/prefabs/` subfolder holds page-section components.
 - Server actions (contact form) live in `app/actions/`. Always validate with Zod and return typed results.
 - Framer Motion is used for animations; honour `prefers-reduced-motion` at component level.
+- This is intentionally a lean site-level instruction stack. Do not pull in larger fullstack data or persistence guidance unless the repository actually grows beyond its current site and form scope.
