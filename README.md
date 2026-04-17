@@ -10,7 +10,7 @@ One-page marketing site for Živé Sklo — a Czech interactive glass-art experi
 | React         | 19      | UI layer                           |
 | TypeScript    | 5       | Type safety                        |
 | Tailwind CSS  | 4       | Utility-first styling              |
-| Framer Motion | 12      | Scroll-reveal and micro-animations |
+| Framer Motion | 12.38   | Scroll-reveal and micro-animations |
 | Zod           | 4       | Schema validation (contact form)   |
 | Brevo         | 5       | Transactional email (contact form) |
 | Playwright    | 1       | End-to-end tests                   |
@@ -18,7 +18,7 @@ One-page marketing site for Živé Sklo — a Czech interactive glass-art experi
 
 ## Architecture
 
-High-level structure, component organization, and key systems live in [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
+High-level structure, key systems, and architectural decisions live in [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md).
 
 ## Development Setup
 
