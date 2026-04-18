@@ -2,64 +2,53 @@
 
 ## Overview
 
-**Živé Sklo Website** is a marketing and booking site for an interactive glass-art experience, built with **Next.js 16+ (App Router)** and **React 19+**. It emphasizes dynamic content, customer engagement, and a seamless contact/inquiry flow.
+Živé Sklo Website is a Next.js App Router marketing site focused on inquiry capture, server-side form handling, and media-rich storytelling for the glass-art experience.
 
-Architectural principles and component layering guidelines are documented in [`.github/instructions/architecture.instructions.md`](./.github/instructions/architecture.instructions.md).
-
----
-
-## Directory Structure
+## Project Structure
 
 ```
-app/                    # Next.js App Router (pages, layout, route handlers)
-  actions/              # Server Actions (contact form, validation)
-  assets/               # Static assets bundled by Next.js
-lib/                    # Shared utilities (content, Zod schemas, security helpers)
-  schemas/              # Zod contact schema
-  security/             # Rate-limiter, honeypot helpers
-  mail/                 # Brevo email client
-ui/                     # Component library (root level, not src/)
-  components/           # General reusable components
-  prefabs/              # Page-section components (Hero, Gallery, ContactForm …)
-  layout/               # Header, Footer, MobileMenu
-public/images/          # Optimised static images
-tests/e2e/              # Playwright end-to-end tests
+app/
+├── actions/                     # Server actions for contact handling
+├── assets/                      # Static assets bundled by Next.js
+├── informacni-list/
+├── layout.tsx
+├── page.tsx
+└── globals.css
+ui/
+├── core/                        # Reusable layout and section primitives
+└── prefabs/                     # Content-heavy page sections and client leaves
+lib/
+├── mail/
+├── schemas/
+├── security/
+└── content.ts
+public/
+tests/
 ```
-
----
 
 ## Key Systems
 
-### 1. Contact Form & Email Delivery
+### 1. Inquiry Pipeline
 
-**Implementation**: `app/actions/` + `lib/mail/contact-mail.ts` using Brevo SDK
+**Implementation**: `app/actions/*`, `ui/prefabs/ContactForm.tsx`, `lib/mail/contact-mail.ts`
 
-**Flow**:
-1. User submits form in `ui/prefabs/ContactForm.tsx`
-2. Server Action validates with Zod (`lib/schemas/contact.ts`)
-3. Security checks: honeypot, rate-limiter, minimum dwell time
-4. Email sent via Brevo (credentials: `BREVO_API_KEY`, `BREVO_FROM_EMAIL`, `CONTACT_TO`)
+Contact submissions stay on the server, where they are validated with Zod, filtered by honeypot, dwell-time, and rate-limit checks, and then sent through Brevo without exposing credentials to the client.
 
-**Benefits**: Server-side validation prevents spam; sensitive API keys never exposed to client.
+### 2. Prefab-Based Content Sections
 
-### 2. Google Analytics
+**Implementation**: `ui/prefabs/*`, `lib/content.ts`
 
-**Implementation**: Conditional GA script injection in layout based on `NEXT_PUBLIC_GA_TRACKING_ID`
+Content-heavy sections are assembled from server-rendered prefabs that read structured copy and media from `lib/content.ts`. Interactive client leaves are kept narrow to carousels, counters, and gallery controls.
 
-**Behavior**: GA script loads only if env var is set (off by default in dev); no PII collected.
+### 3. Gallery & Motion Leaves
 
-### 3. Scroll-Reveal Animations
+**Implementation**: `ui/prefabs/HeroCarousel.tsx`, `ui/prefabs/GallerySection.tsx`, `ui/prefabs/GalleryScroll.tsx`
 
-**Implementation**: Framer Motion for entrance animations triggered on viewport visibility
-
-**Pattern**: CSS-in-JS with `initial` → `whileInView` states; respects `prefers-reduced-motion`
-
----
+The hero carousel, horizontal gallery scroll, and modal browsing are isolated into focused client leaves so media interaction stays rich without turning the whole page into a client-rendered app.
 
 ## Tech Stack Decisions
 
-- **Next.js App Router**: Server Actions simplify form handling and validation without client-side fetch logic.
-- **Brevo**: Lightweight, managed email service; no SMTP infrastructure overhead.
-- **Zod**: Runtime schema validation ensures form data safety before server processing.
-- **Framer Motion**: Smooth scroll-reveal animations that respect `prefers-reduced-motion`.
-- **Tailwind CSS**: Rapid, consistent styling with mobile-first utilities.
+- **Next.js App Router + Server Actions** keep inquiry handling server-side and avoid a separate client API surface.
+- **Root-level `ui/` with `core/` and `prefabs/`** separates reusable building blocks from page sections in a way that matches the content-led site structure.
+- **Zod + runtime abuse checks** keep validation and spam protection at the same mutation boundary.
+- **Brevo behind a mail adapter** keeps email delivery swappable and server-only.

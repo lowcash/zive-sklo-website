@@ -50,28 +50,18 @@ Required variables:
 
 ## Commands
 
-| Command                            | Purpose                              |
-| ---------------------------------- | ------------------------------------ |
-| `npm run dev`                      | Start dev server (port 3000)         |
-| `npm run build`                    | Production build                     |
-| `npm run preview`                  | Serve production build locally       |
-| `npm run lint`                     | ESLint                               |
-| `npm run typecheck`                | TypeScript check                     |
-| `npm run format`                   | Prettier                             |
-| `npm run test:e2e`                 | Run all Playwright tests             |
-| `npm run test:e2e:baseline`        | Smoke + navigation tests (CI subset) |
-| `npm run perf:lighthouse:baseline` | Build + Lighthouse + threshold check |
+- `npm run dev` starts the local development server.
+- `npm run lint` runs ESLint.
+- `npm run test:e2e` runs the Playwright end-to-end suite.
+- `npm run perf:lighthouse` runs local desktop and mobile Lighthouse audits.
+
+For the full script list, see `package.json`.
 
 ## Testing
 
 Three Playwright projects: `desktop-chrome`, `mobile-safari`, `mobile-chrome`.
 Tests run against a production preview build on port 3102 to avoid port conflicts.
 The `E2E_MOCK_CONTACT` env var is set automatically by the webServer config to bypass real email sending during tests.
-
-```bash
-npm run test:e2e
-npm run test:e2e:ui   # interactive UI mode
-```
 
 ## Security Baseline for Contact Form
 
@@ -82,10 +72,8 @@ npm run test:e2e:ui   # interactive UI mode
 
 ## Production
 
-Canonical URL: [https://akce.zivesklo.cz](https://akce.zivesklo.cz)
+Production URL: [https://akce.zivesklo.cz](https://akce.zivesklo.cz)
 Current production deployment target: Vercel
-
----
 
 **Author**: Lowcash  
 **License**: MIT
