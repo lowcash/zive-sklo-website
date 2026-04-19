@@ -15,8 +15,8 @@ export function HeroSection() {
     <header className="relative flex min-h-svh items-center overflow-hidden px-0 pt-24 pb-24 sm:pt-28 sm:pb-26 md:min-h-dvh md:pt-20 md:pb-16">
       <div className="absolute inset-0 z-0">
         <HeroCarousel images={HERO.backgroundImages} />
-        <div className="absolute inset-0 bg-linear-to-r from-[#131313] via-[#131313cc] to-transparent" />
-        <div className="absolute top-1/2 left-1/4 h-150 w-150 -translate-y-1/2 rounded-full bg-[#ffbf00]/10 blur-[120px]" />
+        <div className="absolute inset-0 bg-linear-to-r from-surface-dark via-[#131313cc] to-transparent" />
+        <div className="absolute top-1/2 left-1/4 h-150 w-150 -translate-y-1/2 rounded-full bg-accent-amber/10 blur-[120px]" />
       </div>
 
       <div className="relative z-10 mx-auto w-full max-w-360 px-6 md:px-20">
@@ -28,7 +28,7 @@ export function HeroSection() {
                 key={pill.label}
                 className={`inline-flex items-center border px-3 py-1 text-[0.62rem] font-medium tracking-widest whitespace-nowrap uppercase md:px-3.5 md:text-[0.7rem] ${
                   index === 0 || pill.accent
-                    ? 'border-[#5045324d] text-[#9accf3]'
+                    ? 'border-[#5045324d] text-accent-ice'
                     : 'border-[#5045324d] text-[#e5e2e199]'
                 }`}
               >
@@ -38,9 +38,9 @@ export function HeroSection() {
           </div>
 
           <h1 className="font-display text-4xl leading-[1.08] font-bold tracking-tighter text-white sm:text-5xl md:text-7xl">
-            {applyCzechNbsp(HERO.h1Prefix)}
+            {applyCzechNbsp(HERO.h1Prefix)}{' '}
             <br />
-            <span className="text-[#ffbf00]">{applyCzechNbsp(HERO.h1Highlight)}</span>
+            <span className="text-accent-amber">{applyCzechNbsp(HERO.h1Highlight)}</span>{' '}
             <br />
             {applyCzechNbsp(HERO.h1Suffix)}
           </h1>
@@ -62,7 +62,7 @@ export function HeroSection() {
             </a>
             <a
               href={HERO.secondaryCtaHref}
-              className="font-display inline-flex items-center justify-center gap-2 text-center font-bold text-[#e5e2e1] transition-colors hover:text-[#FFD79B]"
+              className="font-display text-text-primary inline-flex items-center justify-center gap-2 text-center font-bold transition-colors hover:text-[#FFD79B]"
             >
               <span aria-hidden="true">→</span>
               {applyCzechNbsp(HERO.secondaryCtaLabel)}
