@@ -14,10 +14,12 @@ import {
 } from '@/ui/prefabs'
 
 export default function HomePage() {
+  const showCookieInformation = process.env.NODE_ENV !== 'production' || Boolean(process.env.NEXT_PUBLIC_GA_TRACKING_ID)
+
   return (
     <>
       <Navigation />
-      <main id="top">
+      <main id='top'>
         <HeroSection />
         <AboutSection />
         <ProcessSection />
@@ -28,7 +30,7 @@ export default function HomePage() {
         <BenefitsSection />
         <ContactSection />
       </main>
-      <FooterSection />
+      <FooterSection showCookieInformation={showCookieInformation} />
       <ScrollToTopButton />
     </>
   )

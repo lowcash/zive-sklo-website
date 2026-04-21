@@ -87,14 +87,12 @@ export const PROCESS = {
     {
       number: '03',
       title: 'Akce',
-      description:
-        'Přijedeme, rozbalíme mobilní sklářskou dílnu a vytvoříme fascinující atmosféru přímo u vás.',
+      description: 'Přijedeme, rozbalíme mobilní sklářskou dílnu a vytvoříme fascinující atmosféru přímo u vás.',
     },
     {
       number: '04',
       title: 'Výsledek',
-      description:
-        'Hosté si odnesou nezapomenutelný zážitek a často i vlastnoručně vyrobenou ozdobu.',
+      description: 'Hosté si odnesou nezapomenutelný zážitek a často i vlastnoručně vyrobenou ozdobu.',
     },
   ],
   trustLine: 'Program je vhodný pro malé i velké akce - od školních skupin po městské slavnosti.',
@@ -263,20 +261,17 @@ export const BENEFITS = {
     {
       icon: 'inventory_2',
       title: 'Přijedeme vybaveni',
-      description:
-        'Nic nemusíte zajišťovat. Přivezeme veškeré vybavení a postaráme se o bezpečný provoz.',
+      description: 'Nic nemusíte zajišťovat. Přivezeme veškeré vybavení a postaráme se o bezpečný provoz.',
     },
     {
       icon: 'verified_user',
       title: 'Bezpečný provoz',
-      description:
-        'V souladu s požadavky pojišťoven a přísnými normami. Bezpečný provoz vhodný pro veřejné akce.',
+      description: 'V souladu s požadavky pojišťoven a přísnými normami. Bezpečný provoz vhodný pro veřejné akce.',
     },
     {
       icon: 'groups',
       title: 'Pro každou akci',
-      description:
-        'Program vhodný pro děti i dospělé, pro malé skupiny i velké akce od 10 do 500 lidí.',
+      description: 'Program vhodný pro děti i dospělé, pro malé skupiny i velké akce od 10 do 500 lidí.',
     },
     {
       icon: 'description',
@@ -351,7 +346,10 @@ export const CONTACT = {
       required: false,
     },
     gdpr: {
-      label: 'Souhlasím se zpracováním osobních údajů',
+      label: 'Souhlasím se zpracováním osobních údajů pro vyřízení poptávky',
+      detailsText: 'Vaše údaje použijeme pouze pro vyřízení poptávky a navazující komunikaci k dané akci.',
+      detailsLabel: 'Zásady ochrany osobních údajů',
+      detailsHref: '/ochrana-osobnich-udaju',
       required: true,
     },
   },
@@ -377,6 +375,120 @@ export const FOOTER = {
       href: 'https://www.facebook.com/profile.php?id=61585612643034',
     },
   ],
+  legal: {
+    note: 'Google Analytics spouštíme až po vašem souhlasu. Volbu můžete kdykoli změnit.',
+    privacyHref: '/ochrana-osobnich-udaju',
+    privacyLabel: 'Zásady ochrany osobních údajů',
+    cookiesHref: '/cookies',
+    cookiesLabel: 'Zásady cookies',
+    settingsLabel: 'Nastavení cookies',
+  },
   copyrightOwner: 'Živé Sklo - Vlastimil Juřička',
   copyrightRights: 'Všechna práva vyhrazena.',
+}
+
+export const COOKIE_NOTICE = {
+  banner: {
+    eyebrow: 'Souhlas s cookies',
+    title: 'Můžeme měřit návštěvnost webu?',
+    description:
+      'Bez souhlasu se uloží jen informace o vaší volbě. Po souhlasu zapneme Google Analytics pro základní měření návštěvnosti a používání webu.',
+    acceptLabel: 'Povolit analytiku',
+    declineLabel: 'Pokračovat bez analytiky',
+    detailsLabel: 'Podrobnosti o cookies',
+  },
+  page: {
+    eyebrow: 'Informace o cookies',
+    title: 'Zásady cookies',
+    intro:
+      'Na webu Živé Sklo používáme jen nezbytné uložení volby souhlasu v prohlížeči a po vašem svolení také Google Analytics pro základní měření návštěvnosti.',
+    sections: [
+      {
+        title: 'Nezbytné úložiště',
+        description: 'Bez této položky nedokážeme zapamatovat, zda jste analytiku povolili nebo odmítli.',
+        items: [
+          'ukládá pouze stav vašeho souhlasu v prohlížeči',
+          'souhlas obnovujeme nejpozději po 180 dnech nebo po smazání dat prohlížeče',
+          'nejde o reklamní ani marketingový nástroj',
+        ],
+      },
+      {
+        title: 'Google Analytics',
+        description:
+          'Po vašem souhlasu načteme službu Google Analytics 4, která nám pomáhá vyhodnocovat návštěvnost a používání jednotlivých částí webu.',
+        items: [
+          'nástroj se nespustí, dokud ho sami nepovolíte',
+          'nepoužíváme jej pro reklamní personalizaci ani remarketing',
+          'svůj souhlas můžete kdykoli změnit přes odkaz Nastavení cookies ve footeru',
+        ],
+      },
+      {
+        title: 'Jak volbu změnit',
+        description: 'Souhlas můžete změnit kdykoli později, nejen při první návštěvě webu.',
+        items: [
+          've footeru klikněte na odkaz Nastavení cookies',
+          'pro úplné odstranění dříve uložených cookies můžete použít i nastavení prohlížeče',
+          'pokud si nejste jistí, ponechte pouze nezbytné uložení volby',
+        ],
+      },
+    ],
+    contactNote:
+      'Pokud potřebujete doplňující informace k používání cookies nebo analytiky, napište nám na kontaktní e-mail.',
+  },
+}
+
+export const PRIVACY_NOTICE = {
+  page: {
+    eyebrow: 'Ochrana osobních údajů',
+    title: 'Zásady ochrany osobních údajů',
+    intro:
+      'Když nám pošlete poptávku přes formulář na webu Živé Sklo, používáme vaše údaje pouze pro vyřízení poptávky, přípravu nabídky a navazující komunikaci k dané akci.',
+    sections: [
+      {
+        title: 'Kdo údaje zpracovává',
+        description: 'Správcem osobních údajů je Živé Sklo - Vlastimil Juřička.',
+        items: [
+          'kontaktní e-mail: info@zivesklo.cz',
+          'telefon: +420 737 206 653',
+          'v případě dotazů ke zpracování údajů nás můžete kontaktovat přímo těmito kanály',
+        ],
+      },
+      {
+        title: 'Jaké údaje zpracováváme',
+        description: 'Z formuláře zpracováváme pouze údaje, které sami vyplníte.',
+        items: ['jméno a příjmení', 'e-mail a telefon', 'typ akce, datum, místo, počet účastníků a případnou zprávu'],
+      },
+      {
+        title: 'Proč údaje potřebujeme',
+        description: 'Údaje používáme jen pro komunikaci o vaší poptávce a pro přípravu konkrétní nabídky.',
+        items: [
+          'abychom vám mohli odpovědět na poptávku',
+          'abychom mohli navrhnout vhodný program a cenovou nabídku',
+          'nepoužíváme je pro reklamní rozesílky ani profilování',
+        ],
+      },
+      {
+        title: 'Jak dlouho a komu údaje předáváme',
+        description:
+          'Údaje uchováváme jen po nezbytnou dobu a sdílíme je pouze s technickými dodavateli nutnými pro obsluhu poptávky.',
+        items: [
+          'pokud se spolupráce neuskuteční, údaje držíme jen po dobu potřebnou k uzavření a vyhodnocení poptávky a navazující komunikaci',
+          'pokud naváže smluvní vztah, mohou být údaje zpracovány i déle podle smluvních a účetních povinností',
+          'pro doručení e-mailu využíváme službu Brevo a související hostingové a technické poskytovatele',
+        ],
+      },
+      {
+        title: 'Vaše práva',
+        description:
+          'Můžete nás kdykoli požádat o informace ke zpracování nebo o úpravu či odstranění údajů, pokud to dovolují právní povinnosti.',
+        items: [
+          'máte právo na přístup, opravu, omezení zpracování a odstranění',
+          'svůj souhlas můžete kdykoli odvolat',
+          'máte právo podat stížnost u Úřadu pro ochranu osobních údajů',
+        ],
+      },
+    ],
+    contactNote:
+      'Pokud chcete uplatnit některé ze svých práv nebo máte dotaz ke zpracování osobních údajů, napište nám na kontaktní e-mail.',
+  },
 }

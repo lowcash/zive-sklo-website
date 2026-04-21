@@ -7,6 +7,7 @@ export default defineConfig({
   reporter: 'list',
   use: {
     baseURL: 'http://127.0.0.1:3102',
+    storageState: './tests/e2e/fixtures/declined-cookie-consent.storage.json',
     trace: 'on-first-retry',
   },
   webServer: {
@@ -18,6 +19,7 @@ export default defineConfig({
     timeout: 240000,
     env: {
       E2E_MOCK_CONTACT: 'true',
+      NEXT_PUBLIC_GA_TRACKING_ID: 'G-TEST123456',
     },
   },
   projects: [

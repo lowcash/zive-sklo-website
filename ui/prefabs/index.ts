@@ -28,4 +28,5 @@ export { BenefitsSection } from './BenefitsSection'
 export { ContactSection } from './ContactSection'
 
 export { FooterSection } from './FooterSection'
+export { CookieConsentManager } from './CookieConsentManager'
 export { ScrollToTopButton } from './ScrollToTopButton'

@@ -1,13 +1,21 @@
-import { Container } from '@/ui/core'
+import Link from 'next/link'
 
 import { FOOTER } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
+
+import { Container } from '@/ui/core'
+
+import { CookieSettingsButton } from './CookieSettingsButton'
 
 /**
  * FooterSection - RSC (Server Component)
  * Footer with brand, navigation, contact, and social links
  */
-export function FooterSection() {
+type FooterSectionProps = {
+  showCookieInformation?: boolean
+}
+
+export function FooterSection({ showCookieInformation = false }: FooterSectionProps) {
   const currentYear = new Date().getFullYear()
 
   return (
@@ -68,9 +76,39 @@ export function FooterSection() {
         </div>
 
         <div className='mt-12 border-t border-[#51453226] pt-8'>
-          <p className='font-label text-xs tracking-widest text-[#e5e2e1b3] uppercase'>
-            {applyCzechNbsp(`© ${currentYear} ${FOOTER.copyrightOwner}. ${FOOTER.copyrightRights}`)}
-          </p>
+          <div className='flex flex-col gap-5 md:flex-row md:items-end md:justify-between'>
+            <div className='max-w-2xl space-y-3'>
+              {showCookieInformation ? (
+                <p className='text-sm leading-relaxed text-[#E5E2E199]'>{applyCzechNbsp(FOOTER.legal.note)}</p>
+              ) : null}
+              <div className='flex flex-wrap items-center gap-x-5 gap-y-2 text-sm'>
+                <Link
+                  href={FOOTER.legal.privacyHref}
+                  className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
+                >
+                  {applyCzechNbsp(FOOTER.legal.privacyLabel)}
+                </Link>
+                {showCookieInformation ? (
+                  <>
+                    <Link
+                      href={FOOTER.legal.cookiesHref}
+                      className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
+                    >
+                      {applyCzechNbsp(FOOTER.legal.cookiesLabel)}
+                    </Link>
+                    <CookieSettingsButton
+                      label={FOOTER.legal.settingsLabel}
+                      className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
+                    />
+                  </>
+                ) : null}
+              </div>
+            </div>
+
+            <p className='font-label text-xs tracking-widest text-[#e5e2e1b3] uppercase'>
+              {applyCzechNbsp(`© ${currentYear} ${FOOTER.copyrightOwner}. ${FOOTER.copyrightRights}`)}
+            </p>
+          </div>
         </div>
       </Container>
     </footer>

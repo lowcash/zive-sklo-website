@@ -36,6 +36,8 @@ Copy `.env.example` to `.env.local` for local development.
 
 Set `NEXT_PUBLIC_GA_TRACKING_ID` to enable Google Analytics (e.g. `G-XXXXXXXXXX`).
 If the key is not set, GA scripts are not loaded.
+If the key is set, analytics still loads only after the visitor explicitly accepts analytical cookies in the consent banner.
+In local development, the consent banner is also shown without the GA key so the UI can be reviewed before production setup.
 
 ### Contact Form Email
 

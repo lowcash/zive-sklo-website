@@ -1,10 +1,9 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope, Noto_Serif } from 'next/font/google'
-import Script from 'next/script'
-
-import { Analytics } from '@vercel/analytics/next'
 
 import { DESCRIPTION, KEYWORDS, SITE_URL, TITLE } from '@/lib/content'
+
+import { CookieConsentManager } from '@/ui/prefabs'
 
 import './globals.css'
 
@@ -75,7 +74,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   const gaTrackingId = process.env.NEXT_PUBLIC_GA_TRACKING_ID
-  const enableVercelAnalytics = Boolean(process.env.VERCEL || process.env.VERCEL_ENV || process.env.VERCEL_URL)
+  const showCookieBannerPreview = process.env.NODE_ENV !== 'production'
 
   const structuredData = {
     '@context': 'https://schema.org',
@@ -125,7 +124,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang='cs' className={`scroll-smooth ${notoSerif.variable} ${manrope.variable}`}>
+    <html lang='cs' data-scroll-behavior='smooth' className={`scroll-smooth ${notoSerif.variable} ${manrope.variable}`}>
       <head>
         <link
           rel='stylesheet'
@@ -142,20 +141,7 @@ export default function RootLayout({
           Přeskočit na hlavní obsah
         </a>
         {children}
-        {gaTrackingId ? (
-          <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`} strategy='lazyOnload' />
-            <Script id='gtag-init' strategy='lazyOnload'>
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gaTrackingId}');
-              `}
-            </Script>
-          </>
-        ) : null}
-        {enableVercelAnalytics ? <Analytics /> : null}
+        <CookieConsentManager gaTrackingId={gaTrackingId} showBannerPreview={showCookieBannerPreview} />
       </body>
     </html>
   )

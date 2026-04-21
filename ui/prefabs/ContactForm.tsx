@@ -3,6 +3,8 @@
 import type { ChangeEvent, FormEvent } from 'react'
 import { startTransition, useActionState, useEffect, useRef, useState } from 'react'
 
+import Link from 'next/link'
+
 import { CONTACT } from '@/lib/content'
 
 import type { ContactActionState } from '@/app/actions/contact'
@@ -395,6 +397,16 @@ export function ContactForm() {
             {CONTACT.fields.gdpr.label} *
           </span>
         </label>
+        <p className='pl-8 text-xs leading-relaxed text-[#d4c5abb3]'>
+          {CONTACT.fields.gdpr.detailsText}{' '}
+          <Link
+            href={CONTACT.fields.gdpr.detailsHref}
+            className='ui-surface-hover border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
+          >
+            {CONTACT.fields.gdpr.detailsLabel}
+          </Link>
+          .
+        </p>
         {getFieldError('gdpr') && (
           <p id='error-gdpr' role='alert' className='text-sm text-red-300'>
             {getFieldError('gdpr')}
