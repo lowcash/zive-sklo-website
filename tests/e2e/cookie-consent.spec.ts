@@ -1,9 +1,17 @@
 import { expect, test } from '@playwright/test'
 
 const TEST_GA_TRACKING_ID = 'G-TEST123456'
+const COOKIE_CONSENT_COOKIE_NAME = 'zive-sklo-cookie-consent'
 
 async function getStoredConsent(page: import('@playwright/test').Page) {
-  return page.evaluate(() => window.localStorage.getItem('zive-sklo-cookie-consent'))
+  return page.evaluate((cookieName) => {
+    const cookie = document.cookie
+      .split(';')
+      .map((entry) => entry.trim())
+      .find((entry) => entry.startsWith(`${cookieName}=`))
+
+    return cookie ? decodeURIComponent(cookie.slice(cookieName.length + 1)) : null
+  }, COOKIE_CONSENT_COOKIE_NAME)
 }
 
 test.describe('Cookie consent', () => {
@@ -75,12 +83,27 @@ test.describe('Cookie consent', () => {
       allow_ad_personalization_signals: false,
     })
 
-    await expect
-      .poll(async () => {
-        const storedConsent = await getStoredConsent(page)
-        return storedConsent ? JSON.parse(storedConsent).status : null
-      })
-      .toBe('accepted')
+    await expect.poll(async () => getStoredConsent(page)).toBe('accepted')
+  })
+
+  test('returns to the originating section from the cookies page', async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+
+    await page.evaluate(() => {
+      const contactSection = document.getElementById('kontakt')
+      contactSection?.scrollIntoView({ behavior: 'instant', block: 'start' })
+    })
+
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#kontakt')
+
+    await page.getByRole('link', { name: /podrobnosti o cookies/i }).click()
+    await expect(page).toHaveURL(/\/cookies\?returnTo=%2F%23kontakt/)
+
+    await page.getByRole('link', { name: /zpět na web živé sklo/i }).click()
+
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#kontakt')
+    await expect(page.locator('#kontakt')).toBeInViewport({ ratio: 0.1 })
   })
 
   test('removes analytics again when consent is revoked from footer settings', async ({ page }) => {
@@ -111,11 +134,6 @@ test.describe('Cookie consent', () => {
     expect(gaState.disabled).toBe(true)
     expect(gaState.hasGtag).toBe(false)
 
-    await expect
-      .poll(async () => {
-        const storedConsent = await getStoredConsent(page)
-        return storedConsent ? JSON.parse(storedConsent).status : null
-      })
-      .toBe('declined')
+    await expect.poll(async () => getStoredConsent(page)).toBe('declined')
   })
 })

@@ -2,19 +2,18 @@
 
 import { useEffect, useState } from 'react'
 
-import Link from 'next/link'
-
 import { COOKIE_NOTICE } from '@/lib/content'
 import {
   COOKIE_CONSENT_STATUS,
-  COOKIE_CONSENT_STORAGE_KEY,
   COOKIE_SETTINGS_OPEN_EVENT,
   type CookieConsentStatus,
-  isCookieConsentExpired,
-  parseCookieConsentRecord,
-  serializeCookieConsentRecord,
+  readCookieConsent,
+  readLegacyCookieConsentFromStorage,
+  writeCookieConsent,
 } from '@/lib/cookie-consent'
 import { applyCzechNbsp } from '@/lib/utils'
+
+import { PolicyLink } from './PolicyLink'
 
 type CookieConsentManagerProps = {
   gaTrackingId?: string
@@ -48,18 +47,20 @@ function removeGoogleAnalyticsCookies() {
 }
 
 function readStoredConsent(): ConsentState {
-  const storedRecord = parseCookieConsentRecord(window.localStorage.getItem(COOKIE_CONSENT_STORAGE_KEY))
+  const cookieConsent = readCookieConsent(document.cookie)
 
-  if (!storedRecord) {
-    return 'unknown'
+  if (cookieConsent) {
+    return cookieConsent
   }
 
-  if (isCookieConsentExpired(storedRecord)) {
-    window.localStorage.removeItem(COOKIE_CONSENT_STORAGE_KEY)
-    return 'unknown'
+  const legacyConsent = readLegacyCookieConsentFromStorage()
+
+  if (legacyConsent) {
+    writeCookieConsent(legacyConsent)
+    return legacyConsent
   }
 
-  return storedRecord.status
+  return 'unknown'
 }
 
 function setGaDisabledFlag(trackingId: string, value: boolean) {
@@ -163,7 +164,7 @@ export function CookieConsentManager({ gaTrackingId, showBannerPreview = false }
   const shouldShowBanner = shouldExposeConsentUi && isHydrated && (consentState === 'unknown' || isSettingsOpen)
 
   const updateConsent = (nextState: CookieConsentStatus) => {
-    window.localStorage.setItem(COOKIE_CONSENT_STORAGE_KEY, serializeCookieConsentRecord(nextState))
+    writeCookieConsent(nextState)
     setConsentState(nextState)
     setIsSettingsOpen(false)
   }
@@ -196,12 +197,12 @@ export function CookieConsentManager({ gaTrackingId, showBannerPreview = false }
                     </p>
                   </div>
                   <p className='text-xs leading-relaxed text-[#d4c5abb3]'>
-                    <Link
+                    <PolicyLink
                       href='/cookies'
                       className='ui-surface-hover border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
                     >
                       {applyCzechNbsp(COOKIE_NOTICE.banner.detailsLabel)}
-                    </Link>
+                    </PolicyLink>
                   </p>
                   {isPreviewWithoutAnalytics ? (
                     <p className='text-xs leading-relaxed text-[#ffcf42cc]'>

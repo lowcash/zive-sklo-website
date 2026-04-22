@@ -3,12 +3,13 @@
 import type { ChangeEvent, FormEvent } from 'react'
 import { startTransition, useActionState, useEffect, useRef, useState } from 'react'
 
-import Link from 'next/link'
-
 import { CONTACT } from '@/lib/content'
+import { applyCzechNbsp } from '@/lib/utils'
 
 import type { ContactActionState } from '@/app/actions/contact'
 import { submitContactAction } from '@/app/actions/contact'
+
+import { PolicyLink } from './PolicyLink'
 
 const initialContactActionState: ContactActionState = {
   status: 'idle',
@@ -394,19 +395,18 @@ export function ContactForm() {
             </svg>
           </span>
           <span className='leading-relaxed transition-colors duration-300 group-hover:text-[#fff1cd]'>
-            {CONTACT.fields.gdpr.label} *
+            {applyCzechNbsp(CONTACT.fields.gdpr.label)} *
           </span>
         </label>
-        <p className='pl-8 text-xs leading-relaxed text-[#d4c5abb3]'>
-          {CONTACT.fields.gdpr.detailsText}{' '}
-          <Link
+        <div className='pl-8 text-xs leading-relaxed text-[#d4c5abb3]'>
+          <p>{applyCzechNbsp(CONTACT.fields.gdpr.detailsText)}</p>
+          <PolicyLink
             href={CONTACT.fields.gdpr.detailsHref}
-            className='ui-surface-hover border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
+            className='ui-surface-hover mt-1 inline-flex border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
           >
-            {CONTACT.fields.gdpr.detailsLabel}
-          </Link>
-          .
-        </p>
+            {applyCzechNbsp(CONTACT.fields.gdpr.detailsLabel)}
+          </PolicyLink>
+        </div>
         {getFieldError('gdpr') && (
           <p id='error-gdpr' role='alert' className='text-sm text-red-300'>
             {getFieldError('gdpr')}

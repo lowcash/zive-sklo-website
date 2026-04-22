@@ -347,7 +347,7 @@ export const CONTACT = {
     },
     gdpr: {
       label: 'Souhlasím se zpracováním osobních údajů pro vyřízení poptávky',
-      detailsText: 'Vaše údaje použijeme pouze pro vyřízení poptávky a navazující komunikaci k dané akci.',
+      detailsText: 'Údaje použijeme jen pro vyřízení poptávky a navazující komunikaci k akci.',
       detailsLabel: 'Zásady ochrany osobních údajů',
       detailsHref: '/ochrana-osobnich-udaju',
       required: true,
@@ -401,15 +401,15 @@ export const COOKIE_NOTICE = {
     eyebrow: 'Informace o cookies',
     title: 'Zásady cookies',
     intro:
-      'Na webu Živé Sklo používáme jen nezbytné uložení volby souhlasu v prohlížeči a po vašem svolení také Google Analytics pro základní měření návštěvnosti.',
+      'Na webu Živé Sklo používáme nezbytnou cookie pro zapamatování vaší volby a po vašem svolení také Google Analytics pro základní měření návštěvnosti.',
     sections: [
       {
-        title: 'Nezbytné úložiště',
-        description: 'Bez této položky nedokážeme zapamatovat, zda jste analytiku povolili nebo odmítli.',
+        title: 'Cookie pro zapamatování volby',
+        description: 'Tato cookie si pamatuje pouze to, zda jste povolili měření návštěvnosti.',
         items: [
-          'ukládá pouze stav vašeho souhlasu v prohlížeči',
-          'souhlas obnovujeme nejpozději po 180 dnech nebo po smazání dat prohlížeče',
-          'nejde o reklamní ani marketingový nástroj',
+          'ukládá pouze stav vašeho souhlasu',
+          'platí nejdéle 180 dní, pak se zeptáme znovu',
+          'nepoužívá se k reklamě ani měření návštěvnosti',
         ],
       },
       {
@@ -418,7 +418,7 @@ export const COOKIE_NOTICE = {
           'Po vašem souhlasu načteme službu Google Analytics 4, která nám pomáhá vyhodnocovat návštěvnost a používání jednotlivých částí webu.',
         items: [
           'nástroj se nespustí, dokud ho sami nepovolíte',
-          'nepoužíváme jej pro reklamní personalizaci ani remarketing',
+          'v aktuálním nastavení nepoužíváme reklamní personalizaci ani propojení pro Google Ads',
           'svůj souhlas můžete kdykoli změnit přes odkaz Nastavení cookies ve footeru',
         ],
       },

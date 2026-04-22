@@ -24,7 +24,19 @@ export const metadata: Metadata = {
   },
 }
 
-export default function CookiesPage() {
+type CookiesPageProps = {
+  searchParams?: Promise<{
+    returnTo?: string | string[]
+  }>
+}
+
+export default async function CookiesPage({ searchParams }: CookiesPageProps) {
+  const resolvedSearchParams = searchParams ? await searchParams : undefined
+  const returnTo =
+    typeof resolvedSearchParams?.returnTo === 'string' && resolvedSearchParams.returnTo.startsWith('/')
+      ? resolvedSearchParams.returnTo
+      : '/'
+
   return (
     <main className='bg-surface-dark min-h-screen pt-28 pb-20 md:pt-36 md:pb-28'>
       <Section spacing='md'>
@@ -32,10 +44,10 @@ export default function CookiesPage() {
           <div className='space-y-6 border border-[#50453226] bg-[#1c1b1b] p-8 md:p-10'>
             <p>
               <Link
-                href='/'
+                href={returnTo}
                 className='ui-surface-hover border-b border-[#6c5a38] text-sm text-[#FFD79B] hover:border-[#FFD79B]'
               >
-                Zpět na hlavní stránku
+                Zpět na web Živé Sklo
               </Link>
             </p>
             <p className='font-label text-xs tracking-[0.22em] text-[#ffcf42cc] uppercase'>
@@ -82,12 +94,12 @@ export default function CookiesPage() {
           <div className='border border-[#50453226] bg-[#1c1b1b] p-8 text-sm leading-relaxed text-[#E5E2E1CC] md:p-10'>
             <p>{applyCzechNbsp(COOKIE_NOTICE.page.contactNote)}</p>
             <p className='mt-4'>
-              <Link
+              <a
                 href='mailto:info@zivesklo.cz'
                 className='ui-surface-hover border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
               >
                 info@zivesklo.cz
-              </Link>
+              </a>
             </p>
           </div>
         </Container>

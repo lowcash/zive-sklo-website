@@ -1,14 +1,15 @@
 {
-  "cookies": [],
-  "origins": [
+  "cookies": [
     {
-      "origin": "http://127.0.0.1:3102",
-      "localStorage": [
-        {
-          "name": "zive-sklo-cookie-consent",
-          "value": "{\"status\":\"declined\",\"updatedAt\":9999999999999}"
-        }
-      ]
+      "name": "zive-sklo-cookie-consent",
+      "value": "declined",
+      "domain": "127.0.0.1",
+      "path": "/",
+      "expires": 253402300799,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
     }
-  ]
+  ],
+  "origins": []
 }

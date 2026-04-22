@@ -1,11 +1,10 @@
-import Link from 'next/link'
-
 import { FOOTER } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
 
 import { Container } from '@/ui/core'
 
 import { CookieSettingsButton } from './CookieSettingsButton'
+import { PolicyLink } from './PolicyLink'
 
 /**
  * FooterSection - RSC (Server Component)
@@ -82,20 +81,20 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
                 <p className='text-sm leading-relaxed text-[#E5E2E199]'>{applyCzechNbsp(FOOTER.legal.note)}</p>
               ) : null}
               <div className='flex flex-wrap items-center gap-x-5 gap-y-2 text-sm'>
-                <Link
+                <PolicyLink
                   href={FOOTER.legal.privacyHref}
                   className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
                 >
                   {applyCzechNbsp(FOOTER.legal.privacyLabel)}
-                </Link>
+                </PolicyLink>
                 {showCookieInformation ? (
                   <>
-                    <Link
+                    <PolicyLink
                       href={FOOTER.legal.cookiesHref}
                       className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
                     >
                       {applyCzechNbsp(FOOTER.legal.cookiesLabel)}
-                    </Link>
+                    </PolicyLink>
                     <CookieSettingsButton
                       label={FOOTER.legal.settingsLabel}
                       className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
