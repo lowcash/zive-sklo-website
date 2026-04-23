@@ -1,7 +1,7 @@
-import { Container } from '@/ui/core'
-
 import { OFFER } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
+
+import { Container } from '@/ui/core'
 
 /**
  * OfferSection - RSC (Server Component)

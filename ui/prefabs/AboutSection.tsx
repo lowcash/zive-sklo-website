@@ -1,9 +1,9 @@
 import Image from 'next/image'
 
-import { Container, Section } from '@/ui/core'
-
 import { ABOUT } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
+
+import { Container, Section } from '@/ui/core'
 
 /**
  * AboutSection - RSC (Server Component)

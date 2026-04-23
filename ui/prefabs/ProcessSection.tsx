@@ -1,7 +1,7 @@
-import { Container, Section } from '@/ui/core'
-
 import { PROCESS } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
+
+import { Container, Section } from '@/ui/core'
 
 import { ProcessSteps } from './ProcessSteps'
 

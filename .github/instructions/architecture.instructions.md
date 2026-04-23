@@ -13,11 +13,11 @@ Use framework-specific instruction files (for example `next-app-router.instructi
 
 Organize components into logical layers to prevent mixing concerns:
 
-| Layer | Unit | Purpose | Constraints |
-|-------|------|---------|-------------|
-| **UI Layer** | `ui/components/` | Base styled components (buttons, cards, containers) | Zero business logic; pure presentation |
-| **Prefab Layer** | `ui/prefabs/` | Page-section composites | Compose UI components; no raw className styling |
-| **Layout Layer** | `ui/layout/` | Structure wrappers and orchestration boundaries | Pure composition; no feature-specific styling |
+| Layer            | Unit             | Purpose                                             | Constraints                                     |
+| ---------------- | ---------------- | --------------------------------------------------- | ----------------------------------------------- |
+| **UI Layer**     | `ui/components/` | Base styled components (buttons, cards, containers) | Zero business logic; pure presentation          |
+| **Prefab Layer** | `ui/prefabs/`    | Page-section composites                             | Compose UI components; no raw className styling |
+| **Layout Layer** | `ui/layout/`     | Structure wrappers and orchestration boundaries     | Pure composition; no feature-specific styling   |
 
 **Rule**: Prefabs compose UI components. Never define raw styling in prefabs.
 
@@ -25,11 +25,11 @@ Organize components into logical layers to prevent mixing concerns:
 
 Clear separation of state ownership:
 
-| State Type | Owner | Example |
-|----------|-------|---------|
-| **Server state** | Data fetching layer | Page content, metadata |
+| State Type       | Owner                 | Example                           |
+| ---------------- | --------------------- | --------------------------------- |
+| **Server state** | Data fetching layer   | Page content, metadata            |
 | **Engine state** | Client root component | Current section, menu open/closed |
-| **Local state** | Feature component | Form input, dropdown toggled |
+| **Local state**  | Feature component     | Form input, dropdown toggled      |
 
 **Best Practice**: Centralize engine state in one client orchestrator and pass state downward.
 

@@ -54,9 +54,7 @@ test.describe('ScrollToTop button', () => {
     await expect(btn).toHaveAttribute('tabindex', '-1')
 
     // Inspect pointer-events via computed style workaround
-    const pointerEvents = await btn.evaluate(
-      (el) => getComputedStyle(el.closest('[style]') ?? el).pointerEvents
-    )
+    const pointerEvents = await btn.evaluate((el) => getComputedStyle(el.closest('[style]') ?? el).pointerEvents)
     expect(pointerEvents).toBe('none')
   })
 })

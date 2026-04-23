@@ -1,7 +1,7 @@
-import { Container, Section } from '@/ui/core'
-
 import { CONTACT } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
+
+import { Container, Section } from '@/ui/core'
 
 import { ContactForm } from './ContactForm'
 

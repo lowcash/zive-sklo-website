@@ -9,20 +9,16 @@ test.describe('A11y smoke', () => {
     const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze()
 
     const seriousOrCritical = result.violations.filter(
-      (violation) => violation.impact === 'serious' || violation.impact === 'critical'
+      (violation) => violation.impact === 'serious' || violation.impact === 'critical',
     )
 
     // Temporary exception: current design still carries known color-contrast debt.
     // Keep this smoke test strict for all other serious/critical violations.
-    const actionableViolations = seriousOrCritical.filter(
-      (violation) => violation.id !== 'color-contrast'
-    )
+    const actionableViolations = seriousOrCritical.filter((violation) => violation.id !== 'color-contrast')
 
     expect(
       actionableViolations,
-      actionableViolations
-        .map((violation) => `${violation.id}: ${violation.description}`)
-        .join('\n')
+      actionableViolations.map((violation) => `${violation.id}: ${violation.description}`).join('\n'),
     ).toEqual([])
   })
 })

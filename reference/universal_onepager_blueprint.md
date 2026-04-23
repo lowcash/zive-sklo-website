@@ -105,8 +105,8 @@ Raw HTML with `className`/`style` is only permitted in these scenarios:
 Instead of:
 
 ```jsx
-<div className="mb-16 space-y-4 text-center">
-  <Heading level={2} size="4xl">
+<div className='mb-16 space-y-4 text-center'>
+  <Heading level={2} size='4xl'>
     {title}
   </Heading>
   <Text>{subtitle}</Text>
@@ -116,8 +116,8 @@ Instead of:
 Use semantic core composition (once Layout API is extended with `SectionHeading` or `CenteredStack`):
 
 ```jsx
-<SectionHeading align="center" spacing="lg">
-  <Heading level={2} size="4xl">
+<SectionHeading align='center' spacing='lg'>
+  <Heading level={2} size='4xl'>
     {title}
   </Heading>
   <Text>{subtitle}</Text>

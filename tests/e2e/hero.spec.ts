@@ -22,15 +22,11 @@ test.describe('Hero section — desktop', () => {
   test('badges fit in a single row on desktop', async ({ page }) => {
     // Locate all badge elements (spans inside the badges container)
     // Simpler: check that no badge wraps to a second line by comparing top offset
-    const badgeEls = page
-      .locator('section#top span')
-      .filter({ hasText: /akce|škol|firem|svatebn/i })
+    const badgeEls = page.locator('section#top span').filter({ hasText: /akce|škol|firem|svatebn/i })
     const count = await badgeEls.count()
     if (count < 2) return // no badges rendered, skip
 
-    const boxes = await Promise.all(
-      Array.from({ length: count }, (_, i) => badgeEls.nth(i).boundingBox())
-    )
+    const boxes = await Promise.all(Array.from({ length: count }, (_, i) => badgeEls.nth(i).boundingBox()))
     const validBoxes = boxes.filter(Boolean) as {
       x: number
       y: number
