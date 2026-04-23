@@ -17,8 +17,8 @@
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:e2e:baseline": "playwright test tests/e2e/hero.spec.ts tests/e2e/navigation.spec.ts tests/e2e/a11y-smoke.spec.ts tests/e2e/cookie-consent.spec.ts",
-    "test:e2e:baseline:ci": "mkdir -p ./test-results && playwright test tests/e2e/hero.spec.ts tests/e2e/navigation.spec.ts tests/e2e/a11y-smoke.spec.ts tests/e2e/cookie-consent.spec.ts --reporter=json > ./test-results/playwright-baseline.json",
+    "test:e2e:baseline": "playwright test tests/e2e/hero.spec.ts tests/e2e/navigation.spec.ts tests/e2e/a11y-smoke.spec.ts tests/e2e/cookie-consent.spec.ts tests/e2e/seo.spec.ts",
+    "test:e2e:baseline:ci": "mkdir -p ./test-results && playwright test tests/e2e/hero.spec.ts tests/e2e/navigation.spec.ts tests/e2e/a11y-smoke.spec.ts tests/e2e/cookie-consent.spec.ts tests/e2e/seo.spec.ts --reporter=json > ./test-results/playwright-baseline.json",
     "analyze:unused": "knip --config knip.json --no-exit-code",
     "analyze:unused:strict": "knip --config knip.json",
     "perf:lighthouse": "npm run perf:lighthouse:desktop && npm run perf:lighthouse:mobile",
@@ -33,6 +33,7 @@
     "next": "^16.2.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "schema-dts": "^2.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

@@ -12,14 +12,6 @@ export type ContactActionState = {
   fieldErrors: Record<string, string>
 }
 
-function getPublicRequestCode(requestId: string) {
-  if (!requestId || requestId === 'unknown') {
-    return null
-  }
-
-  return requestId.slice(0, 36)
-}
-
 function getSendFailureMessage(reason: 'missing-env' | 'transport-error', requestId: string) {
   const publicCode = getPublicRequestCode(requestId)
 
@@ -32,6 +24,14 @@ function getSendFailureMessage(reason: 'missing-env' | 'transport-error', reques
   return publicCode
     ? `Odeslání se nepodařilo. Kontaktujte nás prosím telefonicky. Kód: ${publicCode}`
     : 'Odeslání se nepodařilo. Kontaktujte nás prosím telefonicky.'
+}
+
+function getPublicRequestCode(requestId: string) {
+  if (!requestId || requestId === 'unknown') {
+    return null
+  }
+
+  return requestId.slice(0, 36)
 }
 
 function logSendFailure(input: {

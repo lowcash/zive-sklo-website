@@ -1,15 +1,39 @@
 import { ImageResponse } from 'next/og'
 
-import { TITLE } from '@/lib/content'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
 
-export const alt = TITLE
+import {
+  OPEN_GRAPH_IMAGE_ALT,
+  OPEN_GRAPH_IMAGE_BRAND_LABEL,
+  OPEN_GRAPH_IMAGE_DESCRIPTION,
+  OPEN_GRAPH_IMAGE_FOOTER_LOCATION,
+  OPEN_GRAPH_IMAGE_HEADLINE,
+  OPEN_GRAPH_IMAGE_SIZE,
+  SITE_URL,
+} from '@/lib/site-config'
+
+const MANROPE_MEDIUM_FONT = readFile(join(process.cwd(), 'app/assets/fonts/Manrope-Medium.ttf'))
+const MANROPE_BOLD_FONT = readFile(join(process.cwd(), 'app/assets/fonts/Manrope-Bold.ttf'))
+
+export const alt = OPEN_GRAPH_IMAGE_ALT
 export const contentType = 'image/png'
-export const size = {
-  width: 1200,
-  height: 630,
-}
+export const size = OPEN_GRAPH_IMAGE_SIZE
 
-export default function OpenGraphImage() {
+const SITE_HOST = new URL(SITE_URL).host
+
+export default async function OpenGraphImage() {
+  const mediumFontBuffer = await MANROPE_MEDIUM_FONT
+  const boldFontBuffer = await MANROPE_BOLD_FONT
+  const mediumFontData = mediumFontBuffer.buffer.slice(
+    mediumFontBuffer.byteOffset,
+    mediumFontBuffer.byteOffset + mediumFontBuffer.byteLength,
+  )
+  const boldFontData = boldFontBuffer.buffer.slice(
+    boldFontBuffer.byteOffset,
+    boldFontBuffer.byteOffset + boldFontBuffer.byteLength,
+  )
+
   return new ImageResponse(
     <div
       style={{
@@ -21,6 +45,7 @@ export default function OpenGraphImage() {
         background:
           'radial-gradient(circle at 17% 20%, rgba(255, 191, 0, 0.3), transparent 46%), radial-gradient(circle at 80% 24%, rgba(154, 204, 243, 0.26), transparent 44%), linear-gradient(135deg, #101010 0%, #161616 100%)',
         color: '#f4f0ea',
+        fontFamily: 'Manrope',
         padding: '56px 64px',
       }}
     >
@@ -34,16 +59,12 @@ export default function OpenGraphImage() {
           fontWeight: 700,
         }}
       >
-        ZIVE SKLO
+        {OPEN_GRAPH_IMAGE_BRAND_LABEL}
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18, maxWidth: 920 }}>
-        <div style={{ fontSize: 72, lineHeight: 1.04, fontWeight: 700 }}>
-          Mobilni sklarska dilna
-        </div>
-        <div style={{ fontSize: 34, lineHeight: 1.24, opacity: 0.94 }}>
-          Ohen, sklo a zazitek na firemni akce, skoly i mestske slavnosti.
-        </div>
+        <div style={{ fontSize: 72, lineHeight: 1.04, fontWeight: 700 }}>{OPEN_GRAPH_IMAGE_HEADLINE}</div>
+        <div style={{ fontSize: 34, lineHeight: 1.24, opacity: 0.94 }}>{OPEN_GRAPH_IMAGE_DESCRIPTION}</div>
       </div>
 
       <div
@@ -55,10 +76,26 @@ export default function OpenGraphImage() {
           opacity: 0.95,
         }}
       >
-        <div>akce.zivesklo.cz</div>
-        <div style={{ color: '#ffbf00', fontWeight: 700 }}>VSETIN</div>
+        <div>{SITE_HOST}</div>
+        <div style={{ color: '#ffbf00', fontWeight: 700 }}>{OPEN_GRAPH_IMAGE_FOOTER_LOCATION}</div>
       </div>
     </div>,
-    size
+    {
+      ...size,
+      fonts: [
+        {
+          name: 'Manrope',
+          data: mediumFontData,
+          style: 'normal',
+          weight: 500,
+        },
+        {
+          name: 'Manrope',
+          data: boldFontData,
+          style: 'normal',
+          weight: 700,
+        },
+      ],
+    },
   )
 }

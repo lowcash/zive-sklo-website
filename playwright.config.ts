@@ -20,6 +20,7 @@ export default defineConfig({
     env: {
       E2E_MOCK_CONTACT: 'true',
       NEXT_PUBLIC_GA_TRACKING_ID: 'G-TEST123456',
+      SITE_ENV: 'production',
     },
   },
   projects: [

@@ -1,12 +1,12 @@
 import type { MetadataRoute } from 'next'
 
-import { SITE_URL } from '@/lib/content'
+import { SITE_URL } from '@/lib/site-config'
 
-import { getProductionSiteUrl, isProductionLikeEnvironment } from './seo-env'
+import { getCanonicalSiteUrl, isProductionLikeEnvironment } from './seo-env'
 
 export default function robots(): MetadataRoute.Robots {
   const isProductionLike = isProductionLikeEnvironment()
-  const siteUrl = getProductionSiteUrl(SITE_URL)
+  const siteUrl = getCanonicalSiteUrl(SITE_URL)
 
   return {
     rules: isProductionLike

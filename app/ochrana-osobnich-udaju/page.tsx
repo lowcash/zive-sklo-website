@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import { PRIVACY_NOTICE, SITE_URL } from '@/lib/content'
+import { PRIVACY_NOTICE } from '@/lib/content'
+import { resolveReturnToFromSearchParams } from '@/lib/return-to'
+import { CONTACT_EMAIL, CONTACT_EMAIL_HREF, SITE_NAME, SITE_URL } from '@/lib/site-config'
 import { applyCzechNbsp } from '@/lib/utils'
 
 import { Container, Section } from '@/ui/core'
 
 export const metadata: Metadata = {
-  title: `${PRIVACY_NOTICE.page.title} | Živé Sklo`,
+  title: `${PRIVACY_NOTICE.page.title} | ${SITE_NAME}`,
   description: PRIVACY_NOTICE.page.intro,
   alternates: {
     canonical: '/ochrana-osobnich-udaju',
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: `${PRIVACY_NOTICE.page.title} | Živé Sklo`,
+    title: `${PRIVACY_NOTICE.page.title} | ${SITE_NAME}`,
     description: PRIVACY_NOTICE.page.intro,
     url: `${SITE_URL}/ochrana-osobnich-udaju`,
     type: 'article',
@@ -31,11 +33,7 @@ type PrivacyPageProps = {
 }
 
 export default async function PrivacyPage({ searchParams }: PrivacyPageProps) {
-  const resolvedSearchParams = searchParams ? await searchParams : undefined
-  const returnTo =
-    typeof resolvedSearchParams?.returnTo === 'string' && resolvedSearchParams.returnTo.startsWith('/')
-      ? resolvedSearchParams.returnTo
-      : '/'
+  const returnTo = await resolveReturnToFromSearchParams(searchParams)
 
   return (
     <main className='bg-surface-dark min-h-screen pt-28 pb-20 md:pt-36 md:pb-28'>
@@ -95,10 +93,10 @@ export default async function PrivacyPage({ searchParams }: PrivacyPageProps) {
             <p>{applyCzechNbsp(PRIVACY_NOTICE.page.contactNote)}</p>
             <p className='mt-4'>
               <a
-                href='mailto:info@zivesklo.cz'
+                href={CONTACT_EMAIL_HREF}
                 className='ui-surface-hover border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
               >
-                info@zivesklo.cz
+                {CONTACT_EMAIL}
               </a>
             </p>
           </div>

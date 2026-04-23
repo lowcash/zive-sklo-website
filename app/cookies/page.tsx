@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import { COOKIE_NOTICE, SITE_URL } from '@/lib/content'
+import { COOKIE_NOTICE } from '@/lib/content'
+import { resolveReturnToFromSearchParams } from '@/lib/return-to'
+import { CONTACT_EMAIL, CONTACT_EMAIL_HREF, SITE_NAME, SITE_URL } from '@/lib/site-config'
 import { applyCzechNbsp } from '@/lib/utils'
 
 import { Container, Section } from '@/ui/core'
 
 export const metadata: Metadata = {
-  title: `${COOKIE_NOTICE.page.title} | Živé Sklo`,
+  title: `${COOKIE_NOTICE.page.title} | ${SITE_NAME}`,
   description: COOKIE_NOTICE.page.intro,
   alternates: {
     canonical: '/cookies',
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: `${COOKIE_NOTICE.page.title} | Živé Sklo`,
+    title: `${COOKIE_NOTICE.page.title} | ${SITE_NAME}`,
     description: COOKIE_NOTICE.page.intro,
     url: `${SITE_URL}/cookies`,
     type: 'article',
@@ -31,11 +33,7 @@ type CookiesPageProps = {
 }
 
 export default async function CookiesPage({ searchParams }: CookiesPageProps) {
-  const resolvedSearchParams = searchParams ? await searchParams : undefined
-  const returnTo =
-    typeof resolvedSearchParams?.returnTo === 'string' && resolvedSearchParams.returnTo.startsWith('/')
-      ? resolvedSearchParams.returnTo
-      : '/'
+  const returnTo = await resolveReturnToFromSearchParams(searchParams)
 
   return (
     <main className='bg-surface-dark min-h-screen pt-28 pb-20 md:pt-36 md:pb-28'>
@@ -95,10 +93,10 @@ export default async function CookiesPage({ searchParams }: CookiesPageProps) {
             <p>{applyCzechNbsp(COOKIE_NOTICE.page.contactNote)}</p>
             <p className='mt-4'>
               <a
-                href='mailto:info@zivesklo.cz'
+                href={CONTACT_EMAIL_HREF}
                 className='ui-surface-hover border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
               >
-                info@zivesklo.cz
+                {CONTACT_EMAIL}
               </a>
             </p>
           </div>

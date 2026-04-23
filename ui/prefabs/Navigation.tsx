@@ -3,8 +3,9 @@
 import type { MouseEvent } from 'react'
 import { useEffect, useState } from 'react'
 
-import { BRAND, NAV } from '@/lib/content'
+import { NAV } from '@/lib/content'
 import { resolveActiveHref, setSectionHash } from '@/lib/navigation-core-adapter'
+import { BRAND } from '@/lib/site-config'
 import { applyCzechNbsp, scrollToHashWithNavOffset } from '@/lib/utils'
 
 import { MobileMenu } from './MobileMenu'

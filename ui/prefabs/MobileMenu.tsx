@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
-import { BRAND, NAV } from '@/lib/content'
+import { NAV } from '@/lib/content'
+import { BRAND } from '@/lib/site-config'
 import { applyCzechNbsp, scrollToHashWithNavOffset } from '@/lib/utils'
 
 /**
@@ -36,51 +37,50 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
   const toggleMenu = () => setIsOpen(!isOpen)
   const closeMenu = () => setIsOpen(false)
 
-  const handleAnchorNavigation =
-    (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
-      event.preventDefault()
-      closeMenu()
+  const handleAnchorNavigation = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    closeMenu()
 
-      window.setTimeout(() => {
-        scrollToHashWithNavOffset(href)
-      }, 0)
-    }
+    window.setTimeout(() => {
+      scrollToHashWithNavOffset(href)
+    }, 0)
+  }
 
   const menuOverlay = (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          id="mobile-nav-overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Navigace"
+          id='mobile-nav-overlay'
+          role='dialog'
+          aria-modal='true'
+          aria-label='Navigace'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-70 flex min-h-dvh w-screen flex-col items-center justify-center bg-[rgba(28,27,27,0.72)] backdrop-blur-[20px]"
+          className='fixed inset-0 z-70 flex min-h-dvh w-screen flex-col items-center justify-center bg-[rgba(28,27,27,0.72)] backdrop-blur-[20px]'
         >
-          <div className="absolute inset-x-0 top-0 mx-auto flex max-w-360 items-center justify-between px-6 py-6 md:px-10">
+          <div className='absolute inset-x-0 top-0 mx-auto flex max-w-360 items-center justify-between px-6 py-6 md:px-10'>
             <a
-              href="#top"
+              href='#top'
               onClick={handleAnchorNavigation('#top')}
-              className="font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors hover:text-[#FFD79B]"
-              aria-label="Přejít na začátek stránky"
+              className='font-display text-xl tracking-tighter text-[#E5E2E1] transition-colors hover:text-[#FFD79B]'
+              aria-label='Přejít na začátek stránky'
             >
               {applyCzechNbsp(BRAND.name)}
             </a>
 
             <button
               onClick={closeMenu}
-              className="flex h-8 w-8 items-center justify-center text-[#E5E2E1]"
-              aria-label="Zavřít navigaci"
+              className='flex h-8 w-8 items-center justify-center text-[#E5E2E1]'
+              aria-label='Zavřít navigaci'
             >
-              <span className="material-symbols-outlined text-[24px]! leading-none">close</span>
+              <span className='material-symbols-outlined text-[24px]! leading-none'>close</span>
             </button>
           </div>
 
           {/* mt-16 shifts items below the visual centre – feels more grounded */}
-          <nav className="mt-16 flex flex-col items-center gap-10">
+          <nav className='mt-16 flex flex-col items-center gap-10'>
             {NAV.links.map((link, index) => (
               <motion.a
                 key={link.href}
@@ -103,7 +103,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: NAV.links.length * 0.06, duration: 0.3 }}
-              className="ui-cta-primary font-display mt-4 px-8 py-4 font-bold"
+              className='ui-cta-primary font-display mt-4 px-8 py-4 font-bold'
             >
               {applyCzechNbsp(NAV.ctaLabel)}
             </motion.a>
@@ -118,21 +118,17 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
       {/* Hamburger Button */}
       <button
         onClick={toggleMenu}
-        className="flex h-8 w-8 flex-col items-center justify-center gap-1.5"
+        className='flex h-8 w-8 flex-col items-center justify-center gap-1.5'
         aria-label={isOpen ? 'Zavřít navigaci' : 'Otevřít navigaci'}
         aria-expanded={isOpen}
-        aria-controls="mobile-nav-overlay"
+        aria-controls='mobile-nav-overlay'
       >
         <span
           className={`h-0.5 w-6 bg-[#E5E2E1] transition-transform duration-300 ${
             isOpen ? 'translate-y-2 rotate-45' : ''
           }`}
         />
-        <span
-          className={`h-0.5 w-6 bg-[#E5E2E1] transition-opacity duration-300 ${
-            isOpen ? 'opacity-0' : ''
-          }`}
-        />
+        <span className={`h-0.5 w-6 bg-[#E5E2E1] transition-opacity duration-300 ${isOpen ? 'opacity-0' : ''}`} />
         <span
           className={`h-0.5 w-6 bg-[#E5E2E1] transition-transform duration-300 ${
             isOpen ? '-translate-y-2 -rotate-45' : ''

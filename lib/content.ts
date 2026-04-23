@@ -2,33 +2,15 @@
  * Content constants for Živé Sklo website
  * All Czech copy, structured by section
  */
-
-export const SITE_URL = 'https://akce.zivesklo.cz'
-
-export const TITLE = 'Živé Sklo | Mobilní sklářská dílna pro akce, školy a firmy'
-
-export const DESCRIPTION =
-  'Mobilní sklářská dílna, která přijede až za vámi. Foukání skla naživo pro firemní akce, školy i městské slavnosti - hosté sledují práci skláře zblízka a odnášejí si vlastní skleněný výrobek.'
-
-export const KEYWORDS = [
-  'živé sklo',
-  'sklářská manufaktura',
-  'foukání skla',
-  'Vsetín',
-  'mobilní sklářská dílna',
-  'sklářská show',
-  'firemní akce',
-  'školní exkurze',
-  'vánoční trhy',
-  'teambuilding',
-  'skleněné ozdoby',
-  'sklář',
-]
-
-export const BRAND = {
-  name: 'ŽIVÉ SKLO',
-  tagline: 'Vsetínská mobilní manufaktura foukaného skla.',
-}
+import {
+  BRAND,
+  CONTACT_EMAIL,
+  CONTACT_EMAIL_HREF,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_HREF,
+  FACEBOOK_URL,
+  INSTAGRAM_URL,
+} from '@/lib/site-config'
 
 export const NAV = {
   links: [
@@ -290,14 +272,14 @@ export const CONTACT = {
     {
       icon: 'mail',
       label: 'E-mail',
-      value: 'info@zivesklo.cz',
-      href: 'mailto:info@zivesklo.cz',
+      value: CONTACT_EMAIL,
+      href: CONTACT_EMAIL_HREF,
     },
     {
       icon: 'phone_iphone',
       label: 'Telefon',
-      value: '+420 737 206 653',
-      href: 'tel:+420737206653',
+      value: CONTACT_PHONE_DISPLAY,
+      href: CONTACT_PHONE_HREF,
     },
   ],
   fields: {
@@ -314,7 +296,7 @@ export const CONTACT = {
     },
     phone: {
       label: 'Telefon',
-      placeholder: '+420 737 206 653',
+      placeholder: CONTACT_PHONE_DISPLAY,
       required: true,
       type: 'tel',
     },
@@ -360,19 +342,19 @@ export const FOOTER = {
   brand: BRAND,
   nav: NAV.links,
   contacts: [
-    { label: 'info@zivesklo.cz', href: 'mailto:info@zivesklo.cz' },
-    { label: '+420 737 206 653', href: 'tel:+420737206653' },
+    { label: CONTACT_EMAIL, href: CONTACT_EMAIL_HREF },
+    { label: CONTACT_PHONE_DISPLAY, href: CONTACT_PHONE_HREF },
   ],
   social: [
     {
       label: 'Instagram',
       value: '@zivesklo',
-      href: 'https://www.instagram.com/zivesklo/',
+      href: INSTAGRAM_URL,
     },
     {
       label: 'Facebook',
       value: 'Živé Sklo',
-      href: 'https://www.facebook.com/profile.php?id=61585612643034',
+      href: FACEBOOK_URL,
     },
   ],
   legal: {
@@ -448,8 +430,8 @@ export const PRIVACY_NOTICE = {
         title: 'Kdo údaje zpracovává',
         description: 'Správcem osobních údajů je Živé Sklo - Vlastimil Juřička.',
         items: [
-          'kontaktní e-mail: info@zivesklo.cz',
-          'telefon: +420 737 206 653',
+          `kontaktní e-mail: ${CONTACT_EMAIL}`,
+          `telefon: ${CONTACT_PHONE_DISPLAY}`,
           'v případě dotazů ke zpracování údajů nás můžete kontaktovat přímo těmito kanály',
         ],
       },

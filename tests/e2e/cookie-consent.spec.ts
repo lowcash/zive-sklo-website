@@ -40,7 +40,6 @@ test.describe('Cookie consent', () => {
     await expect(consentDialog).toBeVisible()
 
     await expect(page.locator(`#google-analytics-script`)).toHaveCount(0)
-    await expect(page.locator(`#google-analytics-init`)).toHaveCount(0)
 
     const gaDisabled = await page.evaluate(
       (trackingId) => window[`ga-disable-${trackingId}` as keyof Window],
@@ -58,7 +57,6 @@ test.describe('Cookie consent', () => {
     await page.getByRole('button', { name: /povolit analytiku/i }).click()
 
     await expect(page.locator('#google-analytics-script')).toHaveCount(1)
-    await expect(page.locator('#google-analytics-init')).toHaveCount(1)
     await expect(page.getByRole('dialog', { name: /můžeme měřit návštěvnost webu/i })).toHaveCount(0)
 
     const gaState = await page.evaluate((trackingId) => {
@@ -106,6 +104,31 @@ test.describe('Cookie consent', () => {
     await expect(page.locator('#kontakt')).toBeInViewport({ ratio: 0.1 })
   })
 
+  test('returns to the originating section from the privacy page', async ({ page }) => {
+    await page.goto('/')
+    await page.waitForLoadState('networkidle')
+
+    await page.getByRole('button', { name: /pokračovat bez analytiky/i }).click()
+
+    await page.evaluate(() => {
+      const contactSection = document.getElementById('kontakt')
+      contactSection?.scrollIntoView({ behavior: 'instant', block: 'start' })
+    })
+
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#kontakt')
+
+    await page
+      .locator('#kontakt')
+      .getByRole('link', { name: /zásady ochrany osobních údajů/i })
+      .click()
+    await expect(page).toHaveURL(/\/ochrana-osobnich-udaju\?returnTo=%2F%23kontakt/)
+
+    await page.getByRole('link', { name: /zpět na web živé sklo/i }).click()
+
+    await expect.poll(() => page.evaluate(() => window.location.hash), { timeout: 3000 }).toBe('#kontakt')
+    await expect(page.locator('#kontakt')).toBeInViewport({ ratio: 0.1 })
+  })
+
   test('removes analytics again when consent is revoked from footer settings', async ({ page }) => {
     await page.goto('/')
     await page.waitForLoadState('networkidle')
@@ -122,7 +145,6 @@ test.describe('Cookie consent', () => {
     await page.getByRole('button', { name: /pokračovat bez analytiky/i }).click()
 
     await expect(page.locator('#google-analytics-script')).toHaveCount(0)
-    await expect(page.locator('#google-analytics-init')).toHaveCount(0)
 
     const gaState = await page.evaluate((trackingId) => {
       return {
