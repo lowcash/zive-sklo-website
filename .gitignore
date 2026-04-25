@@ -40,3 +40,4 @@ temp/
 
 # Local plans and notes
 local/
+.audit.json
