@@ -14,6 +14,7 @@ import {
   SITE_AREA_SERVED,
   SITE_CATEGORY,
   SITE_COUNTRY_CODE,
+  SITE_ICO,
   SITE_KNOWS_ABOUT,
   SITE_LANGUAGE,
   SITE_LOCALE,
@@ -125,6 +126,7 @@ export const LOCAL_BUSINESS_JSON_LD: WithContext<LocalBusiness> = {
   areaServed: SITE_AREA_SERVED,
   priceRange: SITE_PRICE_RANGE,
   sameAs: SITE_SOCIAL_URLS,
+  taxID: SITE_ICO,
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: SITE_OFFER_CATALOG_NAME,

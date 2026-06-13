@@ -8,6 +8,7 @@ export type SiteConfig = {
     readonly countryCode: string
     readonly email: string
     readonly facebookUrl: `https://${string}`
+    readonly ico: string
     readonly instagramUrl: `https://${string}`
     readonly knowsAbout: readonly string[]
     readonly locality: string
@@ -77,6 +78,7 @@ export const SITE_CONFIG = {
     countryCode: 'CZ',
     areaServed: 'CZ',
     priceRange: '$$',
+    ico: '29657539',
     instagramUrl: 'https://www.instagram.com/zivesklo/',
     facebookUrl: 'https://www.facebook.com/profile.php?id=61585612643034',
     knowsAbout: [
@@ -128,6 +130,7 @@ export const SITE_OFFER_CATALOG_NAME = SITE_CONFIG.business.offerCatalogName
 export const SITE_COUNTRY_CODE = SITE_CONFIG.business.countryCode
 export const SITE_AREA_SERVED = SITE_CONFIG.business.areaServed
 export const SITE_PRICE_RANGE = SITE_CONFIG.business.priceRange
+export const SITE_ICO = SITE_CONFIG.business.ico
 export const INSTAGRAM_URL = SITE_CONFIG.business.instagramUrl
 export const FACEBOOK_URL = SITE_CONFIG.business.facebookUrl
 export const SITE_SOCIAL_URLS = [INSTAGRAM_URL, FACEBOOK_URL] as const

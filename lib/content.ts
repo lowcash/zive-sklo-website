@@ -10,6 +10,7 @@ import {
   CONTACT_PHONE_HREF,
   FACEBOOK_URL,
   INSTAGRAM_URL,
+  SITE_ICO,
 } from '@/lib/site-config'
 
 export const NAV = {
@@ -365,7 +366,7 @@ export const FOOTER = {
     cookiesLabel: 'Zásady cookies',
     settingsLabel: 'Nastavení cookies',
   },
-  copyrightOwner: 'Živé Sklo - Vlastimil Juřička',
+  copyrightOwner: `Živé Sklo - Vlastimil Juřička (IČO: ${SITE_ICO})`,
   copyrightRights: 'Všechna práva vyhrazena.',
 }
 
@@ -428,8 +429,9 @@ export const PRIVACY_NOTICE = {
     sections: [
       {
         title: 'Kdo údaje zpracovává',
-        description: 'Správcem osobních údajů je Živé Sklo - Vlastimil Juřička.',
+        description: `Správcem osobních údajů je Živé Sklo - Vlastimil Juřička, se sídlem Vsetín, IČO: ${SITE_ICO}.`,
         items: [
+          `IČO: ${SITE_ICO}`,
           `kontaktní e-mail: ${CONTACT_EMAIL}`,
           `telefon: ${CONTACT_PHONE_DISPLAY}`,
           'v případě dotazů ke zpracování údajů nás můžete kontaktovat přímo těmito kanály',
