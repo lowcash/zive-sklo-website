@@ -227,7 +227,7 @@ export const STATS = {
 
 export const GALLERY = {
   heading: 'Galerie zážitků - Živé sklo v akci',
-  hint: '← přetáhni pro více →',
+  hint: 'Posuňte galerii pro další záběry',
   alts: [
     'Sklář foukající skleněnou ozdobu v plameni',
     'Detail výroby – ruce umělce nad roztaveným sklem',
