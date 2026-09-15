@@ -11,11 +11,14 @@ export type SiteConfig = {
     readonly ico: string
     readonly instagramUrl: `https://${string}`
     readonly knowsAbout: readonly string[]
+    readonly legalName: string
     readonly locality: string
     readonly offerCatalogName: string
     readonly phoneDisplay: string
     readonly phoneE164: `+${string}`
+    readonly postalCode: string
     readonly priceRange: '$' | '$$' | '$$$'
+    readonly streetAddress: string
   }
   readonly category: string
   readonly description: string
@@ -73,12 +76,15 @@ export const SITE_CONFIG = {
     email: 'info@zivesklo.cz',
     phoneDisplay: '+420 737 206 653',
     phoneE164: '+420737206653',
+    legalName: 'Živé sklo s.r.o.',
+    streetAddress: 'Svornosti 1394',
+    postalCode: '755 01',
     locality: 'Vsetín',
     offerCatalogName: 'Sklářské programy Živého Skla',
     countryCode: 'CZ',
     areaServed: 'CZ',
     priceRange: '$$',
-    ico: '29657539',
+    ico: '29885370',
     instagramUrl: 'https://www.instagram.com/zivesklo/',
     facebookUrl: 'https://www.facebook.com/profile.php?id=61585612643034',
     knowsAbout: [
@@ -126,6 +132,13 @@ export const CONTACT_PHONE_DISPLAY = SITE_CONFIG.business.phoneDisplay
 export const CONTACT_PHONE_E164 = SITE_CONFIG.business.phoneE164
 export const CONTACT_PHONE_HREF = `tel:${CONTACT_PHONE_E164}` as const
 export const SITE_LOCALITY = SITE_CONFIG.business.locality
+export const SITE_STREET_ADDRESS = SITE_CONFIG.business.streetAddress
+export const SITE_POSTAL_CODE = SITE_CONFIG.business.postalCode
+export const SITE_LEGAL_NAME = SITE_CONFIG.business.legalName
+export const SITE_ADDRESS_DISPLAY =
+  `${SITE_CONFIG.business.streetAddress}, ${SITE_CONFIG.business.postalCode} ${SITE_CONFIG.business.locality}` as const
+export const SITE_MAPS_URL =
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(SITE_ADDRESS_DISPLAY)}` as const
 export const SITE_OFFER_CATALOG_NAME = SITE_CONFIG.business.offerCatalogName
 export const SITE_COUNTRY_CODE = SITE_CONFIG.business.countryCode
 export const SITE_AREA_SERVED = SITE_CONFIG.business.areaServed

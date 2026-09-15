@@ -10,7 +10,13 @@ import {
   CONTACT_PHONE_HREF,
   FACEBOOK_URL,
   INSTAGRAM_URL,
+  SITE_ADDRESS_DISPLAY,
   SITE_ICO,
+  SITE_LEGAL_NAME,
+  SITE_LOCALITY,
+  SITE_MAPS_URL,
+  SITE_POSTAL_CODE,
+  SITE_STREET_ADDRESS,
 } from '@/lib/site-config'
 
 export const NAV = {
@@ -275,12 +281,28 @@ export const CONTACT = {
       label: 'E-mail',
       value: CONTACT_EMAIL,
       href: CONTACT_EMAIL_HREF,
+      nowrap: true,
     },
     {
       icon: 'phone_iphone',
       label: 'Telefon',
       value: CONTACT_PHONE_DISPLAY,
       href: CONTACT_PHONE_HREF,
+      nowrap: true,
+    },
+    {
+      icon: 'location_on',
+      label: 'Sídlo',
+      value: SITE_STREET_ADDRESS,
+      secondary: `${SITE_POSTAL_CODE} ${SITE_LOCALITY}`,
+      href: SITE_MAPS_URL,
+      external: true,
+    },
+    {
+      icon: 'apartment',
+      label: 'Obchodní firma',
+      value: SITE_LEGAL_NAME,
+      secondary: `IČO\u00A0${SITE_ICO}`,
     },
   ],
   fields: {
@@ -345,6 +367,7 @@ export const FOOTER = {
   contacts: [
     { label: CONTACT_EMAIL, href: CONTACT_EMAIL_HREF },
     { label: CONTACT_PHONE_DISPLAY, href: CONTACT_PHONE_HREF },
+    { label: SITE_ADDRESS_DISPLAY, href: SITE_MAPS_URL, external: true },
   ],
   social: [
     {
@@ -366,7 +389,7 @@ export const FOOTER = {
     cookiesLabel: 'Zásady cookies',
     settingsLabel: 'Nastavení cookies',
   },
-  copyrightOwner: `Živé Sklo - Vlastimil Juřička (IČO: ${SITE_ICO})`,
+  copyrightOwner: `${SITE_LEGAL_NAME} (IČO: ${SITE_ICO})`,
   copyrightRights: 'Všechna práva vyhrazena.',
 }
 
@@ -429,9 +452,10 @@ export const PRIVACY_NOTICE = {
     sections: [
       {
         title: 'Kdo údaje zpracovává',
-        description: `Správcem osobních údajů je Živé Sklo - Vlastimil Juřička, se sídlem Vsetín, IČO: ${SITE_ICO}.`,
+        description: `Správcem osobních údajů je ${SITE_LEGAL_NAME}, se sídlem ${SITE_ADDRESS_DISPLAY}, IČO: ${SITE_ICO}.`,
         items: [
           `IČO: ${SITE_ICO}`,
+          `sídlo: ${SITE_ADDRESS_DISPLAY}`,
           `kontaktní e-mail: ${CONTACT_EMAIL}`,
           `telefon: ${CONTACT_PHONE_DISPLAY}`,
           'v případě dotazů ke zpracování údajů nás můžete kontaktovat přímo těmito kanály',
