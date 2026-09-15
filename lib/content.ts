@@ -281,14 +281,12 @@ export const CONTACT = {
       label: 'E-mail',
       value: CONTACT_EMAIL,
       href: CONTACT_EMAIL_HREF,
-      nowrap: true,
     },
     {
       icon: 'phone_iphone',
       label: 'Telefon',
       value: CONTACT_PHONE_DISPLAY,
       href: CONTACT_PHONE_HREF,
-      nowrap: true,
     },
     {
       icon: 'location_on',
