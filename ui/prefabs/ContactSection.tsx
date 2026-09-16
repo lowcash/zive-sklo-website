@@ -96,7 +96,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div className='@container w-full min-w-0 max-w-2xl flex-1 border border-[#50453226] bg-[#131313] p-6 md:p-8 lg:p-8 xl:max-w-[40rem] xl:p-10'>
+            <div className='@container w-full max-w-2xl min-w-0 flex-1 border border-[#50453226] bg-[#131313] p-6 md:p-8 lg:p-8 xl:max-w-[40rem] xl:p-10'>
               <ContactForm />
             </div>
           </div>
