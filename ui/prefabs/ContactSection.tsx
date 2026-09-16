@@ -11,9 +11,8 @@ import { ContactForm } from './ContactForm'
  * ContactSection - RSC (Server Component)
  * Contact form section (form validation as client leaf)
  *
- * Portrait sits in a fixed-width grid column whose height comes only from the
- * contact list (no in-flow image sizing), so the figure stays visible, never
- * taller than the details, and close to the text. Form on the right from lg.
+ * Contacts + portrait stay a tight w-fit group (no justify-between gap).
+ * Form grows on the right but caps around max-w-2xl so it does not dominate.
  */
 export function ContactSection() {
   return (
@@ -27,8 +26,8 @@ export function ContactSection() {
             <p className='text-lg leading-relaxed text-[#e5e2e199]'>{applyCzechNbsp(CONTACT.subtitle)}</p>
           </div>
 
-          <div className='flex flex-col gap-12 lg:flex-row lg:items-start lg:gap-16 xl:gap-24'>
-            <div className='grid w-fit max-w-full shrink-0 grid-cols-[auto_10rem] items-stretch gap-x-5 sm:grid-cols-[auto_11rem] sm:gap-x-6 md:grid-cols-[auto_12rem] md:gap-x-8 lg:grid-cols-[auto_11rem] xl:grid-cols-[auto_12rem]'>
+          <div className='flex flex-col items-start gap-12 lg:flex-row lg:gap-14 xl:gap-16'>
+            <div className='grid w-fit max-w-full grid-cols-[auto_10rem] items-stretch gap-x-5 sm:grid-cols-[auto_11rem] sm:gap-x-6 md:grid-cols-[auto_12rem] md:gap-x-8 lg:grid-cols-[auto_15rem] xl:grid-cols-[auto_16rem]'>
               <div className='relative z-10 min-w-0 space-y-6 sm:space-y-8'>
                 {CONTACT.details.map((detail) => {
                   const nowrap = 'nowrap' in detail && detail.nowrap
@@ -92,12 +91,12 @@ export function ContactSection() {
                     WebkitMaskImage: 'linear-gradient(to bottom, #000 72%, transparent 100%)',
                   }}
                   quality={90}
-                  sizes='(min-width: 1280px) 12rem, (min-width: 1024px) 11rem, (min-width: 768px) 12rem, (min-width: 640px) 11rem, 10rem'
+                  sizes='(min-width: 1280px) 16rem, (min-width: 1024px) 15rem, (min-width: 768px) 12rem, (min-width: 640px) 11rem, 10rem'
                 />
               </div>
             </div>
 
-            <div className='@container w-full min-w-0 flex-1 border border-[#50453226] bg-[#131313] p-6 md:p-8 lg:p-8'>
+            <div className='@container w-full min-w-0 max-w-2xl flex-1 border border-[#50453226] bg-[#131313] p-6 md:p-8 lg:p-8 xl:max-w-[40rem] xl:p-10'>
               <ContactForm />
             </div>
           </div>
