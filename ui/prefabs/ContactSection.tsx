@@ -46,7 +46,9 @@ export function ContactSection() {
                         >
                           {applyCzechNbsp(detail.label)}
                         </p>
-                        <p className={`text-sm font-bold break-normal sm:text-base ${nowrap ? 'whitespace-nowrap' : ''}`}>
+                        <p
+                          className={`text-sm font-bold break-normal sm:text-base ${nowrap ? 'whitespace-nowrap' : ''}`}
+                        >
                           {applyCzechNbsp(detail.value)}
                         </p>
                         {secondary ? (

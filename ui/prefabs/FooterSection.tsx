@@ -49,9 +49,7 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
                   key={item.label}
                   href={item.href}
                   className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
-                  {...('external' in item && item.external
-                    ? { target: '_blank', rel: 'noopener noreferrer' }
-                    : {})}
+                  {...('external' in item && item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
                   {applyCzechNbsp(item.label)}
                 </a>

@@ -183,7 +183,8 @@ export function ContactForm() {
       <div className='grid grid-cols-1 gap-8 @md:grid-cols-2 @md:gap-x-8 @md:gap-y-8'>
         <div className='space-y-2'>
           <label htmlFor='field-name' className='font-label block text-xs tracking-widest text-[#e5e2e199] uppercase'>
-            {CONTACT.fields.name.label}{' '}*
+            {CONTACT.fields.name.label}
+            {' '}*
           </label>
           <input
             id='field-name'
@@ -208,7 +209,8 @@ export function ContactForm() {
 
         <div className='space-y-2'>
           <label htmlFor='field-email' className='font-label block text-xs tracking-widest text-[#e5e2e199] uppercase'>
-            {CONTACT.fields.email.label}{' '}*
+            {CONTACT.fields.email.label}
+            {' '}*
           </label>
           <input
             id='field-email'
@@ -234,7 +236,8 @@ export function ContactForm() {
 
         <div className='space-y-2'>
           <label htmlFor='field-phone' className='font-label block text-xs tracking-widest text-[#e5e2e199] uppercase'>
-            {CONTACT.fields.phone.label}{' '}*
+            {CONTACT.fields.phone.label}
+            {' '}*
           </label>
           <input
             id='field-phone'
@@ -265,7 +268,8 @@ export function ContactForm() {
             htmlFor='field-eventType'
             className='font-label block text-xs tracking-widest text-[#e5e2e199] uppercase'
           >
-            {CONTACT.fields.eventType.label}{' '}*
+            {CONTACT.fields.eventType.label}
+            {' '}*
           </label>
           <select
             id='field-eventType'
@@ -296,7 +300,8 @@ export function ContactForm() {
             htmlFor='field-datePlace'
             className='font-label block text-xs tracking-widest text-[#e5e2e199] uppercase'
           >
-            {CONTACT.fields.datePlace.label}{' '}*
+            {CONTACT.fields.datePlace.label}
+            {' '}*
           </label>
           <input
             id='field-datePlace'
@@ -324,7 +329,8 @@ export function ContactForm() {
             htmlFor='field-participants'
             className='font-label block text-xs tracking-widest text-[#e5e2e199] uppercase'
           >
-            {CONTACT.fields.participants.label}{' '}*
+            {CONTACT.fields.participants.label}
+            {' '}*
           </label>
           <input
             id='field-participants'
@@ -393,7 +399,8 @@ export function ContactForm() {
             </svg>
           </span>
           <span className='leading-relaxed transition-colors duration-300 group-hover:text-[#fff1cd]'>
-            {applyCzechNbsp(CONTACT.fields.gdpr.label)}{' '}*
+            {applyCzechNbsp(CONTACT.fields.gdpr.label)}
+            {' '}*
           </span>
         </label>
         <div className='pl-8 text-xs leading-relaxed text-[#d4c5abb3]'>
