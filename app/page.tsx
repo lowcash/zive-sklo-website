@@ -11,6 +11,7 @@ import {
   ProcessSection,
   ScrollToTopButton,
   StatsSection,
+  VideoSection,
 } from '@/ui/prefabs'
 
 export default function HomePage() {
@@ -22,6 +23,7 @@ export default function HomePage() {
       <main id='top'>
         <HeroSection />
         <AboutSection />
+        <VideoSection />
         <ProcessSection />
         <OfferSection />
         <AudienceSection />

@@ -60,6 +60,14 @@ export const ABOUT = {
   image: '/images/gallery/forming-process-02.jpg',
 }
 
+export const VIDEO = {
+  heading: 'Živé sklo naživo',
+  subtitle: 'Podívejte se, jak sklářská dílna vypadá naživo při\u00A0akci.',
+  src: '/videos/zive-sklo-akce.mp4',
+  poster: '/videos/zive-sklo-akce-poster.jpg',
+  ariaLabel: 'Video ze sklářské akce Živého skla',
+}
+
 export const PROCESS = {
   heading: 'Jak to celé funguje',
   steps: [

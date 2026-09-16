@@ -15,6 +15,7 @@ export { Navigation } from './Navigation'
 
 export { HeroSection } from './HeroSection'
 export { AboutSection } from './AboutSection'
+export { VideoSection } from './VideoSection'
 export { ProcessSection } from './ProcessSection'
 export { OfferSection } from './OfferSection'
 export { AudienceSection } from './AudienceSection'

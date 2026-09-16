@@ -41,3 +41,11 @@ temp/
 # Local plans and notes
 local/
 .audit.json
+
+# Client source media kept locally under reference/ (processed assets live in public/)
+reference/image-*.jpeg
+reference/image-*.jpg
+reference/image-*.png
+reference/video-*.mp4
+reference/video-*.mov
+reference/video-*.webm
