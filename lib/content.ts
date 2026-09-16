@@ -275,18 +275,24 @@ export const BENEFITS = {
 export const CONTACT = {
   heading: 'Poptejte svoji akci',
   subtitle: 'Vyplňte krátký formulář a my se vám co nejdříve ozveme s nabídkou na míru.',
+  portrait: {
+    src: '/images/contact/portrait.png',
+    alt: 'Vlastimil Juřička, Živé sklo s.r.o.',
+  },
   details: [
     {
       icon: 'mail',
       label: 'E-mail',
       value: CONTACT_EMAIL,
       href: CONTACT_EMAIL_HREF,
+      nowrap: true,
     },
     {
       icon: 'phone_iphone',
       label: 'Telefon',
       value: CONTACT_PHONE_DISPLAY,
       href: CONTACT_PHONE_HREF,
+      nowrap: true,
     },
     {
       icon: 'location_on',
