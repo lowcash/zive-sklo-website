@@ -122,6 +122,7 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
               stepRefs.current[index] = el
             }}
             data-testid='process-step'
+            data-active={isActive ? 'true' : 'false'}
             className='group relative flex h-full cursor-default flex-col'
           >
             {/* Number overlaps the card edge on all breakpoints. */}

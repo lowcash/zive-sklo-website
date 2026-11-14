@@ -1,6 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
+
+import { useRafScroll } from '@/lib/hooks/useRafScroll'
 
 interface HeroScrollCueProps {
   href: string
@@ -14,18 +16,11 @@ interface HeroScrollCueProps {
 export function HeroScrollCue({ href, ariaLabel }: HeroScrollCueProps) {
   const [isVisible, setIsVisible] = useState(true)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsVisible(window.scrollY <= 12)
-    }
-
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+  const handleScroll = useCallback(() => {
+    setIsVisible(window.scrollY <= 12)
   }, [])
+
+  useRafScroll(handleScroll)
 
   if (!isVisible) {
     return null
@@ -38,7 +33,9 @@ export function HeroScrollCue({ href, ariaLabel }: HeroScrollCueProps) {
       className='fixed bottom-6 left-1/2 z-20 -translate-x-1/2 text-[#e5e2e180] transition-colors hover:text-[#9accf3] motion-safe:animate-bounce'
       style={{ marginBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <span className='material-symbols-outlined !text-[30px]'>keyboard_arrow_down</span>
+      <span className='material-symbols-outlined !text-[30px]' aria-hidden='true'>
+        keyboard_arrow_down
+      </span>
     </a>
   )
 }

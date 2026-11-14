@@ -4,6 +4,7 @@ import { headers } from 'next/headers'
 
 import { sendContactMail } from '@/lib/mail/contact-mail'
 import { validateContactSubmission } from '@/lib/schemas/contact'
+import { isE2EContactMockActive } from '@/lib/security/contact-mock'
 import { checkContactRateLimit } from '@/lib/security/contact-rate-limit'
 
 export type ContactActionState = {
@@ -69,11 +70,18 @@ function hasPassedDwellTime(startedAtRaw: string) {
   return Date.now() - startedAt >= 2500
 }
 
-function getClientIdentifier(value: string, fallbackEmail: string) {
-  const normalized = value.split(',')[0]?.trim()
+/**
+ * Prefer platform-provided client IP headers over spoofable x-forwarded-for.
+ * Falls back to email-based identifier when no trusted IP is present.
+ */
+function getClientIdentifier(requestHeaders: Headers, fallbackEmail: string) {
+  const trustedIp =
+    requestHeaders.get('x-real-ip')?.trim() ||
+    requestHeaders.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() ||
+    ''
 
-  if (normalized) {
-    return normalized
+  if (trustedIp) {
+    return trustedIp
   }
 
   if (fallbackEmail) {
@@ -87,9 +95,7 @@ export async function submitContactAction(
   _previous: ContactActionState,
   formData: FormData,
 ): Promise<ContactActionState> {
-  // In E2E test runs (E2E_MOCK_CONTACT=true) skip all side-effects so tests
-  // are deterministic and don't require real Brevo credentials.
-  if (process.env.E2E_MOCK_CONTACT === 'true') {
+  if (isE2EContactMockActive()) {
     return {
       status: 'success',
       message: 'Děkujeme za poptávku. Ozveme se vám co nejdříve.',
@@ -143,13 +149,12 @@ export async function submitContactAction(
   }
 
   const requestHeaders = await headers()
-  const clientIp = requestHeaders.get('x-forwarded-for') ?? ''
   const requestId =
     requestHeaders.get('x-vercel-id') ??
     requestHeaders.get('x-request-id') ??
     requestHeaders.get('x-amzn-trace-id') ??
     'unknown'
-  const identifier = getClientIdentifier(clientIp, validation.data.email)
+  const identifier = getClientIdentifier(requestHeaders, validation.data.email)
 
   const rateLimit = checkContactRateLimit(identifier)
 
@@ -161,7 +166,7 @@ export async function submitContactAction(
     }
   }
 
-  const sendResult = await sendContactMail(validation.data)
+  const sendResult = await sendContactMail(validation.data, { requestId })
 
   if (!sendResult.ok) {
     logSendFailure({

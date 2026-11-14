@@ -2,6 +2,7 @@
  * Content constants for Živé Sklo website
  * All Czech copy, structured by section
  */
+import { CONTACT_EVENT_TYPE_LABELS, CONTACT_EVENT_TYPES } from '@/lib/schemas/contact'
 import {
   BRAND,
   CONTACT_EMAIL,
@@ -33,8 +34,8 @@ export const NAV = {
 export const HERO = {
   backgroundImages: [
     '/images/hero/hero-flame-glass-01.jpg',
-    '/images/gallery/blowing-technique-06.jpg',
-    '/images/gallery/hands-flame-01.jpg',
+    '/images/gallery/blowing-technique-06.webp',
+    '/images/gallery/hands-flame-01.webp',
   ],
   h1Prefix: 'Zažijte kouzlo',
   h1Highlight: 'foukaného skla',
@@ -57,7 +58,7 @@ export const HERO = {
 export const ABOUT = {
   heading: 'Nepřivezeme jen výrobky. Přivezeme celý příběh jejich vzniku.',
   text: 'Živé Sklo je mobilní sklářská dílna z Vsetína - města s dlouhou tradicí výroby skleněných ozdob. Naše dílna se vejde do jedné dodávky a může se rozložit téměř kdekoliv - na náměstí, ve firmě nebo ve škole. Návštěvníci sledují celý proces výroby od zahřátí skleněné trubice v plameni až po vznik hotové ozdoby. Každá ozdoba je originál. A každý zážitek zůstane. Projekt vznikl z více než dvacetileté zkušenosti s výrobou skleněných vánočních ozdob ve Vsetíně.',
-  image: '/images/gallery/forming-process-02.jpg',
+  image: '/images/gallery/forming-process-02.webp',
 }
 
 export const VIDEO = {
@@ -244,11 +245,11 @@ export const GALLERY = {
     'Tváření roztaveného skla – mistr při práci',
   ],
   images: [
-    '/images/gallery/production-01.jpg',
-    '/images/gallery/hands-flame-01.jpg',
-    '/images/gallery/excursion-school-01.jpg',
-    '/images/gallery/glass-detail-01.jpg',
-    '/images/gallery/blowing-technique-06.jpg',
+    '/images/gallery/production-01.webp',
+    '/images/gallery/hands-flame-01.webp',
+    '/images/gallery/excursion-school-01.webp',
+    '/images/gallery/glass-detail-01.webp',
+    '/images/gallery/blowing-technique-06.webp',
   ],
 }
 
@@ -340,11 +341,10 @@ export const CONTACT = {
       required: true,
       options: [
         { value: '', label: 'Vyberte typ akce' },
-        { value: 'teambuilding', label: 'Teambuilding' },
-        { value: 'school', label: 'Škola' },
-        { value: 'city-market', label: 'Město – trh' },
-        { value: 'creative-workshop', label: 'Kreativní dílna' },
-        { value: 'other', label: 'Jiné' },
+        ...CONTACT_EVENT_TYPES.map((value) => ({
+          value,
+          label: CONTACT_EVENT_TYPE_LABELS[value],
+        })),
       ],
     },
     datePlace: {

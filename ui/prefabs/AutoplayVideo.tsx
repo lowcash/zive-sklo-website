@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 type AutoplayVideoProps = {
   src: string
@@ -10,20 +10,25 @@ type AutoplayVideoProps = {
 
 /**
  * AutoplayVideo - Client leaf
- * Ambient muted loop that starts before the section is fully in view.
- * No chrome controls; respects prefers-reduced-motion.
+ * Ambient muted loop that starts when approaching the viewport.
+ * No chrome controls; respects prefers-reduced-motion (poster only).
+ * Uses preload=metadata to avoid fetching the full MP4 up front.
  */
 export function AutoplayVideo({ src, poster, ariaLabel }: AutoplayVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [reduceMotion, setReduceMotion] = useState(false)
+
+  useEffect(() => {
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const syncMotion = () => setReduceMotion(motionQuery.matches)
+    syncMotion()
+    motionQuery.addEventListener('change', syncMotion)
+    return () => motionQuery.removeEventListener('change', syncMotion)
+  }, [])
 
   useEffect(() => {
     const video = videoRef.current
-    if (!video) {
-      return
-    }
-
-    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (motionQuery.matches) {
+    if (!video || reduceMotion) {
       return
     }
 
@@ -32,9 +37,6 @@ export function AutoplayVideo({ src, poster, ariaLabel }: AutoplayVideoProps) {
         // Autoplay may still be blocked on some browsers.
       })
     }
-
-    // Warm the buffer early so the poster→frame swap is less noticeable.
-    video.preload = 'auto'
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -62,7 +64,19 @@ export function AutoplayVideo({ src, poster, ariaLabel }: AutoplayVideoProps) {
       observer.disconnect()
       video.pause()
     }
-  }, [])
+  }, [reduceMotion])
+
+  if (reduceMotion) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element -- decorative poster fallback for reduced motion
+      <img
+        src={poster}
+        alt=''
+        className='aspect-video w-full bg-[#0E0E0E] object-cover'
+        aria-hidden='true'
+      />
+    )
+  }
 
   return (
     <video
@@ -71,8 +85,7 @@ export function AutoplayVideo({ src, poster, ariaLabel }: AutoplayVideoProps) {
       muted
       loop
       playsInline
-      autoPlay
-      preload='auto'
+      preload='metadata'
       poster={poster}
       aria-label={ariaLabel}
       disablePictureInPicture

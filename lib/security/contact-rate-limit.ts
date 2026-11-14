@@ -11,6 +11,14 @@ type RateLimitResult = {
   retryAfterSeconds: number
 }
 
+/**
+ * In-memory per-process rate limiter.
+ *
+ * Limitation: on serverless platforms (e.g. Vercel) each instance has its own
+ * Map, so limits are not shared across cold starts or concurrent instances.
+ * Acceptable for low-volume inquiry forms; swap the store for Redis/Upstash
+ * if cross-instance enforcement is required.
+ */
 const globalStore = globalThis as typeof globalThis & {
   __contactRateLimitStore?: Map<string, Entry>
 }
@@ -32,6 +40,11 @@ function pruneExpired(now: number) {
       store.delete(key)
     }
   }
+}
+
+/** Test-only: clear the in-memory store between unit tests. */
+export function resetContactRateLimitStoreForTests() {
+  store.clear()
 }
 
 export function checkContactRateLimit(identifier: string): RateLimitResult {

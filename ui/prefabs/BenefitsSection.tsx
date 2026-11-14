@@ -21,7 +21,9 @@ export function BenefitsSection() {
           {BENEFITS.items.map((benefit) => (
             <div key={benefit.title} className='space-y-5'>
               <div className='flex h-12 w-12 items-center justify-center bg-[#1c1b1b]'>
-                <span className='material-symbols-outlined text-[24px]! text-[#9accf3]'>{benefit.icon}</span>
+                <span className='material-symbols-outlined text-[24px]! text-[#9accf3]' aria-hidden='true'>
+                  {benefit.icon}
+                </span>
               </div>
               <h3 className='font-display text-xl font-bold'>{applyCzechNbsp(benefit.title)}</h3>
               <p className='text-sm leading-relaxed text-[#e5e2e1b3]'>{applyCzechNbsp(benefit.description)}</p>

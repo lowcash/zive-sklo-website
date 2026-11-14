@@ -35,7 +35,10 @@ export function ContactSection() {
                   const content = (
                     <>
                       <span className='flex h-11 w-11 shrink-0 items-center justify-center bg-[#131313] sm:h-12 sm:w-12'>
-                        <span className='material-symbols-outlined text-[22px]! text-[#ffbf00] sm:text-[24px]!'>
+                        <span
+                          className='material-symbols-outlined text-[22px]! text-[#ffbf00] sm:text-[24px]!'
+                          aria-hidden='true'
+                        >
                           {detail.icon}
                         </span>
                       </span>
