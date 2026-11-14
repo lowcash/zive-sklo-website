@@ -26,6 +26,12 @@ export function GalleryScroll({ images, alts = [], scrollRef, onImageClick }: Ga
     'w-[85vw] md:w-[400px]',
     'w-[85vw] md:w-[400px]',
   ]
+  const sizesPattern = [
+    '(max-width: 768px) 85vw, 400px',
+    '(max-width: 768px) 85vw, 600px',
+    '(max-width: 768px) 85vw, 400px',
+    '(max-width: 768px) 85vw, 400px',
+  ]
 
   return (
     <div ref={containerRef} className='scrollbar-hide flex gap-8 overflow-x-auto overflow-y-hidden scroll-smooth pb-6'>
@@ -42,7 +48,7 @@ export function GalleryScroll({ images, alts = [], scrollRef, onImageClick }: Ga
             alt={alts[index] ?? `Galerie živého skla ${index + 1}`}
             width={960}
             height={1200}
-            sizes='(max-width: 768px) 80vw, 400px'
+            sizes={sizesPattern[index % sizesPattern.length]}
             className='h-full w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.02] group-hover:grayscale-0'
             quality={85}
           />

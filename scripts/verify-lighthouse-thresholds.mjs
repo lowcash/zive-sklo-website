@@ -4,18 +4,20 @@ import process from 'node:process'
 
 const outputDir = path.resolve(process.cwd(), 'test-results')
 
+// Floors from Wave 1 measured run (desktop 98/100/100/100, mobile 100/100/100/100)
+// with headroom for CI variance. Re-measure with `npm run perf:lighthouse:baseline`.
 const thresholds = {
   desktop: {
-    performance: 45,
-    accessibility: 90,
-    bestPractices: 90,
-    seo: 90,
+    performance: 85,
+    accessibility: 100,
+    bestPractices: 95,
+    seo: 95,
   },
   mobile: {
-    performance: 30,
-    accessibility: 90,
-    bestPractices: 90,
-    seo: 90,
+    performance: 85,
+    accessibility: 100,
+    bestPractices: 95,
+    seo: 95,
   },
 }
 

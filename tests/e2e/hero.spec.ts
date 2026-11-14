@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 
 /**
  * Hero section tests — iOS dvh height, badge layout, CTA accessibility.
- * Run against a live dev server: npm run dev
  */
 
 test.describe('Hero section — desktop', () => {
@@ -13,18 +12,15 @@ test.describe('Hero section — desktop', () => {
   })
 
   test('hero section is full viewport height', async ({ page }) => {
-    const hero = page.locator('#top')
+    const hero = page.locator('header').first()
     const box = await hero.boundingBox()
-    // Should be at least viewport height (dvh fallback to vh)
     expect(box?.height).toBeGreaterThanOrEqual(780)
   })
 
   test('badges fit in a single row on desktop', async ({ page }) => {
-    // Locate all badge elements (spans inside the badges container)
-    // Simpler: check that no badge wraps to a second line by comparing top offset
-    const badgeEls = page.locator('section#top span').filter({ hasText: /akce|škol|firem|svatebn/i })
+    const badgeEls = page.locator('header span').filter({ hasText: /výroba|škol|firem|městské/i })
     const count = await badgeEls.count()
-    if (count < 2) return // no badges rendered, skip
+    expect(count).toBeGreaterThanOrEqual(2)
 
     const boxes = await Promise.all(Array.from({ length: count }, (_, i) => badgeEls.nth(i).boundingBox()))
     const validBoxes = boxes.filter(Boolean) as {
@@ -33,15 +29,14 @@ test.describe('Hero section — desktop', () => {
       width: number
       height: number
     }[]
-    // All badges should share the same top Y (single row)
     const firstY = validBoxes[0].y
     for (const b of validBoxes) {
-      expect(Math.abs(b.y - firstY)).toBeLessThan(4) // 4px tolerance
+      expect(Math.abs(b.y - firstY)).toBeLessThan(4)
     }
   })
 
-  test('CTA link "Poptat akci" is visible and has valid href', async ({ page }) => {
-    const cta = page.getByRole('link', { name: 'Poptat akci' }).first()
+  test('CTA link "Nezávazně poptat akci" is visible and has valid href', async ({ page }) => {
+    const cta = page.getByRole('link', { name: /nezávazně poptat akci/i }).first()
     await expect(cta).toBeVisible()
     await expect(cta).toHaveAttribute('href', '#kontakt')
   })
@@ -55,13 +50,13 @@ test.describe('Hero section — mobile', () => {
   })
 
   test('hero section covers full mobile viewport', async ({ page }) => {
-    const hero = page.locator('#top')
+    const hero = page.locator('header').first()
     const box = await hero.boundingBox()
     expect(box?.height).toBeGreaterThanOrEqual(800)
   })
 
   test('CTA link is reachable on mobile', async ({ page }) => {
-    const cta = page.getByRole('link', { name: 'Poptat akci' }).first()
+    const cta = page.getByRole('link', { name: /nezávazně poptat akci/i }).first()
     await expect(cta).toBeVisible()
   })
 })

@@ -1,6 +1,23 @@
 import { z } from 'zod'
 
-const allowedEventTypes = ['teambuilding', 'school', 'city-market', 'creative-workshop', 'other'] as const
+/** Shared event-type enum used by content, mail labels, schema and ContactForm. */
+export const CONTACT_EVENT_TYPES = [
+  'teambuilding',
+  'school',
+  'city-market',
+  'creative-workshop',
+  'other',
+] as const
+
+export type ContactEventType = (typeof CONTACT_EVENT_TYPES)[number]
+
+export const CONTACT_EVENT_TYPE_LABELS: Record<ContactEventType, string> = {
+  teambuilding: 'Teambuilding',
+  school: 'Škola',
+  'city-market': 'Město – trh',
+  'creative-workshop': 'Kreativní dílna',
+  other: 'Jiné',
+}
 
 const participantPattern = /^\d{1,4}$/
 const phonePattern = /^\+?[\d\s]{8,20}$/
@@ -15,7 +32,7 @@ function sanitizeText(value: string) {
   )
 }
 
-const contactSchema = z.object({
+export const contactSchema = z.object({
   name: z
     .string()
     .transform(sanitizeText)
@@ -25,7 +42,7 @@ const contactSchema = z.object({
     .transform((value) => value.trim().toLowerCase())
     .pipe(z.email('Zadejte platný e-mail')),
   phone: z.string().transform(sanitizeText).pipe(z.string().regex(phonePattern, 'Zadejte platné telefonní číslo')),
-  eventType: z.enum(allowedEventTypes, {
+  eventType: z.enum(CONTACT_EVENT_TYPES, {
     error: 'Vyberte typ akce',
   }),
   datePlace: z

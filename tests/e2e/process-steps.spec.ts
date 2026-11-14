@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 
 /**
  * Process section tests — scroll-based step highlighting on mobile.
- * Run against a live dev server: npm run dev
  */
 
 test.describe('Process steps — scroll highlight', () => {
@@ -13,24 +12,23 @@ test.describe('Process steps — scroll highlight', () => {
   })
 
   test('first step is highlighted when section enters view', async ({ page }) => {
-    // Scroll to process section
-    const section = page.locator('#jak-to-funguje')
-    await section.scrollIntoViewIfNeeded()
-    await page.waitForTimeout(600)
-
-    // First step border should have amber colour (border-[#ffbf00])
     const firstStep = page.locator('[data-testid="process-step"]').first()
     await expect(firstStep).toBeVisible()
 
-    // Verify at least one active step is present (amber border applied)
-    const activeStep = page.locator('[class*="border-[#ffbf00]"], [class*="border-amber"]')
-    await expect(activeStep.first()).toBeVisible()
+    await page.evaluate(() => {
+      const step = document.querySelector('[data-testid="process-step"]')
+      if (!step) return
+      const top = step.getBoundingClientRect().top + window.scrollY - window.innerHeight * 0.45
+      window.scrollTo({ top, behavior: 'instant' })
+    })
+
+    await expect.poll(async () => firstStep.getAttribute('data-active'), { timeout: 5000 }).toBe('true')
   })
+
 
   test('step numbers are visible above step content', async ({ page }) => {
     const section = page.locator('#jak-to-funguje')
     await section.scrollIntoViewIfNeeded()
-    await page.waitForTimeout(600)
 
     const firstStep = page.locator('[data-testid="process-step"]').first()
     const number = firstStep.locator('span[aria-hidden="true"]').first()
@@ -45,7 +43,6 @@ test.describe('Process steps — scroll highlight', () => {
     expect(cardBox).not.toBeNull()
 
     if (numberBox && cardBox) {
-      // Number should overlap the top edge of the card.
       expect(numberBox.y).toBeLessThan(cardBox.y)
       expect(numberBox.y + numberBox.height).toBeGreaterThan(cardBox.y)
     }
@@ -59,21 +56,13 @@ test.describe('Stats counter animation', () => {
   })
 
   test('stats section is present with numeric values', async ({ page }) => {
-    // Scroll stats into view
-    const stats = page
-      .locator('section')
-      .filter({ hasText: /°C|ručně|dech/i })
-      .first()
-    if ((await stats.count()) === 0) return // section not found, skip
-    await stats.scrollIntoViewIfNeeded()
-    await page.waitForTimeout(1500) // wait for count-up animation
+    const counters = page.locator('[data-testid="stat-counter"]')
+    await expect(counters).toHaveCount(3)
+    await counters.first().scrollIntoViewIfNeeded()
 
-    // Should show a non-zero number
-    const numericText = page.locator('[class*="stat"], [class*="counter"], [class*="number"]').first()
-    if ((await numericText.count()) > 0) {
-      const text = await numericText.textContent()
-      expect(text).toMatch(/\d+/)
-    }
+    await expect
+      .poll(async () => counters.first().locator('[data-testid="stat-value"]').textContent(), { timeout: 3000 })
+      .toMatch(/\d+/)
   })
 
   test('stats counters stay on one line on iPad Air', async ({ page }) => {
@@ -85,7 +74,15 @@ test.describe('Stats counter animation', () => {
     await expect(counters).toHaveCount(3)
 
     await counters.first().scrollIntoViewIfNeeded()
-    await page.waitForTimeout(1200)
+    await expect
+      .poll(
+        async () => {
+          const text = await counters.first().locator('[data-testid="stat-value"]').textContent()
+          return text && /\d/.test(text) ? 'ready' : 'waiting'
+        },
+        { timeout: 3000 },
+      )
+      .toBe('ready')
 
     const metrics = await counters.evaluateAll((elements) =>
       elements.map((element) => ({

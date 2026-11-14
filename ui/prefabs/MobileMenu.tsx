@@ -1,12 +1,13 @@
 'use client'
 
 import type { MouseEvent } from 'react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { AnimatePresence, motion } from 'framer-motion'
 import { createPortal } from 'react-dom'
 
 import { NAV } from '@/lib/content'
+import { useDialog } from '@/lib/hooks/useDialog'
 import { BRAND } from '@/lib/site-config'
 import { applyCzechNbsp, scrollToHashWithNavOffset } from '@/lib/utils'
 
@@ -17,6 +18,9 @@ import { applyCzechNbsp, scrollToHashWithNavOffset } from '@/lib/utils'
 export function MobileMenu({ activeHref }: { activeHref: string }) {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const closeMenu = useCallback(() => setIsOpen(false), [])
+  const dialogRef = useDialog({ open: isOpen, onClose: closeMenu })
+  const overlayId = 'mobile-nav-overlay'
 
   useEffect(() => {
     setMounted(true)
@@ -34,8 +38,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
     }
   }, [isOpen, mounted])
 
-  const toggleMenu = () => setIsOpen(!isOpen)
-  const closeMenu = () => setIsOpen(false)
+  const toggleMenu = () => setIsOpen((open) => !open)
 
   const handleAnchorNavigation = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
@@ -50,7 +53,9 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          id='mobile-nav-overlay'
+          ref={dialogRef}
+          id={overlayId}
+          tabIndex={-1}
           role='dialog'
           aria-modal='true'
           aria-label='Navigace'
@@ -75,12 +80,14 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               className='flex h-8 w-8 items-center justify-center text-[#E5E2E1]'
               aria-label='Zavřít navigaci'
             >
-              <span className='material-symbols-outlined text-[24px]! leading-none'>close</span>
+              <span className='material-symbols-outlined text-[24px]! leading-none' aria-hidden='true'>
+                close
+              </span>
             </button>
           </div>
 
           {/* mt-16 shifts items below the visual centre – feels more grounded */}
-          <nav className='mt-16 flex flex-col items-center gap-10'>
+          <nav className='mt-16 flex flex-col items-center gap-10' aria-label='Mobilní navigace'>
             {NAV.links.map((link, index) => (
               <motion.a
                 key={link.href}
@@ -89,7 +96,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.06, duration: 0.3 }}
-                aria-current={activeHref === link.href ? 'page' : undefined}
+                aria-current={activeHref === link.href ? 'true' : undefined}
                 className={`font-display text-3xl font-bold transition-colors duration-300 hover:text-[#FFD79B] ${
                   activeHref === link.href ? 'text-[#FFB300]' : 'text-[#E5E2E1]'
                 }`}
@@ -117,11 +124,13 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
     <>
       {/* Hamburger Button */}
       <button
+        type='button'
+        data-testid='mobile-menu-toggle'
         onClick={toggleMenu}
         className='flex h-8 w-8 flex-col items-center justify-center gap-1.5'
         aria-label={isOpen ? 'Zavřít navigaci' : 'Otevřít navigaci'}
         aria-expanded={isOpen}
-        aria-controls='mobile-nav-overlay'
+        aria-controls={isOpen ? overlayId : undefined}
       >
         <span
           className={`h-0.5 w-6 bg-[#E5E2E1] transition-transform duration-300 ${

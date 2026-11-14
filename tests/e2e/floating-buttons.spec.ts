@@ -2,7 +2,6 @@ import { expect, test } from '@playwright/test'
 
 /**
  * Floating button tests — ScrollToTop visibility, footer collision, safe-area.
- * Run against a live dev server: npm run dev
  */
 
 test.describe('ScrollToTop button', () => {
@@ -12,49 +11,39 @@ test.describe('ScrollToTop button', () => {
   })
 
   test('is hidden on initial load (tabindex=-1)', async ({ page }) => {
-    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
+    const btn = page.locator('button[aria-label="Posunout na začátek stránky"]')
     await expect(btn).toHaveAttribute('tabindex', '-1')
   })
 
   test('appears after scrolling past 320px', async ({ page }) => {
     await page.evaluate(() => window.scrollTo({ top: 400, behavior: 'instant' }))
-    await page.waitForTimeout(400)
 
-    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
-    await expect(btn).toHaveAttribute('tabindex', '0')
+    const btn = page.locator('button[aria-label="Posunout na začátek stránky"]')
+    await expect.poll(async () => btn.getAttribute('tabindex'), { timeout: 3000 }).toBe('0')
   })
 
   test('hides again after scrolling back above 220px', async ({ page }) => {
-    await page.evaluate(() => window.scrollTo({ top: 400, behavior: 'instant' }))
-    await page.waitForTimeout(400)
+    const btn = page.locator('button[aria-label="Posunout na začátek stránky"]')
+    await page.evaluate(() => window.scrollTo({ top: 500, behavior: 'instant' }))
+    await page.mouse.wheel(0, 1)
+    await expect.poll(async () => btn.getAttribute('tabindex'), { timeout: 5000 }).toBe('0')
 
-    await page.evaluate(() => window.scrollTo({ top: 100, behavior: 'instant' }))
-    await page.waitForTimeout(400)
-
-    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
-    await expect(btn).toHaveAttribute('tabindex', '-1')
+    await page.evaluate(() => window.scrollTo({ top: 50, behavior: 'instant' }))
+    await page.mouse.wheel(0, -1)
+    await expect.poll(async () => btn.getAttribute('tabindex'), { timeout: 5000 }).toBe('-1')
   })
 
   test('scrolls back to top when clicked', async ({ page }) => {
     await page.evaluate(() => window.scrollTo({ top: 600, behavior: 'instant' }))
-    await page.waitForTimeout(400)
-
-    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
-    await expect(btn).toHaveAttribute('tabindex', '0')
+    const btn = page.locator('button[aria-label="Posunout na začátek stránky"]')
+    await expect.poll(async () => btn.getAttribute('tabindex'), { timeout: 3000 }).toBe('0')
     await btn.click()
-    await page.waitForTimeout(800)
-
-    const scrollY = await page.evaluate(() => window.scrollY)
-    expect(scrollY).toBeLessThan(100)
+    await expect.poll(() => page.evaluate(() => window.scrollY), { timeout: 3000 }).toBeLessThan(100)
   })
 
   test('is not keyboard-focusable when hidden', async ({ page }) => {
-    // At top of page, button should be hidden — pressing Tab should not focus it
-    const btn = page.getByRole('button', { name: /posunout na začátek stránky/i })
+    const btn = page.locator('button[aria-label="Posunout na začátek stránky"]')
     await expect(btn).toHaveAttribute('tabindex', '-1')
-
-    // Inspect pointer-events via computed style workaround
-    const pointerEvents = await btn.evaluate((el) => getComputedStyle(el.closest('[style]') ?? el).pointerEvents)
-    expect(pointerEvents).toBe('none')
+    await expect(btn).toHaveAttribute('aria-hidden', 'true')
   })
 })

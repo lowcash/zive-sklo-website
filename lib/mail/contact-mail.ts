@@ -19,6 +19,7 @@ type MailResult =
       }
     }
 
+/** Inquiry-email labels — keep hyphen for city-market (HEAD mail wording). UI uses en dash separately. */
 const EVENT_TYPE_LABELS: Record<string, string> = {
   teambuilding: 'Teambuilding',
   school: 'Škola',
@@ -40,7 +41,7 @@ function escapeHtml(value: string) {
     .replace(/'/g, '&#039;')
 }
 
-function formatMessageBody(data: ContactSubmission) {
+export function formatMessageBody(data: ContactSubmission) {
   const eventTypeLabel = getEventTypeLabel(data.eventType)
 
   return [
@@ -124,11 +125,33 @@ function formatConfirmationHtmlBody(data: ContactSubmission) {
   `
 }
 
-export async function sendContactMail(data: ContactSubmission): Promise<MailResult> {
+function toProviderError(error: unknown) {
+  const maybeError = error as {
+    name?: string
+    message?: string
+    code?: number
+    statusCode?: number
+    response?: {
+      statusCode?: number
+    }
+  }
+
+  return {
+    name: maybeError.name,
+    message: maybeError.message,
+    statusCode: maybeError.statusCode ?? maybeError.response?.statusCode ?? maybeError.code,
+  }
+}
+
+export async function sendContactMail(
+  data: ContactSubmission,
+  options?: { requestId?: string },
+): Promise<MailResult> {
   const apiKey = process.env.BREVO_API_KEY
   const fromEmail = process.env.BREVO_FROM_EMAIL
   const fromName = process.env.BREVO_FROM_NAME || 'Zive Sklo'
   const to = process.env.CONTACT_TO
+  const requestId = options?.requestId ?? 'unknown'
 
   const missingEnv: MissingEnvKey[] = []
 
@@ -173,11 +196,23 @@ export async function sendContactMail(data: ContactSubmission): Promise<MailResu
       textContent: formatMessageBody(data),
       htmlContent: formatHtmlBody(data),
     })
+  } catch (error) {
+    return {
+      ok: false,
+      reason: 'transport-error',
+      details: {
+        providerError: toProviderError(error),
+      },
+    }
+  }
 
-    const normalizedContactTo = to.trim().toLowerCase()
-    const normalizedSubmitterEmail = data.email.trim().toLowerCase()
+  // Confirmation is best-effort: a failure must not surface as a user error
+  // after the inquiry itself was delivered (would cause duplicate resubmits).
+  const normalizedContactTo = to.trim().toLowerCase()
+  const normalizedSubmitterEmail = data.email.trim().toLowerCase()
 
-    if (normalizedSubmitterEmail !== normalizedContactTo) {
+  if (normalizedSubmitterEmail !== normalizedContactTo) {
+    try {
       await client.transactionalEmails.sendTransacEmail({
         sender: {
           email: fromEmail,
@@ -192,32 +227,17 @@ export async function sendContactMail(data: ContactSubmission): Promise<MailResu
         textContent: formatConfirmationTextBody(data),
         htmlContent: formatConfirmationHtmlBody(data),
       })
-    }
-
-    return { ok: true }
-  } catch (error) {
-    const maybeError = error as {
-      name?: string
-      message?: string
-      code?: number
-      statusCode?: number
-      response?: {
-        statusCode?: number
-      }
-    }
-
-    const providerStatusCode = maybeError.statusCode ?? maybeError.response?.statusCode ?? maybeError.code
-
-    return {
-      ok: false,
-      reason: 'transport-error',
-      details: {
+    } catch (error) {
+      const providerError = toProviderError(error)
+      console.error('[contact-form] confirmation email failed after inquiry delivery', {
+        requestId,
         providerError: {
-          name: maybeError.name,
-          message: maybeError.message,
-          statusCode: providerStatusCode,
+          name: providerError.name,
+          statusCode: providerError.statusCode,
         },
-      },
+      })
     }
   }
+
+  return { ok: true }
 }

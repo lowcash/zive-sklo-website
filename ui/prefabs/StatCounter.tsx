@@ -10,16 +10,24 @@ interface StatCounterProps {
 
 /**
  * StatCounter - Client leaf component for count-up animation.
- * Animates once when the element first enters the viewport.
+ * SSR / no-JS renders the final value. Animation runs only after mount.
  * Respects prefers-reduced-motion: shows final value instantly without animating.
  */
 export function StatCounter({ numericValue, suffix = '', durationMs = 1200 }: StatCounterProps) {
-  const [displayValue, setDisplayValue] = useState(0)
+  const [displayValue, setDisplayValue] = useState(numericValue)
   const [hasAnimated, setHasAnimated] = useState(false)
+  const [canAnimate, setCanAnimate] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const formattedFinal = numericValue.toLocaleString('cs-CZ')
+  const suffixDisplay = suffix.replace(/^\s+/, '\u00A0')
 
   useEffect(() => {
-    if (!ref.current || hasAnimated) return
+    setCanAnimate(true)
+    setDisplayValue(0)
+  }, [])
+
+  useEffect(() => {
+    if (!canAnimate || !ref.current || hasAnimated) return
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
@@ -50,7 +58,7 @@ export function StatCounter({ numericValue, suffix = '', durationMs = 1200 }: St
 
     observer.observe(ref.current)
     return () => observer.disconnect()
-  }, [durationMs, hasAnimated, numericValue])
+  }, [canAnimate, durationMs, hasAnimated, numericValue])
 
   return (
     <div
@@ -58,9 +66,15 @@ export function StatCounter({ numericValue, suffix = '', durationMs = 1200 }: St
       data-testid='stat-counter'
       className='font-display text-accent-amber relative z-10 inline-flex max-w-full items-baseline justify-center text-[3rem] leading-none font-bold tracking-tight whitespace-nowrap sm:text-[3.25rem] md:text-[3rem] lg:text-[3rem] xl:text-7xl'
     >
-      <span data-testid='stat-value'>{displayValue.toLocaleString('cs-CZ')}</span>
-      <span data-testid='stat-suffix' className='text-[0.82em] whitespace-nowrap'>
-        {suffix.replace(/^\s+/, '\u00A0')}
+      <span className='sr-only'>
+        {formattedFinal}
+        {suffixDisplay}
+      </span>
+      <span data-testid='stat-value' aria-hidden='true'>
+        {displayValue.toLocaleString('cs-CZ')}
+      </span>
+      <span data-testid='stat-suffix' className='text-[0.82em] whitespace-nowrap' aria-hidden='true'>
+        {suffixDisplay}
       </span>
     </div>
   )

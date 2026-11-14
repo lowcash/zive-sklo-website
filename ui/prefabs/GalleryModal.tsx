@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 
+import { useDialog } from '@/lib/hooks/useDialog'
+
 type GalleryModalProps = {
   images: string[]
   alts?: string[]
@@ -16,6 +18,9 @@ type GalleryModalProps = {
   onTouchEnd: (event: React.TouchEvent<HTMLDivElement>) => void
 }
 
+const CONTROL_CLASS =
+  'absolute z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none lg:opacity-0 lg:group-hover:opacity-100 lg:focus-visible:opacity-100'
+
 export function GalleryModal({
   images,
   alts = [],
@@ -26,6 +31,9 @@ export function GalleryModal({
   onTouchStart,
   onTouchEnd,
 }: GalleryModalProps) {
+  const isOpen = activeImageIndex !== null
+  const dialogRef = useDialog({ open: isOpen, onClose })
+
   if (images.length === 0) {
     return null
   }
@@ -35,8 +43,10 @@ export function GalleryModal({
 
   return (
     <AnimatePresence>
-      {activeImageIndex !== null ? (
+      {isOpen ? (
         <motion.div
+          ref={dialogRef}
+          tabIndex={-1}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -62,7 +72,7 @@ export function GalleryModal({
               <button
                 type='button'
                 onClick={onClose}
-                className='absolute top-3 right-3 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 focus:outline-none focus-visible:ring-0 focus-visible:outline-none lg:opacity-0 lg:group-hover:opacity-100'
+                className={`${CONTROL_CLASS} top-3 right-3`}
                 aria-label='Zavřít náhled'
               >
                 <X className='h-5 w-5' />
@@ -71,7 +81,7 @@ export function GalleryModal({
               <button
                 type='button'
                 onClick={onPrevious}
-                className='absolute top-1/2 left-3 z-10 hidden h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 focus:outline-none focus-visible:ring-0 focus-visible:outline-none md:flex lg:opacity-0 lg:group-hover:opacity-100'
+                className={`${CONTROL_CLASS} top-1/2 left-3 hidden -translate-y-1/2 md:flex`}
                 aria-label='Předchozí fotografie'
               >
                 <ChevronLeft className='h-5 w-5' />
@@ -80,7 +90,7 @@ export function GalleryModal({
               <button
                 type='button'
                 onClick={onNext}
-                className='absolute top-1/2 right-3 z-10 hidden h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 focus:outline-none focus-visible:ring-0 focus-visible:outline-none md:flex lg:opacity-0 lg:group-hover:opacity-100'
+                className={`${CONTROL_CLASS} top-1/2 right-3 hidden -translate-y-1/2 md:flex`}
                 aria-label='Další fotografie'
               >
                 <ChevronRight className='h-5 w-5' />

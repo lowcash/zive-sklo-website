@@ -47,7 +47,7 @@ export function HeroSection() {
             {applyCzechNbsp(HERO.subtitle)}
           </p>
 
-          <p className='font-label max-w-xl text-sm tracking-[0.18em] text-[#e5e2e180] uppercase'>
+          <p className='font-label max-w-xl text-sm tracking-[0.18em] text-[#e5e2e199] uppercase'>
             {applyCzechNbsp(HERO.trustLine)}
           </p>
 

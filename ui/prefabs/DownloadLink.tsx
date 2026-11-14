@@ -17,7 +17,7 @@ export function DownloadLink({ href, label }: { href: string; label: string }) {
   return (
     <a
       href={href}
-      className='inline-flex items-center gap-2 border border-[#3b3b3b] bg-[#141414] px-4 py-2 text-[#e5e2e1] transition-colors duration-300 hover:bg-[#1f1f1f] focus:outline-none focus-visible:ring-0 focus-visible:outline-none'
+      className='inline-flex items-center gap-2 border border-[#3b3b3b] bg-[#141414] px-4 py-2 text-[#e5e2e1] transition-colors duration-300 hover:bg-[#1f1f1f] focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313] focus-visible:outline-none'
     >
       <span aria-hidden='true'>📄</span>
       <span className='text-base leading-normal'>{label}</span>

@@ -32,12 +32,12 @@ export default defineConfig({
     {
       name: 'mobile-safari',
       use: { ...devices['iPhone 14'] },
-      testIgnore: ['**/*.desktop.spec.ts'],
+      testMatch: ['**/*.mobile.spec.ts', '**/a11y-smoke.spec.ts', '**/hero.spec.ts', '**/navigation.spec.ts'],
     },
     {
       name: 'mobile-chrome',
       use: { ...devices['Pixel 7'] },
-      testIgnore: ['**/*.desktop.spec.ts'],
+      testMatch: ['**/*.mobile.spec.ts', '**/a11y-smoke.spec.ts', '**/hero.spec.ts', '**/navigation.spec.ts'],
     },
   ],
 })

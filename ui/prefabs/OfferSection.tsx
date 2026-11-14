@@ -21,12 +21,13 @@ export function OfferSection() {
             <a
               key={card.title}
               href={card.ctaHref}
-              aria-label={`${card.title} – ${card.ctaLabel}`}
               className='ui-surface-hover group flex h-full flex-col bg-[#131313] p-6 hover:bg-[#201f1f] focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0e0e0e] focus-visible:outline-none md:p-8 lg:p-10'
             >
               <div className='mb-6'>
                 <div className='flex h-12 w-12 items-center justify-center bg-[#1c1b1b]'>
-                  <span className='material-symbols-outlined text-[24px]! text-[#9accf3]'>{card.icon}</span>
+                  <span className='material-symbols-outlined text-[24px]! text-[#9accf3]' aria-hidden='true'>
+                    {card.icon}
+                  </span>
                 </div>
               </div>
 
@@ -66,7 +67,6 @@ export function OfferSection() {
             <a
               key={card.title}
               href={card.ctaHref}
-              aria-label={`${card.title} – ${card.ctaLabel}`}
               className='ui-surface-hover group flex h-full flex-col bg-[#131313] p-6 hover:bg-[#201f1f] focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0e0e0e] focus-visible:outline-none md:p-8 lg:p-10'
             >
               <h3 className='mb-4 text-xl font-bold'>{applyCzechNbsp(card.title)}</h3>
