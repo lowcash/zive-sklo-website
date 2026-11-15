@@ -11,22 +11,22 @@ import { DownloadLink } from './DownloadLink'
  */
 export function BenefitsSection() {
   return (
-    <Section id='benefity' spacing='xl'>
+    <Section id='benefity' spacing='xl' temp={0.94}>
       <Container>
-        <div className='mb-20 max-w-3xl'>
-          <h2 className='font-display text-4xl font-bold tracking-tight'>{applyCzechNbsp(BENEFITS.heading)}</h2>
+        <div className='reveal mb-16 max-w-3xl'>
+          <h2>{applyCzechNbsp(BENEFITS.heading)}</h2>
         </div>
 
-        <div className='grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-12 xl:grid-cols-4'>
+        <div className='grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4'>
           {BENEFITS.items.map((benefit) => (
-            <div key={benefit.title} className='space-y-5'>
-              <div className='flex h-12 w-12 items-center justify-center bg-[#1c1b1b]'>
-                <span className='material-symbols-outlined text-[24px]! text-[#9accf3]' aria-hidden='true'>
+            <div key={benefit.title} className='reveal border-line-strong space-y-3 border-t pt-4'>
+              <div className='border-line flex h-12 w-12 items-center justify-center border bg-white/5'>
+                <span className='material-symbols-outlined text-ice text-[24px]!' aria-hidden='true'>
                   {benefit.icon}
                 </span>
               </div>
-              <h3 className='font-display text-xl font-bold'>{applyCzechNbsp(benefit.title)}</h3>
-              <p className='text-sm leading-relaxed text-[#e5e2e1b3]'>{applyCzechNbsp(benefit.description)}</p>
+              <h3 className='text-step-1'>{applyCzechNbsp(benefit.title)}</h3>
+              <p className='text-fg-2 text-step--1 leading-[1.65]'>{applyCzechNbsp(benefit.description)}</p>
             </div>
           ))}
         </div>

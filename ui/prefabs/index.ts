@@ -11,6 +11,7 @@
  * - NO upward propagation of client boundaries
  */
 
+export { AmbientEffects } from './AmbientEffects'
 export { Navigation } from './Navigation'
 
 export { HeroSection } from './HeroSection'

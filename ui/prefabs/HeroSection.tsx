@@ -1,35 +1,52 @@
+import Image from 'next/image'
+
 import { HERO } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
 
-import { HeroCarousel } from './HeroCarousel'
 import { HeroScrollCue } from './HeroScrollCue'
 
 /**
  * HeroSection - RSC (Server Component)
- * Full-height hero with auto-carousel background (client leaf).
+ * Full-height hero: one static photo, the decorative glass orb and the copy.
+ * The h1 is the LCP element: no animation, opacity or transform on it.
  * Uses min-h-dvh (Dynamic Viewport Height) to prevent content hiding
  * behind iOS Safari's browser toolbar.
  */
 export function HeroSection() {
+  const [heroImage] = HERO.backgroundImages
+
   return (
-    <header className='relative flex min-h-svh items-center overflow-hidden px-0 pt-24 pb-24 sm:pt-28 sm:pb-26 md:min-h-dvh md:pt-20 md:pb-16'>
-      <div className='absolute inset-0 z-0'>
-        <HeroCarousel images={HERO.backgroundImages} />
-        <div className='from-surface-dark absolute inset-0 bg-linear-to-r via-[#131313cc] to-transparent' />
-        <div className='bg-accent-amber/10 absolute top-1/2 left-1/4 h-150 w-150 -translate-y-1/2 rounded-full blur-[120px]' />
+    <header
+      data-temp='0'
+      className='relative flex min-h-svh items-center overflow-clip pt-28 pb-24 md:min-h-dvh md:pt-28 md:pb-16'
+    >
+      <div className='absolute inset-0 z-0' aria-hidden='true'>
+        <Image
+          src={heroImage}
+          alt=''
+          fill
+          sizes='100vw'
+          className='mask-[linear-gradient(to_right,transparent,black_70%)] object-cover opacity-30'
+          priority
+          quality={75}
+        />
       </div>
 
-      <div className='relative z-10 mx-auto w-full max-w-360 px-6 md:px-20'>
-        <div className='flex max-w-4xl flex-col justify-center space-y-5 sm:space-y-6 md:space-y-8'>
-          {/* Badges: wrap on mobile, single row on desktop */}
-          <div className='flex flex-wrap gap-2 md:flex-nowrap md:gap-2.5'>
+      <div
+        aria-hidden='true'
+        className='pointer-events-none absolute top-[6%] -right-[18vw] z-0 aspect-square w-[min(78vw,34rem)] opacity-55 md:top-1/2 md:right-[5vw] md:w-[min(34vw,30rem)] md:-translate-y-1/2 md:opacity-100'
+      >
+        <div className='orb motion-ok:animate-float' />
+      </div>
+
+      <div className='relative z-10 mx-auto w-full max-w-360 px-(--gutter)'>
+        <div className='flex max-w-184 flex-col justify-center gap-6'>
+          <div className='flex flex-wrap gap-2'>
             {HERO.pills.map((pill, index) => (
               <span
                 key={pill.label}
-                className={`inline-flex items-center border px-3 py-1 text-[0.62rem] font-medium tracking-widest whitespace-nowrap uppercase md:px-3.5 md:text-[0.7rem] ${
-                  index === 0 || pill.accent
-                    ? 'text-accent-ice border-[#5045324d]'
-                    : 'border-[#5045324d] text-[#e5e2e199]'
+                className={`text-step--1 inline-flex items-center rounded-full border px-3.5 py-1 leading-snug font-semibold tracking-[0.1em] uppercase ${
+                  index === 0 || pill.accent ? 'border-ice text-ice' : 'border-line-strong text-fg-2'
                 }`}
               >
                 {applyCzechNbsp(pill.label)}
@@ -37,27 +54,28 @@ export function HeroSection() {
             ))}
           </div>
 
-          <h1 className='font-display text-4xl leading-[1.08] font-bold tracking-tighter text-white sm:text-5xl md:text-7xl'>
+          <h1 className='text-step-display leading-[1.04] font-medium tracking-[-0.025em] [font-stretch:92%]'>
             {applyCzechNbsp(HERO.h1Prefix)} <br />
-            <span className='text-accent-amber'>{applyCzechNbsp(HERO.h1Highlight)}</span> <br />
+            <em className='text-amber font-normal italic'>{applyCzechNbsp(HERO.h1Highlight)}</em> <br />
             {applyCzechNbsp(HERO.h1Suffix)}
           </h1>
 
-          <p className='max-w-xl text-base leading-relaxed text-[#e5e2e1cc] sm:text-lg md:text-xl'>
-            {applyCzechNbsp(HERO.subtitle)}
-          </p>
+          <p className='text-step-1 text-fg-2 max-w-160 leading-[1.55]'>{applyCzechNbsp(HERO.subtitle)}</p>
 
-          <p className='font-label max-w-xl text-sm tracking-[0.18em] text-[#e5e2e199] uppercase'>
+          <p className='font-label text-step--1 text-fg-3 leading-normal font-semibold tracking-[0.16em] uppercase'>
             {applyCzechNbsp(HERO.trustLine)}
           </p>
 
-          <div className='flex flex-col gap-4 pt-3 sm:flex-row sm:gap-6 sm:pt-4'>
-            <a href={HERO.ctaHref} className='ui-cta-primary px-8 py-4 text-center font-bold sm:px-10 sm:py-5'>
+          <div className='flex flex-wrap items-center gap-x-6 gap-y-4 pt-2'>
+            <a
+              href={HERO.ctaHref}
+              className='ui-cta-primary inline-flex items-center justify-center px-8 py-4 text-center font-bold'
+            >
               {applyCzechNbsp(HERO.ctaLabel)}
             </a>
             <a
               href={HERO.secondaryCtaHref}
-              className='font-display text-text-primary inline-flex items-center justify-center gap-2 text-center font-bold transition-colors hover:text-[#FFD79B]'
+              className='link-arrow font-display text-fg inline-flex items-center justify-center gap-2 py-3 text-center font-semibold'
             >
               <span aria-hidden='true'>→</span>
               {applyCzechNbsp(HERO.secondaryCtaLabel)}

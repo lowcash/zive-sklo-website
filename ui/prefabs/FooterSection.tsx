@@ -18,23 +18,19 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className='w-full border-t border-[#51453226] bg-[#0E0E0E] py-20'>
+    <footer className='border-line bg-scrim w-full border-t py-16'>
       <Container>
         <div className='grid gap-12 md:grid-cols-[1.2fr_1fr_1fr_1fr]'>
           <div className='space-y-4'>
-            <p className='font-display text-2xl text-[#E5E2E1]'>{applyCzechNbsp(FOOTER.brand.name)}</p>
-            <p className='max-w-xs text-sm leading-relaxed text-[#E5E2E199]'>{applyCzechNbsp(FOOTER.brand.tagline)}</p>
+            <p className='font-display text-step-2 text-fg'>{applyCzechNbsp(FOOTER.brand.name)}</p>
+            <p className='text-fg-2 max-w-xs text-sm leading-relaxed'>{applyCzechNbsp(FOOTER.brand.tagline)}</p>
           </div>
 
           <div className='space-y-4'>
-            <p className='font-label text-xs tracking-[0.18em] text-[#e5e2e1b3] uppercase'>Navigace</p>
+            <p className='font-label text-fg-3 text-step--1 font-semibold tracking-[0.14em] uppercase'>Navigace</p>
             <div className='flex flex-col gap-3 text-sm'>
               {FOOTER.nav.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
-                >
+                <a key={item.label} href={item.href} className='text-fg-2 hover:text-amber-hi transition-colors'>
                   {applyCzechNbsp(item.label)}
                 </a>
               ))}
@@ -42,13 +38,13 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
           </div>
 
           <div className='space-y-4'>
-            <p className='font-label text-xs tracking-[0.18em] text-[#e5e2e1b3] uppercase'>Kontakt</p>
+            <p className='font-label text-fg-3 text-step--1 font-semibold tracking-[0.14em] uppercase'>Kontakt</p>
             <div className='flex flex-col gap-3 text-sm'>
               {FOOTER.contacts.map((item) => (
                 <a
                   key={item.label}
                   href={item.href}
-                  className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
+                  className='text-fg-2 hover:text-amber-hi transition-colors'
                   {...('external' in item && item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
                   {applyCzechNbsp(item.label)}
@@ -58,7 +54,7 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
           </div>
 
           <div className='space-y-4'>
-            <p className='font-label text-xs tracking-[0.18em] text-[#e5e2e1b3] uppercase'>Sociální sítě</p>
+            <p className='font-label text-fg-3 text-step--1 font-semibold tracking-[0.14em] uppercase'>Sociální sítě</p>
             <div className='flex flex-col gap-3 text-sm'>
               {FOOTER.social.map((item) => (
                 <a
@@ -66,7 +62,7 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
                   href={item.href}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
+                  className='text-fg-2 hover:text-amber-hi transition-colors'
                 >
                   {applyCzechNbsp(`${item.label} ${item.value}`)}
                 </a>
@@ -75,37 +71,34 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
           </div>
         </div>
 
-        <div className='mt-12 border-t border-[#51453226] pt-8'>
+        <div className='border-line mt-12 border-t pt-8'>
           <div className='flex flex-col gap-5 md:flex-row md:items-end md:justify-between'>
             <div className='max-w-2xl space-y-3'>
               {showCookieInformation ? (
-                <p className='text-sm leading-relaxed text-[#E5E2E199]'>{applyCzechNbsp(FOOTER.legal.note)}</p>
+                <p className='text-fg-2 text-sm leading-relaxed'>{applyCzechNbsp(FOOTER.legal.note)}</p>
               ) : null}
               <div className='flex flex-wrap items-center gap-x-5 gap-y-2 text-sm'>
-                <PolicyLink
-                  href={FOOTER.legal.privacyHref}
-                  className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
-                >
+                <PolicyLink href={FOOTER.legal.privacyHref} className='text-fg-2 hover:text-amber-hi transition-colors'>
                   {applyCzechNbsp(FOOTER.legal.privacyLabel)}
                 </PolicyLink>
                 {showCookieInformation ? (
                   <>
                     <PolicyLink
                       href={FOOTER.legal.cookiesHref}
-                      className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
+                      className='text-fg-2 hover:text-amber-hi transition-colors'
                     >
                       {applyCzechNbsp(FOOTER.legal.cookiesLabel)}
                     </PolicyLink>
                     <CookieSettingsButton
                       label={FOOTER.legal.settingsLabel}
-                      className='text-[#E5E2E199] transition-colors hover:text-[#FFD79B]'
+                      className='text-fg-2 hover:text-amber-hi transition-colors'
                     />
                   </>
                 ) : null}
               </div>
             </div>
 
-            <p className='font-label text-xs tracking-widest text-[#e5e2e1b3] uppercase'>
+            <p className='font-label text-fg-3 text-step--1 tracking-[0.1em] uppercase'>
               {applyCzechNbsp(`© ${currentYear} ${FOOTER.copyrightOwner}. ${FOOTER.copyrightRights}`)}
             </p>
           </div>

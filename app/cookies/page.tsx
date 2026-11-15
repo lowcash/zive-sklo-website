@@ -36,26 +36,22 @@ export default async function CookiesPage({ searchParams }: CookiesPageProps) {
   const returnTo = await resolveReturnToFromSearchParams(searchParams)
 
   return (
-    <main className='bg-surface-dark min-h-screen pt-28 pb-20 md:pt-36 md:pb-28'>
+    <main className='min-h-screen pt-28 pb-20 md:pt-36 md:pb-28'>
       <Section spacing='md'>
         <Container size='md'>
-          <div className='space-y-6 border border-[#50453226] bg-[#1c1b1b] p-8 md:p-10'>
+          <div className='glass space-y-6 p-8 md:p-10'>
             <p>
               <Link
                 href={returnTo}
-                className='ui-surface-hover border-b border-[#6c5a38] text-sm text-[#FFD79B] hover:border-[#FFD79B]'
+                className='ui-surface-hover border-line-strong text-amber-hi hover:border-amber-hi border-b text-sm'
               >
                 Zpět na web Živé Sklo
               </Link>
             </p>
-            <p className='font-label text-xs tracking-[0.22em] text-[#ffcf42cc] uppercase'>
-              {applyCzechNbsp(COOKIE_NOTICE.page.eyebrow)}
-            </p>
+            <p className='eyebrow'>{applyCzechNbsp(COOKIE_NOTICE.page.eyebrow)}</p>
             <div className='space-y-4'>
-              <h1 className='font-display text-4xl font-bold tracking-tight text-[#E5E2E1] md:text-5xl'>
-                {applyCzechNbsp(COOKIE_NOTICE.page.title)}
-              </h1>
-              <p className='max-w-3xl text-base leading-relaxed text-[#E5E2E1CC]'>
+              <h1 className='text-step-5'>{applyCzechNbsp(COOKIE_NOTICE.page.title)}</h1>
+              <p className='text-fg-2 max-w-3xl text-base leading-relaxed'>
                 {applyCzechNbsp(COOKIE_NOTICE.page.intro)}
               </p>
             </div>
@@ -67,15 +63,13 @@ export default async function CookiesPage({ searchParams }: CookiesPageProps) {
         <Container size='md'>
           <div className='grid gap-6'>
             {COOKIE_NOTICE.page.sections.map((section) => (
-              <article key={section.title} className='border border-[#50453226] bg-[#171717] p-8 md:p-10'>
+              <article key={section.title} className='glass p-8 md:p-10'>
                 <div className='space-y-4'>
-                  <h2 className='font-display text-3xl font-bold tracking-tight text-[#E5E2E1]'>
-                    {applyCzechNbsp(section.title)}
-                  </h2>
-                  <p className='text-base leading-relaxed text-[#E5E2E1CC]'>{applyCzechNbsp(section.description)}</p>
+                  <h2 className='text-step-3'>{applyCzechNbsp(section.title)}</h2>
+                  <p className='text-fg-2 text-base leading-relaxed'>{applyCzechNbsp(section.description)}</p>
                   <ul className='text-text-secondary space-y-3 text-sm leading-relaxed'>
                     {section.items.map((item) => (
-                      <li key={item} className='border-l border-[#6c5a38] pl-4'>
+                      <li key={item} className='border-line-strong border-l pl-4'>
                         {applyCzechNbsp(item)}
                       </li>
                     ))}
@@ -89,12 +83,12 @@ export default async function CookiesPage({ searchParams }: CookiesPageProps) {
 
       <Section spacing='sm'>
         <Container size='md'>
-          <div className='border border-[#50453226] bg-[#1c1b1b] p-8 text-sm leading-relaxed text-[#E5E2E1CC] md:p-10'>
+          <div className='glass text-fg-2 p-8 text-sm leading-relaxed md:p-10'>
             <p>{applyCzechNbsp(COOKIE_NOTICE.page.contactNote)}</p>
             <p className='mt-4'>
               <a
                 href={CONTACT_EMAIL_HREF}
-                className='ui-surface-hover border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
+                className='ui-surface-hover border-line-strong text-amber-hi hover:border-amber-hi border-b'
               >
                 {CONTACT_EMAIL}
               </a>

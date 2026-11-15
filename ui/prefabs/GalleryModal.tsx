@@ -19,7 +19,7 @@ type GalleryModalProps = {
 }
 
 const CONTROL_CLASS =
-  'absolute z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none lg:opacity-0 lg:group-hover:opacity-100 lg:focus-visible:opacity-100'
+  'absolute z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-black/40 text-white/90 transition hover:bg-black/60 focus-visible:ring-2 focus-visible:ring-ice focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none'
 
 export function GalleryModal({
   images,

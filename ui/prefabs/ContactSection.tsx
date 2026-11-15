@@ -16,14 +16,12 @@ import { ContactForm } from './ContactForm'
  */
 export function ContactSection() {
   return (
-    <Section id='kontakt' spacing='xl' surface='subtle'>
+    <Section id='kontakt' spacing='xl' surface='subtle' temp={1}>
       <Container>
         <div className='space-y-10 md:space-y-12'>
-          <div className='max-w-3xl'>
-            <h2 className='font-display mb-4 text-5xl font-bold tracking-tight md:mb-6'>
-              {applyCzechNbsp(CONTACT.heading)}
-            </h2>
-            <p className='text-lg leading-relaxed text-[#e5e2e199]'>{applyCzechNbsp(CONTACT.subtitle)}</p>
+          <div className='reveal max-w-3xl'>
+            <h2 className='text-step-5 mb-4 md:mb-6'>{applyCzechNbsp(CONTACT.heading)}</h2>
+            <p className='text-step-1 text-fg-2 leading-[1.55]'>{applyCzechNbsp(CONTACT.subtitle)}</p>
           </div>
 
           <div className='flex flex-col items-start gap-12 lg:flex-row lg:gap-14 xl:gap-16'>
@@ -34,9 +32,9 @@ export function ContactSection() {
                   const secondary = 'secondary' in detail ? detail.secondary : undefined
                   const content = (
                     <>
-                      <span className='flex h-11 w-11 shrink-0 items-center justify-center bg-[#131313] sm:h-12 sm:w-12'>
+                      <span className='border-line flex h-11 w-11 shrink-0 items-center justify-center border bg-white/5 sm:h-12 sm:w-12'>
                         <span
-                          className='material-symbols-outlined text-[22px]! text-[#ffbf00] sm:text-[24px]!'
+                          className='material-symbols-outlined text-amber text-[22px]! sm:text-[24px]!'
                           aria-hidden='true'
                         >
                           {detail.icon}
@@ -44,7 +42,7 @@ export function ContactSection() {
                       </span>
                       <div className='min-w-0'>
                         <p
-                          className={`font-label text-xs text-[#e5e2e1b3] uppercase ${nowrap ? 'whitespace-nowrap' : 'break-normal'}`}
+                          className={`font-label text-fg-3 text-xs font-semibold tracking-[0.14em] uppercase ${nowrap ? 'whitespace-nowrap' : 'break-normal'}`}
                         >
                           {applyCzechNbsp(detail.label)}
                         </p>
@@ -67,7 +65,7 @@ export function ContactSection() {
                       <a
                         key={detail.label}
                         href={detail.href}
-                        className='flex items-center gap-3 transition-colors hover:text-[#FFD79B] sm:gap-5'
+                        className='hover:text-amber-hi flex items-center gap-3 transition-colors sm:gap-5'
                         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       >
                         {content}
@@ -99,7 +97,7 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div className='@container w-full max-w-2xl min-w-0 flex-1 border border-[#50453226] bg-[#131313] p-6 md:p-8 lg:p-8 xl:max-w-[40rem] xl:p-10'>
+            <div className='glass reveal @container w-full max-w-2xl min-w-0 flex-1 p-6 md:p-8 lg:p-8 xl:max-w-[40rem] xl:p-10'>
               <ContactForm />
             </div>
           </div>

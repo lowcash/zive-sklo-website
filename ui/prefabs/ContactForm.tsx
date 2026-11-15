@@ -11,12 +11,20 @@ import { useContactForm } from './useContactForm'
  * ContactForm - Client leaf for inquiry form validation and submission.
  */
 export function ContactForm() {
-  const { formData, actionState, isSubmitting, startedAt, showActionMessage, handleSubmit, handleChange, getFieldError } =
-    useContactForm()
+  const {
+    formData,
+    actionState,
+    isSubmitting,
+    startedAt,
+    showActionMessage,
+    handleSubmit,
+    handleChange,
+    getFieldError,
+  } = useContactForm()
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-8' aria-label='Formulář pro poptávku sklářské akce' noValidate>
-      <p className='text-xs tracking-wide text-[#e5e2e199]'>Pole označená * jsou povinná.</p>
+    <form onSubmit={handleSubmit} className='space-y-6' aria-label='Formulář pro poptávku sklářské akce' noValidate>
+      <p className='text-fg-3 text-step--1'>Pole označená * jsou povinná.</p>
 
       <div className='grid grid-cols-1 gap-8 @md:grid-cols-2 @md:gap-x-8 @md:gap-y-8'>
         <ContactField
@@ -159,7 +167,7 @@ export function ContactForm() {
       </ContactField>
 
       <div className='space-y-3'>
-        <label className='group flex cursor-pointer items-start gap-3 text-sm text-[#e5e2e1cc]'>
+        <label className='group text-fg-2 flex cursor-pointer items-start gap-3 text-sm'>
           <input
             name='gdpr'
             type='checkbox'
@@ -169,11 +177,11 @@ export function ContactForm() {
             aria-describedby={getFieldError('gdpr') ? 'error-gdpr' : undefined}
             className='peer sr-only'
           />
-          <span className='mt-0.5 flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center border border-[#6c5a38] bg-[#171717] transition-colors duration-300 peer-checked:border-[#ffbf00] peer-checked:bg-[#ffbf00] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[#ffbf00]'>
+          <span className='border-line-strong bg-field peer-checked:border-amber peer-checked:bg-amber peer-focus-visible:outline-ice mt-0.5 flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center border transition-colors duration-300 peer-checked:*:opacity-100 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2'>
             <svg
               viewBox='0 0 20 20'
               aria-hidden='true'
-              className='h-3.5 w-3.5 text-[#402d00] opacity-0 transition-opacity duration-200 peer-checked:opacity-100'
+              className='text-on-amber h-3.5 w-3.5 opacity-0 transition-opacity duration-200'
             >
               <path
                 d='M5 10.5 8.2 13.5 15 6.8'
@@ -185,16 +193,16 @@ export function ContactForm() {
               />
             </svg>
           </span>
-          <span className='leading-relaxed transition-colors duration-300 group-hover:text-[#fff1cd]'>
+          <span className='group-hover:text-fg leading-relaxed transition-colors duration-300'>
             {applyCzechNbsp(CONTACT.fields.gdpr.label)}
             {'\u00A0'}*
           </span>
         </label>
-        <div className='pl-8 text-xs leading-relaxed text-[#d4c5abb3]'>
+        <div className='text-fg-3 text-step--1 pl-8 leading-relaxed'>
           <p>{applyCzechNbsp(CONTACT.fields.gdpr.detailsText)}</p>
           <PolicyLink
             href={CONTACT.fields.gdpr.detailsHref}
-            className='ui-surface-hover mt-1 inline-flex border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
+            className='ui-surface-hover border-line-strong text-amber-hi hover:border-amber-hi mt-1 inline-flex border-b'
           >
             {applyCzechNbsp(CONTACT.fields.gdpr.detailsLabel)}
           </PolicyLink>
@@ -224,7 +232,7 @@ export function ContactForm() {
       <button
         type='submit'
         disabled={isSubmitting}
-        className='ui-cta-primary w-full py-5 text-sm font-bold tracking-widest uppercase disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70'
+        className='ui-cta-primary inline-flex w-full items-center justify-center py-4 text-sm font-bold tracking-widest uppercase disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70'
       >
         {isSubmitting ? 'Odesílám...' : CONTACT.submitLabel}
       </button>

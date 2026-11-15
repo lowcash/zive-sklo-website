@@ -2,11 +2,9 @@
 
 import type { ChangeEvent, ReactNode } from 'react'
 
-const FIELD_INPUT_CLASS =
-  'w-full border-b border-[#5045324d] bg-transparent px-0 py-3 text-[#e5e2e1] transition-colors placeholder:text-[#e5e2e199] focus:border-[#ffbf00] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffbf00]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]'
+const FIELD_INPUT_CLASS = 'field'
 
-const FIELD_SELECT_CLASS =
-  'w-full border-b border-[#5045324d] bg-[#131313] px-0 py-3 text-[#e5e2e1] focus:border-[#ffbf00] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#ffbf00]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313]'
+const FIELD_SELECT_CLASS = 'field'
 
 type ContactFieldProps = {
   id: string
@@ -20,13 +18,9 @@ type ContactFieldProps = {
 export function ContactField({ id, name, label, required, error, children }: ContactFieldProps) {
   return (
     <div className='space-y-2'>
-      <label htmlFor={id} className='font-label block text-xs tracking-widest text-[#e5e2e199] uppercase'>
+      <label htmlFor={id} className='font-label text-fg-2 block text-sm font-semibold tracking-[0.04em]'>
         {label}
-        {required ? (
-          <>
-            {'\u00A0'}*
-          </>
-        ) : null}
+        {required ? <>{'\u00A0'}*</> : null}
       </label>
       {children}
       {error ? (

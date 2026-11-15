@@ -1,6 +1,6 @@
 import { Manrope, Noto_Serif } from 'next/font/google'
 
-import { CookieConsentManager } from '@/ui/prefabs'
+import { AmbientEffects, CookieConsentManager } from '@/ui/prefabs'
 
 import { LOCAL_BUSINESS_JSON_LD, ROOT_METADATA, ROOT_VIEWPORT } from '@/app/site-metadata'
 
@@ -10,14 +10,14 @@ const notoSerif = Noto_Serif({
   subsets: ['latin', 'latin-ext'],
   variable: '--font-display',
   display: 'swap',
-  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  axes: ['wdth'],
 })
 
 const manrope = Manrope({
   subsets: ['latin', 'latin-ext'],
   variable: '--font-body',
   display: 'swap',
-  weight: ['300', '400', '500', '600', '700'],
 })
 
 const MATERIAL_SYMBOLS_HREF =
@@ -36,7 +36,7 @@ export default function RootLayout({
   const showCookieBannerPreview = process.env.NODE_ENV !== 'production'
 
   return (
-    <html lang='cs' data-scroll-behavior='smooth' className={`scroll-smooth ${notoSerif.variable} ${manrope.variable}`}>
+    <html lang='cs' data-scroll-behavior='smooth' className={`${notoSerif.variable} ${manrope.variable}`}>
       <head>
         <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
@@ -56,10 +56,19 @@ export default function RootLayout({
         />
       </head>
       <body className='antialiased'>
+        {/* Hot Glass: cooling sky + decorative thermometer. Pure CSS, driven by --heat. */}
+        <div className='sky' aria-hidden='true' />
+        <div className='therm' aria-hidden='true'>
+          <span className='t hot'>1&nbsp;200&nbsp;°C</span>
+          <span className='bar' />
+          <span className='mark' />
+          <span className='t cold'>20&nbsp;°C</span>
+        </div>
+        <AmbientEffects />
         {/* Skip to main content – accessible keyboard entry point */}
         <a
           href='#top'
-          className='sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:bg-[#ffbf00] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#402d00]'
+          className='focus:bg-amber focus:text-on-amber sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:text-sm focus:font-bold'
         >
           Přeskočit na hlavní obsah
         </a>

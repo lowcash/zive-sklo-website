@@ -6,6 +6,8 @@ type SectionProps = {
   'aria-labelledby'?: string
   spacing?: 'sm' | 'md' | 'lg' | 'xl'
   surface?: 'none' | 'subtle'
+  /** Temperature step (0 to 1) used when motion is reduced. */
+  temp?: number
 }
 
 /**
@@ -17,23 +19,25 @@ export function Section({
   'aria-labelledby': ariaLabelledBy,
   spacing = 'lg',
   surface = 'none',
+  temp,
 }: SectionProps) {
   const spacingClasses = {
     sm: 'py-10 md:py-12',
     md: 'py-12 md:py-16',
-    lg: 'py-16 md:py-24',
-    xl: 'py-20 md:py-32',
+    lg: 'py-(--section-y)',
+    xl: 'py-(--section-y)',
   }
 
   const surfaceClasses = {
     none: '',
-    subtle: 'bg-[#1c1b1b]',
+    subtle: 'bg-scrim',
   }
 
   return (
     <section
       id={id}
       aria-labelledby={ariaLabelledBy}
+      data-temp={temp}
       className={`${spacingClasses[spacing]} ${surfaceClasses[surface]}`}
     >
       {children}

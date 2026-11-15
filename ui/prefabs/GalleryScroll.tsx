@@ -34,14 +34,20 @@ export function GalleryScroll({ images, alts = [], scrollRef, onImageClick }: Ga
   ]
 
   return (
-    <div ref={containerRef} className='scrollbar-hide flex gap-8 overflow-x-auto overflow-y-hidden scroll-smooth pb-6'>
+    <div
+      ref={containerRef}
+      role='region'
+      aria-label='Galerie fotografií'
+      tabIndex={0}
+      className='flex snap-x snap-mandatory [scrollbar-width:thin] [scrollbar-color:var(--color-line-strong)_transparent] gap-4 overflow-x-auto overflow-y-hidden pb-4 motion-safe:scroll-smooth'
+    >
       {images.map((src, index) => (
         <button
           type='button'
           key={`${src}-${index}`}
           onClick={() => onImageClick?.(index)}
           aria-label={`Zobrazit fotografii: ${alts[index] ?? `Galerie živého skla ${index + 1}`}`}
-          className={`group relative h-[500px] flex-none cursor-pointer overflow-hidden text-left ${widthPattern[index % widthPattern.length]}`}
+          className={`tile group border-line relative h-[500px] flex-none cursor-pointer snap-start overflow-hidden border text-left ${widthPattern[index % widthPattern.length]}`}
         >
           <Image
             src={src}
@@ -49,7 +55,7 @@ export function GalleryScroll({ images, alts = [], scrollRef, onImageClick }: Ga
             width={960}
             height={1200}
             sizes={sizesPattern[index % sizesPattern.length]}
-            className='h-full w-full object-cover grayscale transition-all duration-500 group-hover:scale-[1.02] group-hover:grayscale-0'
+            className='h-full w-full object-cover'
             quality={85}
           />
         </button>

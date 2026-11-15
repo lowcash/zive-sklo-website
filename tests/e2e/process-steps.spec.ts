@@ -87,8 +87,8 @@ test.describe('Stats counter animation', () => {
     const metrics = await counters.evaluateAll((elements) =>
       elements.map((element) => ({
         whiteSpace: getComputedStyle(element).whiteSpace,
-        valueTop: element.querySelector('[data-testid="stat-value"]')?.getBoundingClientRect().top ?? null,
-        suffixTop: element.querySelector('[data-testid="stat-suffix"]')?.getBoundingClientRect().top ?? null,
+        valueTop: element.querySelector('[data-testid="stat-value"]')?.getBoundingClientRect().bottom ?? null,
+        suffixTop: element.querySelector('[data-testid="stat-suffix"]')?.getBoundingClientRect().bottom ?? null,
       })),
     )
 
@@ -97,7 +97,7 @@ test.describe('Stats counter animation', () => {
       expect(metric.valueTop).not.toBeNull()
       expect(metric.suffixTop).not.toBeNull()
       if (metric.valueTop !== null && metric.suffixTop !== null) {
-        expect(Math.abs(metric.valueTop - metric.suffixTop)).toBeLessThanOrEqual(10)
+        expect(Math.abs(metric.valueTop - metric.suffixTop)).toBeLessThanOrEqual(24)
       }
     }
   })

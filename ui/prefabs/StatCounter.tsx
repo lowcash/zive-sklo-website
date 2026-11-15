@@ -1,79 +1,34 @@
-'use client'
-
-import { useEffect, useRef, useState } from 'react'
-
 interface StatCounterProps {
   numericValue: number
   suffix?: string
-  durationMs?: number
+  tone?: 'amber' | 'ice'
 }
 
 /**
- * StatCounter - Client leaf component for count-up animation.
- * SSR / no-JS renders the final value. Animation runs only after mount.
- * Respects prefers-reduced-motion: shows final value instantly without animating.
+ * StatCounter - RSC (Server Component)
+ * Renders the real value in the HTML, so SSR, no-JS and print show the final number.
  */
-export function StatCounter({ numericValue, suffix = '', durationMs = 1200 }: StatCounterProps) {
-  const [displayValue, setDisplayValue] = useState(numericValue)
-  const [hasAnimated, setHasAnimated] = useState(false)
-  const [canAnimate, setCanAnimate] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
+export function StatCounter({ numericValue, suffix = '', tone = 'amber' }: StatCounterProps) {
   const formattedFinal = numericValue.toLocaleString('cs-CZ')
   const suffixDisplay = suffix.replace(/^\s+/, '\u00A0')
-
-  useEffect(() => {
-    setCanAnimate(true)
-    setDisplayValue(0)
-  }, [])
-
-  useEffect(() => {
-    if (!canAnimate || !ref.current || hasAnimated) return
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return
-
-        setHasAnimated(true)
-        observer.disconnect()
-
-        if (prefersReducedMotion) {
-          setDisplayValue(numericValue)
-          return
-        }
-
-        const start = performance.now()
-        const frame = (now: number) => {
-          const progress = Math.min((now - start) / durationMs, 1)
-          // Cubic ease-out for natural deceleration
-          const eased = 1 - Math.pow(1 - progress, 3)
-          setDisplayValue(Math.round(numericValue * eased))
-          if (progress < 1) requestAnimationFrame(frame)
-        }
-        requestAnimationFrame(frame)
-      },
-      { threshold: 0.5 },
-    )
-
-    observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [canAnimate, durationMs, hasAnimated, numericValue])
+  const gradient =
+    tone === 'ice'
+      ? 'bg-[linear-gradient(100deg,var(--color-ice),var(--color-fg))]'
+      : 'bg-[linear-gradient(100deg,var(--color-amber),var(--color-ember))]'
 
   return (
     <div
-      ref={ref}
       data-testid='stat-counter'
-      className='font-display text-accent-amber relative z-10 inline-flex max-w-full items-baseline justify-center text-[3rem] leading-none font-bold tracking-tight whitespace-nowrap sm:text-[3.25rem] md:text-[3rem] lg:text-[3rem] xl:text-7xl'
+      className={`font-display inline-flex max-w-full items-baseline justify-start bg-clip-text text-[clamp(3rem,2rem+5vw,6rem)] leading-none font-light tracking-[-0.03em] whitespace-nowrap text-transparent [font-stretch:90%] ${gradient}`}
     >
       <span className='sr-only'>
         {formattedFinal}
         {suffixDisplay}
       </span>
       <span data-testid='stat-value' aria-hidden='true'>
-        {displayValue.toLocaleString('cs-CZ')}
+        {formattedFinal}
       </span>
-      <span data-testid='stat-suffix' className='text-[0.82em] whitespace-nowrap' aria-hidden='true'>
+      <span data-testid='stat-suffix' className='text-[0.45em] tracking-normal whitespace-nowrap' aria-hidden='true'>
         {suffixDisplay}
       </span>
     </div>

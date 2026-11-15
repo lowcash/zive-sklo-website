@@ -11,15 +11,13 @@ import { ProcessSteps } from './ProcessSteps'
  */
 export function ProcessSection() {
   return (
-    <Section id='jak-to-funguje' spacing='xl'>
+    <Section id='jak-to-funguje' spacing='xl' surface='subtle' temp={0.38}>
       <Container>
-        <h2 className='font-display mb-14 text-center text-4xl font-bold tracking-tight md:mb-24'>
-          {applyCzechNbsp(PROCESS.heading)}
-        </h2>
+        <h2 className='reveal mb-14 md:mb-20'>{applyCzechNbsp(PROCESS.heading)}</h2>
 
         <ProcessSteps steps={PROCESS.steps} />
 
-        <p className='mx-auto mt-12 max-w-3xl text-center text-sm leading-relaxed text-[#e5e2e199] md:text-base'>
+        <p className='text-fg-3 text-step--1 mt-12 max-w-[56ch] font-semibold tracking-[0.12em] uppercase'>
           {applyCzechNbsp(PROCESS.trustLine)}
         </p>
       </Container>

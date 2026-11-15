@@ -1,15 +1,56 @@
 @import 'tailwindcss';
 
-@theme {
-  /* Color tokens — generates bg-*, text-*, border-* utilities */
-  --color-surface-dark: #131313;
-  --color-accent-amber: #ffbf00;
-  --color-accent-ice: #9accf3;
-  --color-text-primary: #e5e2e1;
-  --color-text-secondary: #d4c5ab;
-  --color-border: #504532;
+/*
+ * "Hot Glass" design system (demo/hot-glass). Spec: .refactor/design/design-spec.md
+ * The single scroll-driven variable is --heat (0 = molten, 1 = cold glass).
+ */
+@property --heat {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0.3;
+}
 
-  /* Border radius — sharp design: all zero except full */
+@custom-variant motion-ok (@media (prefers-reduced-motion: no-preference));
+
+@theme {
+  /* Color tokens (OKLCH). Hex fallbacks for engines without oklch() live in the @supports block below. */
+  --color-bg-hot: oklch(0.22 0.06 45);
+  --color-bg-cold: oklch(0.25 0.05 240);
+  --color-fg: oklch(0.94 0.006 70);
+  --color-fg-2: oklch(0.82 0.03 80);
+  --color-fg-3: oklch(0.78 0.025 75);
+  --color-amber: oklch(0.84 0.17 85);
+  --color-amber-hi: oklch(0.89 0.15 85);
+  --color-on-amber: oklch(0.3 0.06 85);
+  --color-ice: oklch(0.83 0.07 240);
+  --color-ember: oklch(0.68 0.19 45);
+  --color-line: oklch(1 0 0 / 0.1);
+  --color-line-strong: oklch(0.6 0.035 75);
+  --color-scrim: oklch(0.12 0.01 60 / 0.55);
+  --color-card: oklch(0.14 0.012 60 / 0.62);
+  --color-card-hi: oklch(0.22 0.015 60 / 0.72);
+  --color-field: oklch(0.1 0.01 60 / 0.55);
+  --color-panel: oklch(0.15 0.015 60);
+
+  /* Legacy names kept as aliases so no component breaks (spec section 3) */
+  --color-surface-dark: oklch(0.14 0.012 60);
+  --color-accent-amber: var(--color-amber);
+  --color-accent-ice: var(--color-ice);
+  --color-text-primary: var(--color-fg);
+  --color-text-secondary: var(--color-fg-2);
+  --color-border: var(--color-line);
+
+  /* Fluid type scale (Utopia, 360 to 1440 px) */
+  --text-step--1: clamp(0.8333rem, 0.8111rem + 0.0988vw, 0.9rem);
+  --text-step-0: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem);
+  --text-step-1: clamp(1.2rem, 1.1312rem + 0.3056vw, 1.4063rem);
+  --text-step-2: clamp(1.44rem, 1.3341rem + 0.4708vw, 1.7578rem);
+  --text-step-3: clamp(1.728rem, 1.5716rem + 0.6952vw, 2.1973rem);
+  --text-step-4: clamp(2.0736rem, 1.8493rem + 0.997vw, 2.7466rem);
+  --text-step-5: clamp(2.4883rem, 2.1734rem + 1.3999vw, 3.4332rem);
+  --text-step-display: clamp(2.5rem, 1.75rem + 3.5vw, 5.25rem);
+
+  /* Border radius: sharp design, pills only */
   --radius-sm: 0;
   --radius-md: 0;
   --radius-lg: 0;
@@ -17,12 +58,35 @@
   --radius-2xl: 0;
   --radius-full: 9999px;
 
-  /* Backdrop blur extension */
+  /* Shadow and glow */
+  --shadow-glass: 0 1px 0 oklch(1 0 0 / 0.06) inset, 0 8px 24px -12px oklch(0 0 0 / 0.6);
+  --shadow-glass-hover: 0 1px 0 oklch(1 0 0 / 0.1) inset, 0 24px 48px -24px oklch(0 0 0 / 0.7);
+  --shadow-glow-amber: 0 0 0 1px oklch(0.84 0.17 85 / 0.35), 0 0 32px -4px oklch(0.84 0.17 85 / 0.35);
+  --shadow-glow-ice: 0 0 0 1px oklch(0.83 0.07 240 / 0.35), 0 0 32px -4px oklch(0.83 0.07 240 / 0.3);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
+  --animate-float: float 14s var(--ease-inout) infinite;
+
+  /* Backdrop blur: the fixed nav is the only blurred surface */
   --blur-glass: 20px;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-1.1rem) rotate(2.5deg);
+    }
+  }
 }
 
 :root {
-  /* Spacing scale — for use as var(--spacing-*) in custom utilities */
+  color-scheme: dark;
+
+  /* Spacing scale for use as var(--spacing-*) in custom utilities */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
@@ -30,11 +94,49 @@
   --spacing-xl: 3rem;
   --spacing-2xl: 4rem;
   --spacing-3xl: 6rem;
+
+  --section-y: clamp(4rem, 2.5rem + 6vw, 8rem);
+  --gutter: clamp(1.25rem, 0.5rem + 3.5vw, 5rem);
+  --measure: 62ch;
+  --dur-fast: 140ms;
+  --dur-base: 280ms;
+  --dur-slow: 600ms;
+}
+
+/* Hex fallbacks for engines without oklch() */
+@supports not (color: oklch(0 0 0)) {
+  :root {
+    --color-bg-hot: #300f01;
+    --color-bg-cold: #062437;
+    --color-fg: #eeeae7;
+    --color-fg-2: #cec2af;
+    --color-fg-3: #c1b5a6;
+    --color-amber: #fdc010;
+    --color-amber-hi: #ffd256;
+    --color-on-amber: #3c2b02;
+    --color-ice: #9ecef1;
+    --color-ember: #f3680f;
+    --color-line: rgb(255 255 255 / 0.1);
+    --color-line-strong: #8d7e69;
+    --color-scrim: rgb(20 17 14 / 0.55);
+    --color-card: rgb(28 25 22 / 0.62);
+    --color-card-hi: rgb(48 43 38 / 0.72);
+    --color-field: rgb(14 12 10 / 0.55);
+    --color-panel: #1f1b17;
+    --color-surface-dark: #1c1916;
+  }
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    background: var(--color-bg-hot);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   section[id],
@@ -50,9 +152,13 @@
   }
 
   body {
-    background-color: var(--color-surface-dark);
-    color: var(--color-text-primary);
-    font-family: var(--font-body), sans-serif;
+    background-color: transparent;
+    color: var(--color-fg);
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: var(--text-step-0);
+    line-height: 1.65;
+    font-optical-sizing: auto;
+    overflow-x: clip;
   }
 
   h1,
@@ -65,9 +171,34 @@
     margin: 0;
   }
 
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), Georgia, serif;
+    font-stretch: 94%;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  h2 {
+    font-size: var(--text-step-4);
+    line-height: 1.12;
+  }
+
+  h3 {
+    font-size: var(--text-step-2);
+    line-height: 1.2;
+    font-weight: 600;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
   ::selection {
-    color: #402d00;
-    background: #ffbf00;
+    color: var(--color-on-amber);
+    background: var(--color-amber);
   }
 
   a[href],
@@ -80,8 +211,8 @@
   }
 
   :focus-visible {
-    outline: 2px solid #ffbf00;
-    outline-offset: 2px;
+    outline: 2px solid var(--color-ice);
+    outline-offset: 3px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -100,15 +231,421 @@
   }
 }
 
+@layer components {
+  /* ===== Sky: the cooling-glass background. Fixed, contained, no layout. ===== */
+  .sky {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    contain: strict;
+    pointer-events: none;
+    background: color-mix(in oklch, var(--color-bg-hot), var(--color-bg-cold) calc(var(--heat) * 100%));
+  }
+
+  .sky::before,
+  .sky::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .sky::before {
+    background: radial-gradient(
+      60rem 42rem at 18% 8%,
+      color-mix(in oklch, oklch(0.62 0.19 45 / 0.32), oklch(0.8 0.09 235 / 0.22) calc(var(--heat) * 100%)),
+      transparent 70%
+    );
+  }
+
+  .sky::after {
+    background: radial-gradient(
+      48rem 36rem at 88% 92%,
+      oklch(0.8 0.09 235 / calc(0.04 + var(--heat) * 0.18)),
+      transparent 70%
+    );
+  }
+
+  /* Thermometer: decorative, desktop only */
+  .therm {
+    --h: 34vh;
+    position: fixed;
+    right: 1.1rem;
+    top: 50%;
+    translate: 0 -50%;
+    z-index: 20;
+    display: none;
+    width: 2.2rem;
+    height: var(--h);
+    pointer-events: none;
+    color: var(--color-fg-3);
+    font:
+      600 0.72rem/1 var(--font-body),
+      system-ui,
+      sans-serif;
+    letter-spacing: 0.08em;
+  }
+
+  .therm .bar {
+    position: absolute;
+    right: 0;
+    top: 1.4rem;
+    bottom: 1.4rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--color-ember), var(--color-amber) 35%, var(--color-ice));
+  }
+
+  .therm .mark {
+    position: absolute;
+    right: -3px;
+    top: 1.4rem;
+    width: 8px;
+    height: 8px;
+    background: var(--color-fg);
+    box-shadow: 0 0 12px 2px oklch(0.94 0.006 70 / 0.5);
+    transform: translateY(calc(var(--heat) * (var(--h) - 2.8rem - 8px)));
+  }
+
+  .therm .t {
+    position: absolute;
+    right: 0;
+    white-space: nowrap;
+    display: none;
+  }
+
+  .therm .t.hot {
+    top: 0;
+  }
+
+  .therm .t.cold {
+    bottom: 0;
+  }
+
+  @media (min-width: 1200px) {
+    .therm {
+      display: block;
+      right: 0.55rem;
+      width: 1rem;
+    }
+  }
+
+  @media (min-width: 1560px) {
+    .therm {
+      right: 1.1rem;
+      width: 2.2rem;
+    }
+
+    .therm .t {
+      display: block;
+    }
+  }
+
+  /* Native scroll-driven path; everything here is optional enhancement. */
+  @keyframes cool {
+    from {
+      --heat: 0;
+    }
+    to {
+      --heat: 1;
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .sky,
+      .therm {
+        animation: cool linear both;
+        animation-timeline: scroll(root block);
+      }
+    }
+  }
+
+  /* ===== Scroll-driven reveal. Default state is visible. Never on the hero. ===== */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      translate: 0 1.5rem;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 45%;
+      }
+    }
+  }
+
+  /* ===== Navigation ===== */
+  .glass-nav {
+    background: var(--color-card);
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    backdrop-filter: blur(var(--blur-glass));
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .glass-nav {
+      background: var(--color-panel);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+
+  .nav-link {
+    padding-block: 0.5rem;
+    background: linear-gradient(var(--color-amber), var(--color-amber)) 0 100% / 0 1px no-repeat;
+    transition:
+      color var(--dur-base) var(--ease-out),
+      background-size var(--dur-base) var(--ease-out);
+  }
+
+  .nav-link:hover,
+  .nav-link[aria-current='true'] {
+    background-size: 100% 1px;
+  }
+
+  /* ===== Buttons ===== */
+  .ui-cta-primary {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    min-height: 3.25rem;
+    background: var(--color-amber);
+    color: var(--color-on-amber);
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+  }
+
+  .ui-cta-primary:hover {
+    background: var(--color-amber-hi);
+    box-shadow: var(--shadow-glow-amber);
+  }
+
+  .ui-cta-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 35%, oklch(1 0 0 / 0.45) 50%, transparent 65%);
+    transform: translateX(-120%);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ui-cta-primary:hover::after {
+      transform: translateX(120%);
+      transition: transform 700ms var(--ease-out);
+    }
+  }
+
+  .ui-cta-ghost {
+    border: 1px solid var(--color-line-strong);
+    color: var(--color-fg);
+    transition:
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .ui-cta-ghost:hover {
+    border-color: var(--color-ice);
+    color: var(--color-ice);
+  }
+
+  .link-arrow {
+    transition:
+      color var(--dur-base) var(--ease-out),
+      gap var(--dur-base) var(--ease-out);
+  }
+
+  .link-arrow:hover,
+  a:hover > .link-arrow,
+  a:focus-visible > .link-arrow {
+    color: var(--color-amber-hi);
+  }
+
+  /* ===== Glass card: specular streak, inner highlight, optional pointer glow ===== */
+  .glass {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--color-card);
+    border: 1px solid var(--color-line);
+    box-shadow: var(--shadow-glass);
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      linear-gradient(115deg, transparent 38%, oklch(1 0 0 / 0.07) 46%, oklch(1 0 0 / 0.02) 52%, transparent 58%),
+      radial-gradient(18rem 14rem at var(--mx, 85%) var(--my, 0%), oklch(0.83 0.07 240 / 0.12), transparent 70%);
+  }
+
+  .glass:hover,
+  .glass:focus-within {
+    background: var(--color-card-hi);
+    border-color: oklch(0.83 0.07 240 / 0.4);
+    box-shadow: var(--shadow-glass-hover);
+  }
+
+  /* ===== Glass orb: refraction highlights in pure CSS (decorative) ===== */
+  .orb {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 34% 28%, oklch(1 0 0 / 0.55) 0 3%, transparent 9%),
+      radial-gradient(ellipse 26% 12% at 30% 22%, oklch(1 0 0 / 0.42), transparent 70%),
+      radial-gradient(
+        circle at 50% 56%,
+        oklch(0.9 0.16 88 / 0.95) 0 16%,
+        oklch(0.74 0.19 55 / 0.9) 36%,
+        oklch(0.5 0.17 40 / 0.85) 58%,
+        oklch(0.22 0.07 40 / 0.9) 78%
+      ),
+      conic-gradient(
+        from 210deg,
+        oklch(0.8 0.08 235 / 0.9),
+        oklch(0.65 0.15 300 / 0.5),
+        oklch(0.8 0.12 85 / 0.6),
+        oklch(0.8 0.08 235 / 0.9)
+      );
+    box-shadow:
+      inset 0 0 0 1px oklch(1 0 0 / 0.18),
+      inset -1.4rem -2rem 4rem oklch(0.83 0.07 240 / 0.28),
+      inset 1.2rem 1.6rem 3rem oklch(1 0 0 / 0.08),
+      0 0 8rem -1rem oklch(0.68 0.19 45 / 0.45);
+  }
+
+  .orb::before {
+    content: '';
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    border: 1px solid oklch(0.83 0.07 240 / 0.45);
+    border-left-color: transparent;
+    border-bottom-color: oklch(0.84 0.17 85 / 0.5);
+    rotate: -28deg;
+  }
+
+  .orb::after {
+    content: '';
+    position: absolute;
+    left: 62%;
+    top: 70%;
+    width: 22%;
+    height: 22%;
+    border-radius: 50%;
+    background: radial-gradient(circle, oklch(0.83 0.07 240 / 0.55), transparent 70%);
+  }
+
+  /* ===== Gallery tile: refraction sweep ===== */
+  .tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 40%, oklch(1 0 0 / 0.16) 48%, transparent 56%) -80% 0 / 220% 100%
+      no-repeat;
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .tile::after {
+      transition: background-position 900ms var(--ease-out);
+    }
+
+    .tile:hover::after {
+      background-position: 120% 0;
+    }
+
+    .tile img {
+      transition: transform 900ms var(--ease-out);
+    }
+
+    .tile:hover img {
+      transform: scale(1.03);
+    }
+  }
+
+  /* ===== Process connector: hot to cold, wide layout only ===== */
+  @media (min-width: 1280px) {
+    .steps-line::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 1px;
+      background: linear-gradient(to right, var(--color-ember), var(--color-amber), var(--color-ice));
+      opacity: 0.6;
+    }
+  }
+
+  /* ===== Form fields ===== */
+  .field {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-line-strong);
+    border-radius: 0;
+    background: var(--color-field);
+    color: var(--color-fg);
+    transition:
+      border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  .field::placeholder {
+    color: var(--color-fg-3);
+    opacity: 1;
+  }
+
+  .field:focus-visible {
+    outline: 2px solid var(--color-ice);
+    outline-offset: 2px;
+    border-color: var(--color-ice);
+    box-shadow: var(--shadow-glow-ice);
+  }
+
+  .field[aria-invalid='true'] {
+    border-color: oklch(0.78 0.12 25);
+  }
+}
+
 @layer utilities {
   .font-display,
   .font-headline {
-    font-family: var(--font-display), serif;
+    font-family: var(--font-display), Georgia, serif;
   }
 
   .font-body,
   .font-label {
-    font-family: var(--font-body), sans-serif;
+    font-family: var(--font-body), system-ui, sans-serif;
+  }
+
+  .eyebrow {
+    font-family: var(--font-body), system-ui, sans-serif;
+    font-size: var(--text-step--1);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ice);
   }
 
   .material-symbols-outlined {
@@ -119,48 +656,16 @@
       'opsz' 24;
   }
 
-  .glass-nav {
-    background: rgba(28, 27, 27, 0.6);
-    backdrop-filter: blur(20px);
-  }
-
-  .ui-motion {
-    transition-property: background-color, color, border-color, filter, opacity, transform;
-    transition-duration: 280ms;
-    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
   .ui-surface-hover {
     transition-property: background-color, color, border-color;
     transition-duration: 280ms;
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .ui-cta-primary {
-    background: #ffbf00;
-    color: #402d00;
-    transition-property: background-color, color, transform;
-    transition-duration: 280ms;
-    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .ui-cta-primary:hover {
-    background: #ffcf42;
-  }
-
   .ui-hover-media {
     transition-property: filter, opacity, transform;
     transition-duration: 280ms;
     transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  /* Glass card utilities — bg and border have intentionally different colors */
-  .bg-glass {
-    background-color: rgba(28, 27, 27, 0.6);
-  }
-
-  .border-glass {
-    border-color: rgba(80, 69, 50, 0.4);
   }
 
   .scrollbar-hide {
@@ -179,5 +684,19 @@
 
   .mb-safe {
     margin-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+@media (forced-colors: active) {
+  .sky,
+  .therm {
+    display: none;
+  }
+}
+
+@media print {
+  .sky,
+  .therm {
+    display: none;
   }
 }

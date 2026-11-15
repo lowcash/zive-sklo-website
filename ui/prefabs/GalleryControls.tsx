@@ -175,10 +175,10 @@ export function GalleryControls({ heading, hint, images, alts }: GalleryControls
   return (
     <>
       <Container>
-        <div className='mb-12 flex items-end justify-between'>
+        <div className='reveal mb-12 flex items-end justify-between gap-6'>
           <div className='space-y-3'>
-            <h2 className='font-display text-4xl font-bold tracking-tight'>{heading}</h2>
-            <p className='font-label text-xs tracking-[0.18em] text-[#e5e2e1b3] uppercase'>{hint}</p>
+            <h2>{heading}</h2>
+            <p className='font-label text-fg-3 text-step--1 font-semibold tracking-[0.12em] uppercase'>{hint}</p>
           </div>
           <div className='flex gap-4'>
             <button
@@ -186,7 +186,7 @@ export function GalleryControls({ heading, hint, images, alts }: GalleryControls
               onClick={() => scrollGallery('prev')}
               disabled={!canScrollPrev}
               aria-label='Posunout galerii doleva'
-              className='flex h-12 w-12 cursor-pointer items-center justify-center border border-[#3b3b3b] bg-[#141414] text-[#e5e2e1] transition-colors duration-300 hover:bg-[#1f1f1f] focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313] focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#141414] disabled:hover:text-[#e5e2e1]'
+              className='border-line-strong text-fg hover:border-ice hover:text-ice disabled:hover:border-line-strong disabled:hover:text-fg flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-40'
             >
               <span className='material-symbols-outlined text-[24px]!' aria-hidden='true'>
                 arrow_back
@@ -197,7 +197,7 @@ export function GalleryControls({ heading, hint, images, alts }: GalleryControls
               onClick={() => scrollGallery('next')}
               disabled={!canScrollNext}
               aria-label='Posunout galerii doprava'
-              className='flex h-12 w-12 cursor-pointer items-center justify-center border border-[#3b3b3b] bg-[#141414] text-[#e5e2e1] transition-colors duration-300 hover:bg-[#1f1f1f] focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313] focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-[#141414] disabled:hover:text-[#e5e2e1]'
+              className='border-line-strong text-fg hover:border-ice hover:text-ice disabled:hover:border-line-strong disabled:hover:text-fg flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-40'
             >
               <span className='material-symbols-outlined text-[24px]!' aria-hidden='true'>
                 arrow_forward

@@ -46,7 +46,7 @@ export function ScrollToTopButton() {
 
   return (
     <div className='pointer-events-none fixed inset-x-0 bottom-6 z-40 md:bottom-8'>
-      <div className='mx-auto flex w-full max-w-360 justify-end px-6 md:px-10'>
+      <div className='mx-auto flex w-full max-w-360 justify-end px-(--gutter)'>
         <motion.button
           type='button'
           initial={false}
@@ -57,7 +57,7 @@ export function ScrollToTopButton() {
           }}
           transition={{ duration: 0.28, ease: 'easeOut' }}
           onClick={scrollToTop}
-          className={`pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border border-[#50453266] bg-[rgba(28,27,27,0.82)] text-[#E5E2E1] backdrop-blur-[20px] transition-colors duration-300 hover:bg-[#ffbf00] hover:text-[#402d00] ${canShow ? '' : 'pointer-events-none'}`}
+          className={`border-line-strong bg-card text-fg hover:bg-amber hover:text-on-amber pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border transition-colors duration-300 ${canShow ? '' : 'pointer-events-none'}`}
           style={{
             marginBottom: 'env(safe-area-inset-bottom)',
             transform: 'translateZ(0)',

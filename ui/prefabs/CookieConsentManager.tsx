@@ -66,39 +66,37 @@ export function CookieConsentManager({ gaTrackingId, showBannerPreview = false }
     <>
       {shouldShowBanner ? (
         <div className='pb-safe pointer-events-none fixed inset-x-0 bottom-0 z-80 pb-4'>
-          <div className='mx-auto max-w-360 px-6 md:px-20'>
+          <div className='mx-auto max-w-360 px-(--gutter)'>
             <div
               role='dialog'
               aria-labelledby='cookie-consent-title'
               aria-describedby='cookie-consent-description'
-              className='pointer-events-auto mx-auto max-w-5xl border border-[#6c5a3899] bg-[#131313f2] shadow-[0_-16px_40px_rgba(0,0,0,0.32)] backdrop-blur-md'
+              className='border-line-strong bg-panel pointer-events-auto mx-auto max-w-5xl border shadow-[0_-16px_40px_rgba(0,0,0,0.32)]'
             >
               <div className='grid gap-6 p-5 md:grid-cols-[1.8fr_auto] md:items-end md:p-6'>
                 <div className='space-y-3'>
-                  <p className='font-label text-xs tracking-[0.22em] text-[#ffcf42cc] uppercase'>
-                    {applyCzechNbsp(COOKIE_NOTICE.banner.eyebrow)}
-                  </p>
+                  <p className='eyebrow'>{applyCzechNbsp(COOKIE_NOTICE.banner.eyebrow)}</p>
                   <div className='space-y-2'>
-                    <h2 id='cookie-consent-title' className='font-display text-2xl text-[#E5E2E1] md:text-[2rem]'>
+                    <h2 id='cookie-consent-title' className='text-step-3'>
                       {applyCzechNbsp(COOKIE_NOTICE.banner.title)}
                     </h2>
                     <p
                       id='cookie-consent-description'
-                      className='max-w-3xl text-sm leading-relaxed text-[#E5E2E1CC] md:text-[0.95rem]'
+                      className='text-fg-2 max-w-3xl text-sm leading-relaxed md:text-[0.95rem]'
                     >
                       {applyCzechNbsp(COOKIE_NOTICE.banner.description)}
                     </p>
                   </div>
-                  <p className='text-xs leading-relaxed text-[#d4c5abb3]'>
+                  <p className='text-fg-3 text-step--1 leading-relaxed'>
                     <PolicyLink
                       href='/cookies'
-                      className='ui-surface-hover border-b border-[#6c5a38] text-[#FFD79B] hover:border-[#FFD79B]'
+                      className='ui-surface-hover border-line-strong text-amber-hi hover:border-amber-hi border-b'
                     >
                       {applyCzechNbsp(COOKIE_NOTICE.banner.detailsLabel)}
                     </PolicyLink>
                   </p>
                   {isPreviewWithoutAnalytics ? (
-                    <p className='text-xs leading-relaxed text-[#ffcf42cc]'>
+                    <p className='text-amber text-step--1 leading-relaxed'>
                       Náhled v lokálním vývoji: bez nastaveného NEXT_PUBLIC_GA_TRACKING_ID se po kliknutí žádná
                       analytika nenačte.
                     </p>
@@ -109,14 +107,14 @@ export function CookieConsentManager({ gaTrackingId, showBannerPreview = false }
                   <button
                     type='button'
                     onClick={() => updateConsent(COOKIE_CONSENT_STATUS.accepted)}
-                    className='ui-cta-primary min-w-56 px-5 py-3 text-sm font-bold'
+                    className='ui-cta-primary inline-flex min-w-56 items-center justify-center px-5 py-3 text-sm font-bold'
                   >
                     {applyCzechNbsp(COOKIE_NOTICE.banner.acceptLabel)}
                   </button>
                   <button
                     type='button'
                     onClick={() => updateConsent(COOKIE_CONSENT_STATUS.declined)}
-                    className='ui-surface-hover min-w-56 border border-[#6c5a38] px-5 py-3 text-sm font-bold text-[#E5E2E1] hover:border-[#FFD79B] hover:text-[#FFD79B]'
+                    className='ui-cta-ghost inline-flex min-h-12 min-w-56 items-center justify-center px-5 py-3 text-sm font-bold'
                   >
                     {applyCzechNbsp(COOKIE_NOTICE.banner.declineLabel)}
                   </button>

@@ -6,7 +6,7 @@ export function DownloadLink({ href, label }: { href: string; label: string }) {
     return (
       <span
         aria-disabled='true'
-        className='inline-flex cursor-not-allowed items-center gap-2 border border-[#3b3b3b] bg-[#141414] px-4 py-2 text-[#e5e2e180]'
+        className='border-line-strong text-fg-3 inline-flex cursor-not-allowed items-center gap-2 border px-4 py-2'
       >
         <span aria-hidden='true'>📄</span>
         <span className='text-base leading-normal'>{label}</span>
@@ -15,10 +15,7 @@ export function DownloadLink({ href, label }: { href: string; label: string }) {
   }
 
   return (
-    <a
-      href={href}
-      className='inline-flex items-center gap-2 border border-[#3b3b3b] bg-[#141414] px-4 py-2 text-[#e5e2e1] transition-colors duration-300 hover:bg-[#1f1f1f] focus-visible:ring-2 focus-visible:ring-[#ffbf00] focus-visible:ring-offset-2 focus-visible:ring-offset-[#131313] focus-visible:outline-none'
-    >
+    <a href={href} className='ui-cta-ghost inline-flex min-h-12 items-center gap-2 px-5 py-2'>
       <span aria-hidden='true'>📄</span>
       <span className='text-base leading-normal'>{label}</span>
     </a>

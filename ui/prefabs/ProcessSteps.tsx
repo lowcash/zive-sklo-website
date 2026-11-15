@@ -111,8 +111,10 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
     }
   }, [])
 
+  const numeralTones = ['text-ember', 'text-amber', 'text-[oklch(0.82_0.08_160)]', 'text-ice']
+
   return (
-    <div className='grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-10 xl:grid-cols-4 xl:gap-10'>
+    <div className='steps-line relative grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-10 xl:grid-cols-4 xl:gap-10'>
       {steps.map((step, index) => {
         const isActive = activeIndex === index && highlightMode === 'scroll'
         return (
@@ -123,36 +125,26 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
             }}
             data-testid='process-step'
             data-active={isActive ? 'true' : 'false'}
-            className='group relative flex h-full cursor-default flex-col'
+            className='group reveal relative flex h-full cursor-default flex-col'
           >
-            {/* Number overlaps the card edge on all breakpoints. */}
+            {/* Outline numeral overlaps the card edge on all breakpoints. */}
             <span
               aria-hidden='true'
-              className={`font-display pointer-events-none absolute top-0 left-5 z-10 -translate-y-[46%] text-[3.2rem] leading-none font-bold tracking-[-0.05em] whitespace-nowrap drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] transition-colors duration-300 sm:left-6 sm:text-[3.45rem] md:top-0 md:left-6 md:-translate-y-[44%] md:text-[3.05rem] lg:text-[3rem] xl:top-0 xl:left-8 xl:-translate-y-[46%] xl:text-[3.6rem] ${
-                isActive
-                  ? 'text-[#f3cb70]'
-                  : 'text-[#c8aa73] group-hover:text-[#d8b878] group-focus-visible:text-[#d8b878]'
-              }`}
+              className={`font-display pointer-events-none absolute top-0 left-5 z-10 -translate-y-[46%] text-[3.2rem] leading-none font-light tracking-[-0.03em] whitespace-nowrap transition-[color,-webkit-text-stroke-color] duration-300 [-webkit-text-stroke:1.5px_currentColor] sm:left-6 sm:text-[3.45rem] xl:left-8 xl:text-[3.6rem] ${numeralTones[index % numeralTones.length]} ${
+                isActive ? '[-webkit-text-fill-color:currentColor]' : '[-webkit-text-fill-color:transparent]'
+              } group-hover:[-webkit-text-fill-color:currentColor]`}
             >
               {step.number}
             </span>
 
-            {/* Bordered card body */}
+            {/* Glass card body */}
             <div
-              className={`ui-surface-hover flex min-h-53 flex-1 flex-col border border-[#50453226] bg-[#201f1f] px-6 pt-8 pb-7 md:min-h-55 md:px-7 md:pt-12 md:pb-8 xl:min-h-60 xl:px-8 xl:pt-9 ${
-                isActive ? 'bg-[#252320]' : 'group-hover:bg-[#242220] group-focus-visible:bg-[#242220]'
+              className={`glass flex min-h-53 flex-1 flex-col px-6 pt-9 pb-7 md:min-h-55 md:px-7 md:pt-12 md:pb-8 xl:min-h-60 xl:px-8 xl:pt-10 ${
+                isActive ? 'bg-card-hi border-ice/40' : ''
               }`}
             >
-              <h3
-                className={`pb-3 text-xl font-bold transition-colors duration-300 ${
-                  isActive ? 'text-[#ffdf8a]' : 'group-hover:text-[#ffdf8a] group-focus-visible:text-[#ffdf8a]'
-                }`}
-              >
-                {applyCzechNbsp(step.title)}
-              </h3>
-              <p className='text-sm leading-relaxed text-[#e5e2e199] md:text-[0.95rem]'>
-                {applyCzechNbsp(step.description)}
-              </p>
+              <h3 className='pb-3 text-xl font-semibold'>{applyCzechNbsp(step.title)}</h3>
+              <p className='text-fg-2 text-sm leading-relaxed md:text-[0.95rem]'>{applyCzechNbsp(step.description)}</p>
             </div>
           </div>
         )
