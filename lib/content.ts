@@ -33,7 +33,7 @@ export const NAV = {
 
 export const HERO = {
   backgroundImages: [
-    '/images/hero/hero-flame-glass-01.jpg',
+    '/images/gallery/production-01.webp',
     '/images/gallery/blowing-technique-06.webp',
     '/images/gallery/hands-flame-01.webp',
   ],

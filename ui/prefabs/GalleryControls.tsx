@@ -186,7 +186,7 @@ export function GalleryControls({ heading, hint, images, alts }: GalleryControls
               onClick={() => scrollGallery('prev')}
               disabled={!canScrollPrev}
               aria-label='Posunout galerii doleva'
-              className='border-line-strong text-fg hover:border-ice hover:text-ice disabled:hover:border-line-strong disabled:hover:text-fg flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-40'
+              className='border-line-strong text-fg hover:border-fg-3 disabled:hover:border-line-strong disabled:hover:text-fg flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-40'
             >
               <span className='material-symbols-outlined text-[24px]!' aria-hidden='true'>
                 arrow_back
@@ -197,7 +197,7 @@ export function GalleryControls({ heading, hint, images, alts }: GalleryControls
               onClick={() => scrollGallery('next')}
               disabled={!canScrollNext}
               aria-label='Posunout galerii doprava'
-              className='border-line-strong text-fg hover:border-ice hover:text-ice disabled:hover:border-line-strong disabled:hover:text-fg flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-40'
+              className='border-line-strong text-fg hover:border-fg-3 disabled:hover:border-line-strong disabled:hover:text-fg flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-40'
             >
               <span className='material-symbols-outlined text-[24px]!' aria-hidden='true'>
                 arrow_forward

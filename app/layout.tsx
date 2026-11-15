@@ -1,6 +1,6 @@
 import { Manrope, Noto_Serif } from 'next/font/google'
 
-import { AmbientEffects, CookieConsentManager } from '@/ui/prefabs'
+import { CookieConsentManager } from '@/ui/prefabs'
 
 import { LOCAL_BUSINESS_JSON_LD, ROOT_METADATA, ROOT_VIEWPORT } from '@/app/site-metadata'
 
@@ -56,15 +56,6 @@ export default function RootLayout({
         />
       </head>
       <body className='antialiased'>
-        {/* Hot Glass: cooling sky + decorative thermometer. Pure CSS, driven by --heat. */}
-        <div className='sky' aria-hidden='true' />
-        <div className='therm' aria-hidden='true'>
-          <span className='t hot'>1&nbsp;200&nbsp;°C</span>
-          <span className='bar' />
-          <span className='mark' />
-          <span className='t cold'>20&nbsp;°C</span>
-        </div>
-        <AmbientEffects />
         {/* Skip to main content – accessible keyboard entry point */}
         <a
           href='#top'

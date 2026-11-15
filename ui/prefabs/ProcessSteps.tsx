@@ -16,7 +16,7 @@ interface ProcessStepsProps {
 
 /**
  * ProcessSteps - Client leaf component for scroll-triggered step highlighting.
- * On mobile, the active step in the viewport is highlighted with amber border and coloured number.
+ * On mobile, the active step in the viewport is highlighted with a stronger border.
  * On desktop, existing group-hover effects take over.
  */
 export function ProcessSteps({ steps }: ProcessStepsProps) {
@@ -111,10 +111,8 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
     }
   }, [])
 
-  const numeralTones = ['text-ember', 'text-amber', 'text-[oklch(0.82_0.08_160)]', 'text-ice']
-
   return (
-    <div className='steps-line relative grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-10 xl:grid-cols-4 xl:gap-10'>
+    <div className='relative grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-10 xl:grid-cols-4 xl:gap-10'>
       {steps.map((step, index) => {
         const isActive = activeIndex === index && highlightMode === 'scroll'
         return (
@@ -127,22 +125,18 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
             data-active={isActive ? 'true' : 'false'}
             className='group reveal relative flex h-full cursor-default flex-col'
           >
-            {/* Outline numeral overlaps the card edge on all breakpoints. */}
-            <span
-              aria-hidden='true'
-              className={`font-display pointer-events-none absolute top-0 left-5 z-10 -translate-y-[46%] text-[3.2rem] leading-none font-light tracking-[-0.03em] whitespace-nowrap transition-[color,-webkit-text-stroke-color] duration-300 [-webkit-text-stroke:1.5px_currentColor] sm:left-6 sm:text-[3.45rem] xl:left-8 xl:text-[3.6rem] ${numeralTones[index % numeralTones.length]} ${
-                isActive ? '[-webkit-text-fill-color:currentColor]' : '[-webkit-text-fill-color:transparent]'
-              } group-hover:[-webkit-text-fill-color:currentColor]`}
-            >
-              {step.number}
-            </span>
-
-            {/* Glass card body */}
+            {/* Card body */}
             <div
-              className={`glass flex min-h-53 flex-1 flex-col px-6 pt-9 pb-7 md:min-h-55 md:px-7 md:pt-12 md:pb-8 xl:min-h-60 xl:px-8 xl:pt-10 ${
-                isActive ? 'bg-card-hi border-ice/40' : ''
+              className={`glass flex flex-1 flex-col p-6 md:p-7 xl:p-8 ${
+                isActive ? 'bg-card-hi border-line-strong' : ''
               }`}
             >
+              <span
+                aria-hidden='true'
+                className='font-display text-fg-3 mb-6 text-sm font-medium tracking-[0.18em] tabular-nums'
+              >
+                {step.number}
+              </span>
               <h3 className='pb-3 text-xl font-semibold'>{applyCzechNbsp(step.title)}</h3>
               <p className='text-fg-2 text-sm leading-relaxed md:text-[0.95rem]'>{applyCzechNbsp(step.description)}</p>
             </div>

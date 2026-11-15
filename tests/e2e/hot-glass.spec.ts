@@ -1,33 +1,16 @@
 import { expect, test } from '@playwright/test'
 
 /**
- * Hot Glass redesign: scroll-driven temperature, reduced-motion fallbacks,
+ * Hot Glass redesign (restrained pass): no decorative layers, reduced-motion safety,
  * LCP safety, click-to-play video, no horizontal overflow.
  */
 
-const readHeat = (page: import('@playwright/test').Page) =>
-  page.evaluate(() =>
-    Number.parseFloat(getComputedStyle(document.querySelector('.sky') as Element).getPropertyValue('--heat')),
-  )
-
-test.describe('Temperature driver (motion allowed)', () => {
+test.describe('Restrained surface (no decorative layers)', () => {
   test.use({ viewport: { width: 1440, height: 900 } })
 
-  test('--heat follows the scroll position from 0 to 1', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'no-preference' })
+  test('no sky, thermometer or orb nodes exist', async ({ page }) => {
     await page.goto('/')
-    await page.waitForLoadState('networkidle')
-
-    await expect.poll(() => readHeat(page)).toBeLessThan(0.05)
-
-    await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }))
-    await expect.poll(() => readHeat(page), { timeout: 3000 }).toBeGreaterThan(0.95)
-
-    await page.evaluate(() =>
-      window.scrollTo({ top: (document.documentElement.scrollHeight - innerHeight) / 2, behavior: 'instant' }),
-    )
-    await expect.poll(() => readHeat(page), { timeout: 3000 }).toBeGreaterThan(0.35)
-    expect(await readHeat(page)).toBeLessThan(0.65)
+    await expect(page.locator('.sky, .therm, .orb')).toHaveCount(0)
   })
 
   test('the h1 (LCP element) carries no animation', async ({ page }) => {
@@ -38,39 +21,19 @@ test.describe('Temperature driver (motion allowed)', () => {
     const opacity = await page.locator('h1').evaluate((el) => getComputedStyle(el).opacity)
     expect(opacity).toBe('1')
   })
-})
 
-test.describe('Temperature driver (reduced motion)', () => {
-  test.use({ viewport: { width: 1440, height: 900 } })
-
-  test('no animation runs and the temperature changes as hard steps', async ({ page }) => {
+  test('reduced motion: no running animations and scroll reveal never hides content', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.goto('/')
     await page.waitForLoadState('networkidle')
-
-    const skyAnimations = await page.evaluate(() => document.querySelector('.sky')?.getAnimations().length ?? -1)
-    expect(skyAnimations).toBe(0)
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto')
-
-    await expect.poll(() => readHeat(page)).toBe(0)
-
-    await page.evaluate(() =>
-      document.getElementById('nabidka')?.scrollIntoView({ behavior: 'instant', block: 'center' }),
-    )
-    await expect.poll(() => readHeat(page), { timeout: 3000 }).toBeCloseTo(0.5, 2)
-
-    await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }))
-    await expect.poll(() => readHeat(page), { timeout: 3000 }).toBe(1)
-  })
-
-  test('scroll reveal never hides content', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' })
-    await page.goto('/')
-    const hidden = await page.evaluate(
-      () =>
-        Array.from(document.querySelectorAll('.reveal')).filter((el) => getComputedStyle(el).opacity !== '1').length,
-    )
-    expect(hidden).toBe(0)
+    const state = await page.evaluate(() => ({
+      running: document.getAnimations().filter((a) => a.playState === 'running').length,
+      hidden: Array.from(document.querySelectorAll('.reveal')).filter((el) => getComputedStyle(el).opacity !== '1')
+        .length,
+    }))
+    expect(state.hidden).toBe(0)
+    expect(state.running).toBe(0)
   })
 })
 
@@ -103,10 +66,9 @@ test.describe('Layout safety', () => {
     })
   }
 
-  test('hero uses one static photo and the decorative orb, no carousel', async ({ page }) => {
+  test('hero uses one static photo, no carousel', async ({ page }) => {
     await page.goto('/')
     await expect(page.locator('header img')).toHaveCount(1)
-    await expect(page.locator('header .orb')).toHaveCount(1)
   })
 })
 

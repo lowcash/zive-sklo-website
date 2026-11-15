@@ -11,7 +11,7 @@ import { GalleryControls } from './GalleryControls'
  */
 export function GallerySection() {
   return (
-    <Section id='galerie' spacing='xl' surface='subtle' temp={0.86}>
+    <Section id='galerie' spacing='xl' surface='subtle'>
       <GalleryControls
         heading={applyCzechNbsp(GALLERY.heading)}
         hint={applyCzechNbsp(GALLERY.hint)}

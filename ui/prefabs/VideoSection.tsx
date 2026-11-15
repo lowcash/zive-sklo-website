@@ -11,7 +11,7 @@ import { VideoPlayer } from './VideoPlayer'
  */
 export function VideoSection() {
   return (
-    <Section id='video' spacing='xl' temp={0.25}>
+    <Section id='video' spacing='xl'>
       <Container>
         <div className='reveal mx-auto mb-10 max-w-3xl space-y-4 text-center md:mb-14'>
           <h2>{applyCzechNbsp(VIDEO.heading)}</h2>

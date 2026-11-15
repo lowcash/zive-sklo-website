@@ -11,7 +11,7 @@ import { ProcessSteps } from './ProcessSteps'
  */
 export function ProcessSection() {
   return (
-    <Section id='jak-to-funguje' spacing='xl' surface='subtle' temp={0.38}>
+    <Section id='jak-to-funguje' spacing='xl' surface='subtle'>
       <Container>
         <h2 className='reveal mb-14 md:mb-20'>{applyCzechNbsp(PROCESS.heading)}</h2>
 

@@ -63,7 +63,7 @@ export function VideoPlayer({ src, poster, ariaLabel }: VideoPlayerProps) {
             data-testid='video-play'
             onClick={start}
             aria-label={`Přehrát: ${ariaLabel}`}
-            className='border-fg/50 bg-card text-fg hover:bg-amber/85 hover:text-on-amber shadow-glow-amber absolute inset-0 m-auto grid size-21 place-items-center rounded-full border transition-colors duration-280 ease-out'
+            className='border-fg/60 bg-bg/70 text-fg hover:bg-fg hover:text-bg absolute inset-0 m-auto grid size-20 place-items-center rounded-full border transition-colors duration-280 ease-out'
           >
             <svg viewBox='0 0 24 24' fill='currentColor' aria-hidden='true' className='ml-1 size-6'>
               <path d='M6 4l14 8-14 8z' />

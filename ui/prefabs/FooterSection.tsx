@@ -30,7 +30,7 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
             <p className='font-label text-fg-3 text-step--1 font-semibold tracking-[0.14em] uppercase'>Navigace</p>
             <div className='flex flex-col gap-3 text-sm'>
               {FOOTER.nav.map((item) => (
-                <a key={item.label} href={item.href} className='text-fg-2 hover:text-amber-hi transition-colors'>
+                <a key={item.label} href={item.href} className='text-fg-2 hover:text-fg transition-colors'>
                   {applyCzechNbsp(item.label)}
                 </a>
               ))}
@@ -44,7 +44,7 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
                 <a
                   key={item.label}
                   href={item.href}
-                  className='text-fg-2 hover:text-amber-hi transition-colors'
+                  className='text-fg-2 hover:text-fg transition-colors'
                   {...('external' in item && item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 >
                   {applyCzechNbsp(item.label)}
@@ -62,7 +62,7 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
                   href={item.href}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='text-fg-2 hover:text-amber-hi transition-colors'
+                  className='text-fg-2 hover:text-fg transition-colors'
                 >
                   {applyCzechNbsp(`${item.label} ${item.value}`)}
                 </a>
@@ -78,20 +78,17 @@ export function FooterSection({ showCookieInformation = false }: FooterSectionPr
                 <p className='text-fg-2 text-sm leading-relaxed'>{applyCzechNbsp(FOOTER.legal.note)}</p>
               ) : null}
               <div className='flex flex-wrap items-center gap-x-5 gap-y-2 text-sm'>
-                <PolicyLink href={FOOTER.legal.privacyHref} className='text-fg-2 hover:text-amber-hi transition-colors'>
+                <PolicyLink href={FOOTER.legal.privacyHref} className='text-fg-2 hover:text-fg transition-colors'>
                   {applyCzechNbsp(FOOTER.legal.privacyLabel)}
                 </PolicyLink>
                 {showCookieInformation ? (
                   <>
-                    <PolicyLink
-                      href={FOOTER.legal.cookiesHref}
-                      className='text-fg-2 hover:text-amber-hi transition-colors'
-                    >
+                    <PolicyLink href={FOOTER.legal.cookiesHref} className='text-fg-2 hover:text-fg transition-colors'>
                       {applyCzechNbsp(FOOTER.legal.cookiesLabel)}
                     </PolicyLink>
                     <CookieSettingsButton
                       label={FOOTER.legal.settingsLabel}
-                      className='text-fg-2 hover:text-amber-hi transition-colors'
+                      className='text-fg-2 hover:text-fg transition-colors'
                     />
                   </>
                 ) : null}

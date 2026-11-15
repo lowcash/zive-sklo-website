@@ -16,7 +16,7 @@ import { ContactForm } from './ContactForm'
  */
 export function ContactSection() {
   return (
-    <Section id='kontakt' spacing='xl' surface='subtle' temp={1}>
+    <Section id='kontakt' spacing='xl' surface='subtle'>
       <Container>
         <div className='space-y-10 md:space-y-12'>
           <div className='reveal max-w-3xl'>
@@ -34,7 +34,7 @@ export function ContactSection() {
                     <>
                       <span className='border-line flex h-11 w-11 shrink-0 items-center justify-center border bg-white/5 sm:h-12 sm:w-12'>
                         <span
-                          className='material-symbols-outlined text-amber text-[22px]! sm:text-[24px]!'
+                          className='material-symbols-outlined text-fg-2 text-[22px]! sm:text-[24px]!'
                           aria-hidden='true'
                         >
                           {detail.icon}
@@ -65,7 +65,7 @@ export function ContactSection() {
                       <a
                         key={detail.label}
                         href={detail.href}
-                        className='hover:text-amber-hi flex items-center gap-3 transition-colors sm:gap-5'
+                        className='hover:text-fg-2 flex items-center gap-3 transition-colors sm:gap-5'
                         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                       >
                         {content}

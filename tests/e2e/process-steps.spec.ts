@@ -26,25 +26,24 @@ test.describe('Process steps — scroll highlight', () => {
   })
 
 
-  test('step numbers are visible above step content', async ({ page }) => {
+  test('step numbers are visible and sit above the step title', async ({ page }) => {
     const section = page.locator('#jak-to-funguje')
     await section.scrollIntoViewIfNeeded()
 
     const firstStep = page.locator('[data-testid="process-step"]').first()
     const number = firstStep.locator('span[aria-hidden="true"]').first()
-    const card = firstStep.locator(':scope > div').first()
+    const title = firstStep.locator('h3')
 
     await expect(number).toBeVisible()
-    await expect(card).toBeVisible()
+    await expect(title).toBeVisible()
 
     const numberBox = await number.boundingBox()
-    const cardBox = await card.boundingBox()
+    const titleBox = await title.boundingBox()
     expect(numberBox).not.toBeNull()
-    expect(cardBox).not.toBeNull()
+    expect(titleBox).not.toBeNull()
 
-    if (numberBox && cardBox) {
-      expect(numberBox.y).toBeLessThan(cardBox.y)
-      expect(numberBox.y + numberBox.height).toBeGreaterThan(cardBox.y)
+    if (numberBox && titleBox) {
+      expect(numberBox.y + numberBox.height).toBeLessThanOrEqual(titleBox.y)
     }
   })
 })

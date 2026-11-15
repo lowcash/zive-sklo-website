@@ -68,7 +68,7 @@ export function Navigation() {
         <a
           href='#top'
           onClick={handleAnchorNavigation('#top')}
-          className='font-display text-fg hover:text-amber-hi inline-flex min-h-11 items-center text-xl font-bold tracking-[0.14em] uppercase transition-colors duration-300'
+          className='font-display text-fg hover:text-fg-2 inline-flex min-h-11 items-center text-xl font-bold tracking-[0.14em] uppercase transition-colors duration-300'
           aria-label='Přejít na začátek stránky'
         >
           {applyCzechNbsp(BRAND.name)}
@@ -82,7 +82,7 @@ export function Navigation() {
               aria-current={activeHref === link.href ? 'true' : undefined}
               className={
                 activeHref === link.href
-                  ? 'nav-link text-step--1 text-amber font-semibold tracking-[0.04em]'
+                  ? 'nav-link text-step--1 text-fg font-semibold tracking-[0.04em]'
                   : 'nav-link text-step--1 text-fg-2 hover:text-fg font-semibold tracking-[0.04em]'
               }
               onClick={handleAnchorNavigation(link.href)}

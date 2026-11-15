@@ -69,7 +69,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
             <a
               href='#top'
               onClick={handleAnchorNavigation('#top')}
-              className='font-display text-fg hover:text-amber-hi inline-flex min-h-11 items-center text-xl font-bold tracking-[0.14em] uppercase transition-colors'
+              className='font-display text-fg hover:text-fg-2 inline-flex min-h-11 items-center text-xl font-bold tracking-[0.14em] uppercase transition-colors'
               aria-label='Přejít na začátek stránky'
             >
               {applyCzechNbsp(BRAND.name)}
@@ -97,8 +97,8 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.06, duration: 0.3 }}
                 aria-current={activeHref === link.href ? 'true' : undefined}
-                className={`font-display hover:text-amber-hi text-step-4 font-medium transition-colors duration-300 ${
-                  activeHref === link.href ? 'text-amber' : 'text-fg'
+                className={`font-display hover:text-fg-2 text-step-4 font-medium transition-colors duration-300 ${
+                  activeHref === link.href ? 'text-fg underline decoration-1 underline-offset-8' : 'text-fg-2'
                 }`}
               >
                 {applyCzechNbsp(link.label)}

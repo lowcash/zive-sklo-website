@@ -52,3 +52,7 @@ The hero carousel, horizontal gallery scroll, and modal browsing are isolated in
 - **Root-level `ui/` with `core/` and `prefabs/`** separates reusable building blocks from page sections in a way that matches the content-led site structure.
 - **Zod + runtime abuse checks** keep validation and spam protection at the same mutation boundary.
 - **Brevo behind a mail adapter** keeps email delivery swappable and server-only.
+
+## Visual Language (demo/hot-glass)
+
+Restrained pass: one warm dark surface (`--color-bg`), flat hairline cards, amber reserved for primary actions, a single hero photo under a dark gradient, solid serif numerals. There is no scroll-driven colour, no decorative background layers and no looping animation. The only motion is a small scroll reveal (`.reveal`, gated by `@supports` and `prefers-reduced-motion: no-preference`) and a slow image zoom on gallery hover (fine pointers only). Tokens and type scale live in `app/globals.css`.

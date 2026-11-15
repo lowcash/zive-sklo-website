@@ -30,7 +30,7 @@ export function HeroScrollCue({ href, ariaLabel }: HeroScrollCueProps) {
     <a
       href={href}
       aria-label={ariaLabel}
-      className='text-fg-3 hover:text-ice fixed bottom-6 left-1/2 z-20 hidden -translate-x-1/2 transition-colors motion-safe:animate-bounce md:block'
+      className='text-fg-3 hover:text-fg fixed bottom-6 left-1/2 z-20 hidden -translate-x-1/2 transition-colors md:block'
       style={{ marginBottom: 'env(safe-area-inset-bottom)' }}
     >
       <span className='material-symbols-outlined !text-[30px]' aria-hidden='true'>
