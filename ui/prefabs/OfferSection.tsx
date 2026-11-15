@@ -1,95 +1,65 @@
 import { OFFER } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
 
-import { Container } from '@/ui/core'
+import { Container, Section, SectionHead } from '@/ui/core'
 
 /**
  * OfferSection - RSC (Server Component)
- * Offer section with primary and secondary program cards
+ * Three primary programmes as priced cards, three add-ons as a quiet list.
  */
 export function OfferSection() {
   return (
-    <section id='nabidka' className='py-(--section-y)'>
+    <Section id='nabidka' tone='paper'>
       <Container>
-        <div className='reveal mb-12 max-w-3xl space-y-6 md:mb-20'>
-          <h2>{applyCzechNbsp(OFFER.heading)}</h2>
-          <p className='text-step-1 text-fg-2 leading-[1.55]'>{applyCzechNbsp(OFFER.subtitle)}</p>
-        </div>
+        <SectionHead eyebrow={OFFER.eyebrow} heading={OFFER.heading} lead={OFFER.subtitle} className='mb-12 md:mb-20' />
 
-        <div className='border-line bg-line grid grid-cols-1 gap-px border lg:grid-cols-3'>
+        <div className='grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8'>
           {OFFER.primary.map((card) => (
-            <a
-              key={card.title}
-              href={card.ctaHref}
-              className='glass reveal group flex h-full flex-col border-0 p-6 shadow-none md:p-8 lg:p-10'
-            >
-              <div className='mb-6'>
-                <div className='border-line flex h-12 w-12 items-center justify-center border bg-transparent'>
-                  <span className='material-symbols-outlined text-fg-2 text-[24px]!' aria-hidden='true'>
-                    {card.icon}
-                  </span>
+            <article key={card.title} className='glass reveal flex flex-col p-7 md:p-9'>
+              <h3 className='lg:min-h-[2.4em]'>{applyCzechNbsp(card.title)}</h3>
+              <p className='text-fg-2 mt-5'>{applyCzechNbsp(card.description)}</p>
+
+              <dl className='border-line mt-8 space-y-4 border-t pt-6'>
+                <div>
+                  <dt className='eyebrow before:hidden'>Vhodné pro</dt>
+                  <dd className='mt-1'>{applyCzechNbsp(card.suitableFor)}</dd>
                 </div>
-              </div>
-
-              <h3 className='mb-4'>{applyCzechNbsp(card.title)}</h3>
-              <p className='text-fg-2 mb-10'>{applyCzechNbsp(card.description)}</p>
-
-              <div className='text-fg-2 text-step--1 space-y-3 pb-10'>
-                <p>
-                  <span className='font-label text-fg-3 font-semibold tracking-[0.14em] uppercase'>Vhodné pro</span>
-                  <br />
-                  {applyCzechNbsp(card.suitableFor)}
-                </p>
                 {card.duration ? (
-                  <p>
-                    <span className='font-label text-fg-3 font-semibold tracking-[0.14em] uppercase'>Délka</span>
-                    <br />
-                    {applyCzechNbsp(card.duration)}
-                  </p>
+                  <div>
+                    <dt className='eyebrow before:hidden'>Délka</dt>
+                    <dd className='mt-1'>{applyCzechNbsp(card.duration)}</dd>
+                  </div>
                 ) : null}
-              </div>
+              </dl>
 
-              <div className='mt-auto'>
-                <p className='font-label text-fg-3 text-step--1 mb-1 font-semibold tracking-[0.14em] uppercase'>Cena</p>
-                <p className='font-display text-step-2 text-fg leading-[1.1] font-medium'>
-                  {applyCzechNbsp(card.price)}
-                </p>
+              <div className='mt-auto flex flex-wrap items-end justify-between gap-x-6 gap-y-5 pt-10'>
+                <p className='font-display text-step-3 leading-none tracking-[-0.01em]'>{applyCzechNbsp(card.price)}</p>
+                <a href={card.ctaHref} className='link-arrow'>
+                  {applyCzechNbsp(card.ctaLabel)}
+                  <span aria-hidden='true'>→</span>
+                </a>
               </div>
-
-              <span className='link-arrow font-display text-fg group-hover:text-fg-2 mt-10 inline-flex items-center gap-2 font-semibold'>
-                <span aria-hidden='true'>→</span>
-                {applyCzechNbsp(card.ctaLabel)}
-              </span>
-            </a>
+            </article>
           ))}
         </div>
 
-        <div className='border-line bg-line mt-10 grid grid-cols-1 gap-px border md:mt-16 lg:grid-cols-3'>
-          {OFFER.secondary.map((card) => (
-            <a
+        <ul className='border-line-strong mt-16 grid grid-cols-1 border-t md:mt-24 lg:grid-cols-3'>
+          {OFFER.secondary.map((card, index) => (
+            <li
               key={card.title}
-              href={card.ctaHref}
-              className='glass reveal group flex h-full flex-col border-0 p-6 shadow-none md:p-8 lg:p-10'
+              className={`reveal border-line flex flex-col gap-4 border-b py-8 lg:border-b-0 lg:py-10 ${
+                index > 0 ? 'lg:border-l lg:pl-8' : ''
+              } ${index < 2 ? 'lg:pr-8' : ''}`}
             >
-              <h3 className='mb-4'>{applyCzechNbsp(card.title)}</h3>
-              <p className='text-fg-2 mb-8'>{applyCzechNbsp(card.description)}</p>
+              <h3>{applyCzechNbsp(card.title)}</h3>
+              <p className='text-fg-2'>{applyCzechNbsp(card.description)}</p>
               {card.price ? (
-                <p className='font-label text-fg-3 text-step--1 mb-6 font-semibold tracking-[0.14em] uppercase'>
-                  Cena
-                  <br />
-                  <span className='font-display text-step-1 text-fg mt-2 inline-block font-medium tracking-normal normal-case'>
-                    {applyCzechNbsp(card.price)}
-                  </span>
-                </p>
+                <p className='font-display text-step-1 mt-auto pt-2'>{applyCzechNbsp(card.price)}</p>
               ) : null}
-              <span className='link-arrow font-display text-fg group-hover:text-fg-2 mt-auto inline-flex items-center gap-2 font-semibold'>
-                <span aria-hidden='true'>→</span>
-                {applyCzechNbsp(card.ctaLabel)}
-              </span>
-            </a>
+            </li>
           ))}
-        </div>
+        </ul>
       </Container>
-    </section>
+    </Section>
   )
 }

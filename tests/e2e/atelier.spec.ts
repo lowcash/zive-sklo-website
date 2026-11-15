@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test'
 
 /**
- * Hot Glass redesign (restrained pass): no decorative layers, reduced-motion safety,
+ * Atelier redesign: no decorative layers, reduced-motion safety,
  * LCP safety, click-to-play video, no horizontal overflow.
  */
 
@@ -48,7 +48,8 @@ test.describe('Video: poster first, no autoplay', () => {
 
     const video = page.locator('video')
     await expect(video).toHaveCount(1)
-    await expect(video).toHaveAttribute('controls', '')
+    await expect(page.getByRole('button', { name: /pozastavit video|přehrát video/i })).toBeVisible()
+    await expect(page.getByRole('button', { name: /ztlumit|zapnout zvuk/i })).toBeVisible()
     await expect(play).toHaveCount(0)
   })
 })
@@ -86,5 +87,37 @@ test.describe('Mobile menu keyboard', () => {
     await page.keyboard.press('Escape')
     await expect(overlay).not.toBeVisible()
     await expect(toggle).toBeFocused()
+  })
+})
+
+test.describe('Conversion path', () => {
+  test('FAQ answers open natively and every question is reachable by keyboard', async ({ page }) => {
+    await page.goto('/')
+    const items = page.locator('#faq details')
+    await expect(items).toHaveCount(6)
+    const first = items.first()
+    await first.locator('summary').click()
+    await expect(first).toHaveAttribute('open', '')
+  })
+
+  test('sections alternate between ink and ivory surfaces', async ({ page }) => {
+    await page.goto('/')
+    const tones = await page.evaluate(() =>
+      Array.from(document.querySelectorAll('main > section')).map((el) =>
+        el.classList.contains('surface-ink') ? 'ink' : 'light',
+      ),
+    )
+    expect(tones).toContain('ink')
+    expect(tones).toContain('light')
+    expect(tones.at(-1)).toBe('ink')
+  })
+
+  test('every section offers the same inquiry action target', async ({ page }) => {
+    await page.goto('/')
+    const hrefs = await page
+      .locator('main a.ui-cta-primary, main a.link-arrow[href="#kontakt"]')
+      .evaluateAll((els) => els.map((el) => el.getAttribute('href')))
+    expect(hrefs.length).toBeGreaterThanOrEqual(5)
+    expect(new Set(hrefs).size).toBe(1)
   })
 })

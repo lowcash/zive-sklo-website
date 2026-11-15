@@ -20,11 +20,11 @@ export { ProcessSection } from './ProcessSection'
 export { OfferSection } from './OfferSection'
 export { AudienceSection } from './AudienceSection'
 
-export { StatsSection } from './StatsSection'
-
 export { GallerySection } from './GallerySection'
 
 export { BenefitsSection } from './BenefitsSection'
+
+export { FaqSection } from './FaqSection'
 
 export { ContactSection } from './ContactSection'
 

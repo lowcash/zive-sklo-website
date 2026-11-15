@@ -63,12 +63,12 @@ export function Navigation() {
   }, [])
 
   return (
-    <nav data-nav-root='true' className='glass-nav fixed top-0 z-50 w-full'>
-      <div className='mx-auto flex max-w-360 items-center justify-between px-(--gutter) py-3 min-[1280px]:py-4'>
+    <nav data-nav-root='true' className='nav-bar surface-ink fixed top-0 z-50 w-full'>
+      <div className='wrap flex items-center justify-between py-2.5'>
         <a
           href='#top'
           onClick={handleAnchorNavigation('#top')}
-          className='font-display text-fg hover:text-fg-2 inline-flex min-h-11 items-center text-xl font-bold tracking-[0.14em] uppercase transition-colors duration-300'
+          className='font-display text-fg hover:text-ember inline-flex min-h-11 items-center text-2xl tracking-[-0.01em] transition-colors duration-240'
           aria-label='Přejít na začátek stránky'
         >
           {applyCzechNbsp(BRAND.name)}
@@ -82,8 +82,8 @@ export function Navigation() {
               aria-current={activeHref === link.href ? 'true' : undefined}
               className={
                 activeHref === link.href
-                  ? 'nav-link text-step--1 text-fg font-semibold tracking-[0.04em]'
-                  : 'nav-link text-step--1 text-fg-2 hover:text-fg font-semibold tracking-[0.04em]'
+                  ? 'nav-link text-step--1 text-fg font-semibold tracking-[0.06em] uppercase'
+                  : 'nav-link text-step--1 text-fg-2 hover:text-fg font-semibold tracking-[0.06em] uppercase'
               }
               onClick={handleAnchorNavigation(link.href)}
             >
@@ -95,7 +95,7 @@ export function Navigation() {
         <a
           href={NAV.ctaHref}
           onClick={handleAnchorNavigation(NAV.ctaHref)}
-          className='ui-cta-primary text-step--1 hidden min-h-11 items-center justify-center px-6 py-2 font-bold xl:inline-flex'
+          className='ui-cta-primary hidden min-h-11! px-6! py-2! xl:inline-flex'
         >
           {applyCzechNbsp(NAV.ctaLabel)}
         </a>

@@ -13,7 +13,7 @@ export function StatCounter({ numericValue, suffix = '' }: StatCounterProps) {
   return (
     <div
       data-testid='stat-counter'
-      className={`font-display text-fg inline-flex max-w-full items-baseline justify-start text-[clamp(2.75rem,2rem+3.5vw,4.5rem)] leading-none font-normal tracking-[-0.02em] whitespace-nowrap`}
+      className={`font-display text-fg text-step-4 inline-flex max-w-full items-baseline justify-start leading-none font-normal tracking-[-0.02em] whitespace-nowrap`}
     >
       <span className='sr-only'>
         {formattedFinal}

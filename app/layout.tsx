@@ -1,4 +1,4 @@
-import { Manrope, Noto_Serif } from 'next/font/google'
+import { Instrument_Sans, Newsreader } from 'next/font/google'
 
 import { CookieConsentManager } from '@/ui/prefabs'
 
@@ -6,22 +6,19 @@ import { LOCAL_BUSINESS_JSON_LD, ROOT_METADATA, ROOT_VIEWPORT } from '@/app/site
 
 import './globals.css'
 
-const notoSerif = Noto_Serif({
+const display = Newsreader({
   subsets: ['latin', 'latin-ext'],
   variable: '--font-display',
   display: 'swap',
   style: ['normal', 'italic'],
-  axes: ['wdth'],
+  axes: ['opsz'],
 })
 
-const manrope = Manrope({
+const body = Instrument_Sans({
   subsets: ['latin', 'latin-ext'],
   variable: '--font-body',
   display: 'swap',
 })
-
-const MATERIAL_SYMBOLS_HREF =
-  'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0&display=swap'
 
 export const viewport = ROOT_VIEWPORT
 
@@ -36,20 +33,8 @@ export default function RootLayout({
   const showCookieBannerPreview = process.env.NODE_ENV !== 'production'
 
   return (
-    <html lang='cs' data-scroll-behavior='smooth' className={`${notoSerif.variable} ${manrope.variable}`}>
+    <html lang='cs' data-scroll-behavior='smooth' className={`${display.variable} ${body.variable}`}>
       <head>
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
-        <link rel='preload' as='style' href={MATERIAL_SYMBOLS_HREF} />
-        <link rel='stylesheet' href={MATERIAL_SYMBOLS_HREF} media='print' />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `document.querySelectorAll('link[href="${MATERIAL_SYMBOLS_HREF}"][media="print"]').forEach(function(l){l.media='all'})`,
-          }}
-        />
-        <noscript>
-          <link rel='stylesheet' href={MATERIAL_SYMBOLS_HREF} />
-        </noscript>
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
@@ -59,7 +44,7 @@ export default function RootLayout({
         {/* Skip to main content – accessible keyboard entry point */}
         <a
           href='#top'
-          className='focus:bg-amber focus:text-on-amber sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:text-sm focus:font-bold'
+          className='focus:bg-ember focus:text-on-ember sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:text-sm focus:font-bold'
         >
           Přeskočit na hlavní obsah
         </a>

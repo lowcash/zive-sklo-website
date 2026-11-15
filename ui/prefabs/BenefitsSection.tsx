@@ -1,37 +1,36 @@
 import { BENEFITS } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
 
-import { Container, Section } from '@/ui/core'
+import { Container, Section, SectionHead } from '@/ui/core'
 
 import { DownloadLink } from './DownloadLink'
 
 /**
  * BenefitsSection - RSC (Server Component)
- * Benefits grid with download link
+ * Four trust points taken from the offer copy, plus the organiser information sheet.
  */
 export function BenefitsSection() {
   return (
-    <Section id='benefity' spacing='xl'>
+    <Section id='benefity' tone='ink'>
       <Container>
-        <div className='reveal mb-16 max-w-3xl'>
-          <h2>{applyCzechNbsp(BENEFITS.heading)}</h2>
-        </div>
+        <SectionHead eyebrow={BENEFITS.eyebrow} heading={BENEFITS.heading} className='mb-12 md:mb-20' />
 
-        <div className='grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-4'>
-          {BENEFITS.items.map((benefit) => (
-            <div key={benefit.title} className='reveal border-line-strong space-y-3 border-t pt-4'>
-              <div className='border-line flex h-12 w-12 items-center justify-center border bg-transparent'>
-                <span className='material-symbols-outlined text-fg-2 text-[24px]!' aria-hidden='true'>
-                  {benefit.icon}
-                </span>
-              </div>
-              <h3 className='text-step-1'>{applyCzechNbsp(benefit.title)}</h3>
-              <p className='text-fg-2 text-step--1 leading-[1.65]'>{applyCzechNbsp(benefit.description)}</p>
-            </div>
+        <ul className='grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 xl:grid-cols-4'>
+          {BENEFITS.items.map((benefit, index) => (
+            <li key={benefit.title} className='reveal border-line-strong border-t pt-6'>
+              <span
+                aria-hidden='true'
+                className='font-display text-ember text-step-2 mb-5 block leading-none tabular-nums'
+              >
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <h3 className='text-step-2'>{applyCzechNbsp(benefit.title)}</h3>
+              <p className='text-fg-2 mt-3 max-w-[32ch]'>{applyCzechNbsp(benefit.description)}</p>
+            </li>
           ))}
-        </div>
+        </ul>
 
-        <div className='mt-16'>
+        <div className='mt-14 md:mt-20'>
           <DownloadLink href={BENEFITS.downloadHref} label={applyCzechNbsp(BENEFITS.downloadLabel)} />
         </div>
       </Container>

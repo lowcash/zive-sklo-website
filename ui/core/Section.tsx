@@ -5,18 +5,19 @@ type SectionProps = {
   id?: string
   'aria-labelledby'?: string
   spacing?: 'sm' | 'md' | 'lg' | 'xl'
-  surface?: 'none' | 'subtle'
+  tone?: 'ink' | 'light' | 'paper'
 }
 
 /**
- * Section shell primitive - semantic section wrapper.
+ * Section shell primitive: semantic wrapper with one vertical rhythm and a surface tone.
+ * Sections alternate between ink (dark) and light/paper (ivory) tones.
  */
 export function Section({
   children,
   id,
   'aria-labelledby': ariaLabelledBy,
   spacing = 'lg',
-  surface = 'none',
+  tone = 'ink',
 }: SectionProps) {
   const spacingClasses = {
     sm: 'py-10 md:py-12',
@@ -25,17 +26,14 @@ export function Section({
     xl: 'py-(--section-y)',
   }
 
-  const surfaceClasses = {
-    none: '',
-    subtle: 'bg-scrim',
+  const toneClasses = {
+    ink: 'surface-ink',
+    light: 'surface-light',
+    paper: 'surface-paper',
   }
 
   return (
-    <section
-      id={id}
-      aria-labelledby={ariaLabelledBy}
-      className={`${spacingClasses[spacing]} ${surfaceClasses[surface]}`}
-    >
+    <section id={id} aria-labelledby={ariaLabelledBy} className={`${spacingClasses[spacing]} ${toneClasses[tone]}`}>
       {children}
     </section>
   )

@@ -53,6 +53,6 @@ The hero carousel, horizontal gallery scroll, and modal browsing are isolated in
 - **Zod + runtime abuse checks** keep validation and spam protection at the same mutation boundary.
 - **Brevo behind a mail adapter** keeps email delivery swappable and server-only.
 
-## Visual Language (demo/hot-glass)
+## Visual Language (redesign/2026-11, Atelier)
 
-Restrained pass: one warm dark surface (`--color-bg`), flat hairline cards, amber reserved for primary actions, a single hero photo under a dark gradient, solid serif numerals. There is no scroll-driven colour, no decorative background layers and no looping animation. The only motion is a small scroll reveal (`.reveal`, gated by `@supports` and `prefers-reduced-motion: no-preference`) and a slow image zoom on gallery hover (fine pointers only). Tokens and type scale live in `app/globals.css`.
+Alternating ink and ivory surfaces (`.surface-ink`, `.surface-light`, `.surface-paper` re-map the colour tokens), Newsreader + Instrument Sans, one ember accent, one `.wrap` container and `.grid-12` grid, shared `SectionHead` (eyebrow, h2, lead) in `ui/core`. The gallery is a 12-column mosaic with a modal; the FAQ is native `details`. The only motion is a small scroll reveal gated by `@supports` and `prefers-reduced-motion` and a hover zoom on fine pointers. Full rationale, palette contrast values and the asset audit: [design-spec.md](./design-spec.md).

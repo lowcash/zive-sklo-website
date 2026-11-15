@@ -5,21 +5,17 @@ import { StatCounter } from './StatCounter'
 
 /**
  * StatsSection - RSC (Server Component)
- * Stats with real values in the HTML (no hydration, no count-up).
+ * Three key figures with real values in the HTML (no hydration, no count-up).
  */
 export function StatsSection() {
   return (
-    <section className='bg-scrim py-(--section-y)'>
-      <div className='mx-auto max-w-360 px-(--gutter)'>
-        <div className='grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-3 md:gap-8 xl:gap-12'>
-          {STATS.items.map((stat) => (
-            <div key={stat.label} className='reveal border-line-strong min-w-0 border-t pt-4'>
-              <StatCounter numericValue={stat.numericValue} suffix={stat.suffix} />
-              <p className='text-fg-2 mt-3 max-w-[28ch]'>{applyCzechNbsp(stat.label)}</p>
-            </div>
-          ))}
+    <div className='border-line-strong mt-16 grid grid-cols-1 gap-10 border-t pt-10 sm:grid-cols-3 sm:gap-8 md:mt-24'>
+      {STATS.items.map((stat) => (
+        <div key={stat.label} className='min-w-0'>
+          <StatCounter numericValue={stat.numericValue} suffix={stat.suffix} />
+          <p className='text-fg-2 text-step--1 mt-3 max-w-[22ch]'>{applyCzechNbsp(stat.label)}</p>
         </div>
-      </div>
-    </section>
+      ))}
+    </div>
   )
 }

@@ -1,48 +1,41 @@
 @import 'tailwindcss';
 
 /*
- * Hot Glass (demo/hot-glass), restrained pass: one warm dark surface, amber only for
- * primary actions, no decorative background layers, no scroll-driven colour.
+ * Atelier (demo/redesign-2026-11): alternating ink / ivory surfaces, one ember accent,
+ * Newsreader (display) + Instrument Sans (text). Tokens below are the DARK (ink) surface;
+ * `.surface-light` and `.surface-paper` re-map the same names for ivory sections, so every
+ * component works on both. See docs/design-spec.md.
  */
 @custom-variant motion-ok (@media (prefers-reduced-motion: no-preference));
 
 @theme {
-  /* Color tokens (OKLCH). Hex fallbacks for engines without oklch() live in the @supports block below. */
-  --color-bg: oklch(0.18 0.008 55);
-  --color-fg: oklch(0.94 0.006 70);
-  --color-fg-2: oklch(0.82 0.03 80);
-  --color-fg-3: oklch(0.78 0.025 75);
-  --color-amber: oklch(0.84 0.17 85);
-  --color-amber-hi: oklch(0.89 0.15 85);
-  --color-on-amber: oklch(0.3 0.06 85);
-  --color-ice: oklch(0.83 0.07 240);
-  --color-line: oklch(1 0 0 / 0.1);
-  --color-line-strong: oklch(0.6 0.035 75);
-  --color-scrim: oklch(0.14 0.008 55);
-  --color-card: oklch(0.21 0.009 55);
-  --color-card-hi: oklch(0.24 0.01 55);
-  --color-field: oklch(0.15 0.008 55);
-  --color-panel: oklch(0.15 0.015 60);
+  --color-bg: #14110e;
+  --color-fg: #f2ece2;
+  --color-fg-2: #cfc5b6;
+  --color-fg-3: #a99e8e;
+  --color-ember: #ff8d52;
+  --color-ember-hi: #ffa472;
+  --color-on-ember: #14110e;
+  --color-ice: #9ecef1;
+  --color-line: rgb(242 236 226 / 0.14);
+  --color-line-strong: #8a7f70;
+  --color-scrim: #0e0c0a;
+  --color-card: #1d1915;
+  --color-card-hi: #25201b;
+  --color-field: #100d0b;
+  --color-panel: #1a1612;
+  --color-danger: #ff9b8a;
 
-  /* Legacy names kept as aliases so no component breaks (spec section 3) */
-  --color-surface-dark: oklch(0.14 0.012 60);
-  --color-accent-amber: var(--color-amber);
-  --color-accent-ice: var(--color-ice);
-  --color-text-primary: var(--color-fg);
-  --color-text-secondary: var(--color-fg-2);
-  --color-border: var(--color-line);
+  /* Fluid type scale (360 to 1440 px) */
+  --text-step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --text-step-0: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+  --text-step-1: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
+  --text-step-2: clamp(1.375rem, 1.25rem + 0.5vw, 1.6875rem);
+  --text-step-3: clamp(1.625rem, 1.4rem + 0.9vw, 2.125rem);
+  --text-step-4: clamp(2rem, 1.45rem + 2.3vw, 3.5rem);
+  --text-step-5: clamp(2.375rem, 1.6rem + 3.2vw, 4.5rem);
+  --text-step-display: clamp(3rem, 1.5rem + 5.2vw, 6.25rem);
 
-  /* Fluid type scale (Utopia, 360 to 1440 px) */
-  --text-step--1: clamp(0.8333rem, 0.8111rem + 0.0988vw, 0.9rem);
-  --text-step-0: clamp(1rem, 0.9583rem + 0.1852vw, 1.125rem);
-  --text-step-1: clamp(1.2rem, 1.1312rem + 0.3056vw, 1.4063rem);
-  --text-step-2: clamp(1.44rem, 1.3341rem + 0.4708vw, 1.7578rem);
-  --text-step-3: clamp(1.728rem, 1.5716rem + 0.6952vw, 2.1973rem);
-  --text-step-4: clamp(2.0736rem, 1.8493rem + 0.997vw, 2.7466rem);
-  --text-step-5: clamp(2.4883rem, 2.1734rem + 1.3999vw, 3.4332rem);
-  --text-step-display: clamp(2.5rem, 1.95rem + 2.4vw, 4.25rem);
-
-  /* Border radius: sharp design, pills only */
   --radius-sm: 0;
   --radius-md: 0;
   --radius-lg: 0;
@@ -50,54 +43,49 @@
   --radius-2xl: 0;
   --radius-full: 9999px;
 
-  /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
-
-  /* Backdrop blur: the fixed nav is the only blurred surface */
-  --blur-glass: 20px;
+  --blur-glass: 16px;
 }
 
 :root {
   color-scheme: dark;
-
-  /* Spacing scale for use as var(--spacing-*) in custom utilities */
-  --spacing-xs: 0.5rem;
-  --spacing-sm: 1rem;
-  --spacing-md: 1.5rem;
-  --spacing-lg: 2rem;
-  --spacing-xl: 3rem;
-  --spacing-2xl: 4rem;
-  --spacing-3xl: 6rem;
-
-  --section-y: clamp(4rem, 2.5rem + 6vw, 8rem);
-  --gutter: clamp(1.25rem, 0.5rem + 3.5vw, 5rem);
-  --measure: 62ch;
-  --dur-fast: 140ms;
-  --dur-base: 280ms;
-  --dur-slow: 600ms;
+  --section-y: clamp(4.5rem, 2.5rem + 7vw, 9rem);
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 4rem);
+  --dur-base: 240ms;
 }
 
-/* Hex fallbacks for engines without oklch() */
-@supports not (color: oklch(0 0 0)) {
-  :root {
-    --color-bg: #1a1715;
-    --color-fg: #eeeae7;
-    --color-fg-2: #cec2af;
-    --color-fg-3: #c1b5a6;
-    --color-amber: #fdc010;
-    --color-amber-hi: #ffd256;
-    --color-on-amber: #3c2b02;
-    --color-ice: #9ecef1;
-    --color-line: rgb(255 255 255 / 0.1);
-    --color-line-strong: #8d7e69;
-    --color-scrim: #141210;
-    --color-card: #221f1c;
-    --color-card-hi: #292521;
-    --color-field: #171513;
-    --color-panel: #1f1b17;
-    --color-surface-dark: #1c1916;
-  }
+/* Ivory surfaces. Same token names, light values. */
+.surface-light,
+.surface-paper {
+  --color-bg: #f4efe6;
+  --color-fg: #1b1713;
+  --color-fg-2: #554c41;
+  --color-fg-3: #6a5f52;
+  --color-ember: #a8360a;
+  --color-ember-hi: #8c2c06;
+  --color-on-ember: #ffffff;
+  --color-line: rgb(27 23 19 / 0.14);
+  --color-line-strong: #8c8274;
+  --color-card: #fbf8f2;
+  --color-card-hi: #ffffff;
+  --color-field: #fbf8f2;
+  --color-danger: #a1301f;
+  --color-ice: #1d5f94;
+  color-scheme: light;
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+.surface-paper {
+  --color-bg: #ebe4d6;
+  --color-card: #f4efe6;
+  --color-card-hi: #fbf8f2;
+  --color-field: #f4efe6;
+}
+
+.surface-ink {
+  background: var(--color-bg);
+  color: var(--color-fg);
 }
 
 @layer base {
@@ -114,14 +102,7 @@
 
   section[id],
   header[id] {
-    scroll-margin-top: 5.75rem;
-  }
-
-  @media (min-width: 1280px) {
-    section[id],
-    header[id] {
-      scroll-margin-top: 6.5rem;
-    }
+    scroll-margin-top: 4.5rem;
   }
 
   body {
@@ -138,8 +119,6 @@
   h2,
   h3,
   h4,
-  h5,
-  h6,
   p {
     margin: 0;
   }
@@ -148,21 +127,20 @@
   h2,
   h3 {
     font-family: var(--font-display), Georgia, serif;
-    font-stretch: 94%;
-    font-weight: 500;
-    letter-spacing: -0.015em;
+    font-weight: 400;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
 
   h2 {
     font-size: var(--text-step-4);
-    line-height: 1.12;
+    line-height: 1.08;
   }
 
   h3 {
     font-size: var(--text-step-2);
     line-height: 1.2;
-    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 
   p {
@@ -170,16 +148,14 @@
   }
 
   ::selection {
-    color: var(--color-on-amber);
-    background: var(--color-amber);
+    color: var(--color-on-ember);
+    background: var(--color-ember);
   }
 
   a[href],
   button:not(:disabled),
   [role='button'],
-  summary,
-  input[type='submit'],
-  input[type='button'] {
+  summary {
     cursor: pointer;
   }
 
@@ -205,7 +181,28 @@
 }
 
 @layer components {
-  /* ===== Scroll-driven reveal. Default state is visible. Never on the hero. ===== */
+  /* ===== Layout: one container, one 12-column grid ===== */
+  .wrap {
+    width: 100%;
+    max-width: 82.5rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .grid-12 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .grid-12 {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      column-gap: 2rem;
+    }
+  }
+
+  /* ===== Scroll reveal: default visible, only where supported and allowed ===== */
   @keyframes rise {
     from {
       opacity: 0;
@@ -222,22 +219,22 @@
       .reveal {
         animation: rise linear both;
         animation-timeline: view();
-        animation-range: entry 0% entry 45%;
+        animation-range: entry 0% entry 40%;
       }
     }
   }
 
   /* ===== Navigation ===== */
-  .glass-nav {
-    background: var(--color-card);
+  .nav-bar {
+    background: rgb(20 17 14 / 0.88);
     -webkit-backdrop-filter: blur(var(--blur-glass));
     backdrop-filter: blur(var(--blur-glass));
     border-bottom: 1px solid var(--color-line);
   }
 
   @media (prefers-reduced-transparency: reduce) {
-    .glass-nav {
-      background: var(--color-panel);
+    .nav-bar {
+      background: var(--color-bg);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
@@ -245,7 +242,7 @@
 
   .nav-link {
     padding-block: 0.5rem;
-    background: linear-gradient(var(--color-amber), var(--color-amber)) 0 100% / 0 1px no-repeat;
+    background: linear-gradient(var(--color-ember), var(--color-ember)) 0 100% / 0 1px no-repeat;
     transition:
       color var(--dur-base) var(--ease-out),
       background-size var(--dur-base) var(--ease-out);
@@ -257,80 +254,111 @@
   }
 
   /* ===== Buttons ===== */
-  .ui-cta-primary {
+  .btn,
+  .ui-cta-primary,
+  .ui-cta-ghost {
+    display: inline-flex;
     min-height: 3.25rem;
-    background: var(--color-amber);
-    color: var(--color-on-amber);
-    transition: background-color var(--dur-base) var(--ease-out);
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.85rem 1.75rem;
+    font-size: var(--text-step--1);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out);
+  }
+
+  .ui-cta-primary {
+    background: var(--color-ember);
+    color: var(--color-on-ember);
   }
 
   .ui-cta-primary:hover {
-    background: var(--color-amber-hi);
+    background: var(--color-ember-hi);
   }
 
   .ui-cta-ghost {
     border: 1px solid var(--color-line-strong);
     color: var(--color-fg);
-    transition:
-      border-color var(--dur-base) var(--ease-out),
-      color var(--dur-base) var(--ease-out);
   }
 
   .ui-cta-ghost:hover {
-    border-color: var(--color-fg-3);
-    color: var(--color-fg);
+    border-color: var(--color-fg);
   }
 
   .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: var(--text-step--1);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-fg);
+    border-bottom: 1px solid var(--color-line-strong);
+    padding-bottom: 0.2rem;
     transition:
-      color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out),
       gap var(--dur-base) var(--ease-out);
   }
 
   .link-arrow:hover,
   a:hover > .link-arrow,
   a:focus-visible > .link-arrow {
-    color: var(--color-fg-2);
+    border-color: var(--color-ember);
+    gap: 0.8rem;
   }
 
-  /* ===== Card: flat surface, hairline border ===== */
+  /* ===== Card: quiet surface, hairline ===== */
   .glass {
     background: var(--color-card);
     border: 1px solid var(--color-line);
-    transition:
-      background-color var(--dur-base) var(--ease-out),
-      border-color var(--dur-base) var(--ease-out);
   }
 
-  .glass:hover,
-  .glass:focus-within {
-    background: var(--color-card-hi);
-    border-color: var(--color-line-strong);
-  }
-
-  /* ===== Gallery tile: gentle image zoom on hover only ===== */
+  /* ===== Image tile ===== */
   @media (prefers-reduced-motion: no-preference) and (hover: hover) {
     .tile img {
       transition: transform 900ms var(--ease-out);
     }
 
     .tile:hover img {
-      transform: scale(1.02);
+      transform: scale(1.025);
     }
+  }
+
+  /* ===== FAQ ===== */
+  .faq summary {
+    list-style: none;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq details[open] .faq-plus {
+    rotate: 45deg;
+  }
+
+  .faq-plus {
+    transition: rotate var(--dur-base) var(--ease-out);
   }
 
   /* ===== Form fields ===== */
   .field {
     width: 100%;
-    min-height: 3rem;
-    padding: 0.85rem 1rem;
+    min-height: 3.25rem;
+    padding: 0.8rem 0.95rem;
     border: 1px solid var(--color-line-strong);
     border-radius: 0;
     background: var(--color-field);
     color: var(--color-fg);
-    transition:
-      border-color var(--dur-base) var(--ease-out),
-      box-shadow var(--dur-base) var(--ease-out);
+    transition: border-color var(--dur-base) var(--ease-out);
   }
 
   .field::placeholder {
@@ -338,14 +366,18 @@
     opacity: 1;
   }
 
-  .field:focus-visible {
-    outline: 2px solid var(--color-ice);
-    outline-offset: 2px;
+  .field:hover {
     border-color: var(--color-fg-3);
   }
 
+  .field:focus-visible {
+    outline: 2px solid var(--color-ice);
+    outline-offset: 2px;
+    border-color: var(--color-fg);
+  }
+
   .field[aria-invalid='true'] {
-    border-color: oklch(0.78 0.12 25);
+    border-color: var(--color-danger);
   }
 }
 
@@ -361,33 +393,23 @@
   }
 
   .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
     font-family: var(--font-body), system-ui, sans-serif;
     font-size: var(--text-step--1);
     font-weight: 600;
     line-height: 1.3;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--color-fg-3);
   }
 
-  .material-symbols-outlined {
-    font-variation-settings:
-      'FILL' 0,
-      'wght' 300,
-      'GRAD' 0,
-      'opsz' 24;
-  }
-
-  .ui-surface-hover {
-    transition-property: background-color, color, border-color;
-    transition-duration: 280ms;
-    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .ui-hover-media {
-    transition-property: filter, opacity, transform;
-    transition-duration: 280ms;
-    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  .eyebrow::before {
+    content: '';
+    width: 1.75rem;
+    height: 1px;
+    background: var(--color-ember);
   }
 
   .scrollbar-hide {
@@ -399,12 +421,7 @@
     display: none;
   }
 
-  /* Safe-area utilities for iOS fixed-position elements (viewport-fit: cover) */
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  .mb-safe {
-    margin-bottom: env(safe-area-inset-bottom);
   }
 }

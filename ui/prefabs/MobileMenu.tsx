@@ -65,11 +65,11 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
           transition={{ duration: 0.25 }}
           className='bg-panel fixed inset-0 z-70 flex min-h-dvh w-screen flex-col items-center justify-center'
         >
-          <div className='absolute inset-x-0 top-0 mx-auto flex max-w-360 items-center justify-between px-(--gutter) py-3'>
+          <div className='wrap absolute inset-x-0 top-0 flex items-center justify-between py-2.5'>
             <a
               href='#top'
               onClick={handleAnchorNavigation('#top')}
-              className='font-display text-fg hover:text-fg-2 inline-flex min-h-11 items-center text-xl font-bold tracking-[0.14em] uppercase transition-colors'
+              className='font-display text-fg hover:text-ember inline-flex min-h-11 items-center text-2xl tracking-[-0.01em] transition-colors'
               aria-label='Přejít na začátek stránky'
             >
               {applyCzechNbsp(BRAND.name)}
@@ -80,9 +80,16 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               className='text-fg border-line-strong flex h-11 w-11 items-center justify-center border'
               aria-label='Zavřít navigaci'
             >
-              <span className='material-symbols-outlined text-[24px]! leading-none' aria-hidden='true'>
-                close
-              </span>
+              <svg
+                viewBox='0 0 24 24'
+                fill='none'
+                stroke='currentColor'
+                strokeWidth='1.6'
+                aria-hidden='true'
+                className='size-6'
+              >
+                <path d='M6 6l12 12M18 6 6 18' strokeLinecap='round' />
+              </svg>
             </button>
           </div>
 
@@ -97,7 +104,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: index * 0.06, duration: 0.3 }}
                 aria-current={activeHref === link.href ? 'true' : undefined}
-                className={`font-display hover:text-fg-2 text-step-4 font-medium transition-colors duration-300 ${
+                className={`font-display hover:text-ember text-step-4 transition-colors duration-300 ${
                   activeHref === link.href ? 'text-fg underline decoration-1 underline-offset-8' : 'text-fg-2'
                 }`}
               >
@@ -110,7 +117,7 @@ export function MobileMenu({ activeHref }: { activeHref: string }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: NAV.links.length * 0.06, duration: 0.3 }}
-              className='ui-cta-primary font-display mt-4 inline-flex items-center justify-center px-8 py-4 font-bold'
+              className='ui-cta-primary mt-4'
             >
               {applyCzechNbsp(NAV.ctaLabel)}
             </motion.a>

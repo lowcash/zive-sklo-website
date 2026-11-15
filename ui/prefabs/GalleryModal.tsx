@@ -65,7 +65,7 @@ export function GalleryModal({
             onClick={(event) => event.stopPropagation()}
           >
             <div
-              className='relative w-full overflow-hidden rounded-2xl bg-[#090909] shadow-[0_20px_60px_rgba(0,0,0,0.5)]'
+              className='relative w-full overflow-hidden bg-[#090909]'
               onTouchStart={onTouchStart}
               onTouchEnd={onTouchEnd}
             >

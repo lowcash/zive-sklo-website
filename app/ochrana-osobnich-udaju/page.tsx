@@ -43,7 +43,7 @@ export default async function PrivacyPage({ searchParams }: PrivacyPageProps) {
             <p>
               <Link
                 href={returnTo}
-                className='ui-surface-hover border-line-strong text-amber-hi hover:border-amber-hi border-b text-sm'
+                className='border-line-strong text-ember-hi hover:border-ember-hi border-b text-sm transition-colors'
               >
                 Zpět na web Živé Sklo
               </Link>
@@ -67,7 +67,7 @@ export default async function PrivacyPage({ searchParams }: PrivacyPageProps) {
                 <div className='space-y-4'>
                   <h2 className='text-step-3'>{applyCzechNbsp(section.title)}</h2>
                   <p className='text-fg-2 text-base leading-relaxed'>{applyCzechNbsp(section.description)}</p>
-                  <ul className='text-text-secondary space-y-3 text-sm leading-relaxed'>
+                  <ul className='text-fg-2 space-y-3 text-sm leading-relaxed'>
                     {section.items.map((item) => (
                       <li key={item} className='border-line-strong border-l pl-4'>
                         {applyCzechNbsp(item)}
@@ -88,7 +88,7 @@ export default async function PrivacyPage({ searchParams }: PrivacyPageProps) {
             <p className='mt-4'>
               <a
                 href={CONTACT_EMAIL_HREF}
-                className='ui-surface-hover border-line-strong text-amber-hi hover:border-amber-hi border-b'
+                className='border-line-strong text-ember-hi hover:border-ember-hi border-b transition-colors'
               >
                 {CONTACT_EMAIL}
               </a>

@@ -3,6 +3,7 @@ import {
   AudienceSection,
   BenefitsSection,
   ContactSection,
+  FaqSection,
   FooterSection,
   GallerySection,
   HeroSection,
@@ -10,7 +11,6 @@ import {
   OfferSection,
   ProcessSection,
   ScrollToTopButton,
-  StatsSection,
   VideoSection,
 } from '@/ui/prefabs'
 
@@ -27,9 +27,9 @@ export default function HomePage() {
         <ProcessSection />
         <OfferSection />
         <AudienceSection />
-        <StatsSection />
         <GallerySection />
         <BenefitsSection />
+        <FaqSection />
         <ContactSection />
       </main>
       <FooterSection showCookieInformation={showCookieInformation} />

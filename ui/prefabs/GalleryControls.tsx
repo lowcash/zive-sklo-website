@@ -2,67 +2,33 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { Container } from '@/ui/core'
+import Image from 'next/image'
+
+import { Container, SectionHead } from '@/ui/core'
 
 import { GalleryModal } from './GalleryModal'
-import { GalleryScroll } from './GalleryScroll'
 
 type GalleryControlsProps = {
+  eyebrow: string
   heading: string
-  hint: string
   images: string[]
   alts: string[]
 }
 
+const TILE_LAYOUT = [
+  { box: 'col-span-2 aspect-4/3 md:col-span-8 md:aspect-auto md:h-[30rem]', sizes: '(min-width: 768px) 66vw, 100vw' },
+  { box: 'aspect-square md:col-span-4 md:aspect-auto md:h-[30rem]', sizes: '(min-width: 768px) 33vw, 50vw' },
+  { box: 'aspect-square md:col-span-4 md:aspect-auto md:h-[20rem]', sizes: '(min-width: 768px) 33vw, 50vw' },
+  { box: 'col-span-2 aspect-16/10 md:col-span-4 md:aspect-auto md:h-[20rem]', sizes: '(min-width: 768px) 33vw, 100vw' },
+  { box: 'col-span-2 aspect-16/10 md:col-span-4 md:aspect-auto md:h-[20rem]', sizes: '(min-width: 768px) 33vw, 100vw' },
+] as const
+
 /**
- * GalleryControls - Client leaf for horizontal scroll state and modal browsing.
+ * GalleryControls - Client leaf: photo mosaic on the 12-column grid plus modal browsing.
  */
-export function GalleryControls({ heading, hint, images, alts }: GalleryControlsProps) {
-  const scrollRef = useRef<HTMLDivElement>(null)
+export function GalleryControls({ eyebrow, heading, images, alts }: GalleryControlsProps) {
   const touchStartRef = useRef<{ x: number; y: number } | null>(null)
-  const [canScrollPrev, setCanScrollPrev] = useState(false)
-  const [canScrollNext, setCanScrollNext] = useState(true)
   const [activeImageIndex, setActiveImageIndex] = useState<number | null>(null)
-
-  useEffect(() => {
-    const element = scrollRef.current
-
-    if (!element) {
-      return
-    }
-
-    let frameId: number | null = null
-
-    const updateScrollState = () => {
-      const threshold = 4
-      setCanScrollPrev(element.scrollLeft > threshold)
-      setCanScrollNext(element.scrollLeft + element.clientWidth < element.scrollWidth - threshold)
-    }
-
-    const scheduleUpdate = () => {
-      if (frameId !== null) {
-        return
-      }
-
-      frameId = window.requestAnimationFrame(() => {
-        frameId = null
-        updateScrollState()
-      })
-    }
-
-    updateScrollState()
-
-    element.addEventListener('scroll', scheduleUpdate, { passive: true })
-    window.addEventListener('resize', scheduleUpdate)
-
-    return () => {
-      element.removeEventListener('scroll', scheduleUpdate)
-      window.removeEventListener('resize', scheduleUpdate)
-      if (frameId !== null) {
-        window.cancelAnimationFrame(frameId)
-      }
-    }
-  }, [])
 
   useEffect(() => {
     if (activeImageIndex === null) {
@@ -155,60 +121,34 @@ export function GalleryControls({ heading, hint, images, alts }: GalleryControls
     showPreviousImage()
   }
 
-  const scrollGallery = (direction: 'prev' | 'next') => {
-    const element = scrollRef.current
-
-    if (!element) {
-      return
-    }
-
-    const scrollDelta = Math.min(520, Math.round(element.clientWidth * 0.82))
-    const leftOffset = direction === 'next' ? scrollDelta : -scrollDelta
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    element.scrollBy({
-      left: leftOffset,
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-    })
-  }
-
   return (
     <>
       <Container>
-        <div className='reveal mb-12 flex items-end justify-between gap-6'>
-          <div className='space-y-3'>
-            <h2>{heading}</h2>
-            <p className='font-label text-fg-3 text-step--1 font-semibold tracking-[0.12em] uppercase'>{hint}</p>
-          </div>
-          <div className='flex gap-4'>
-            <button
-              type='button'
-              onClick={() => scrollGallery('prev')}
-              disabled={!canScrollPrev}
-              aria-label='Posunout galerii doleva'
-              className='border-line-strong text-fg hover:border-fg-3 disabled:hover:border-line-strong disabled:hover:text-fg flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-40'
-            >
-              <span className='material-symbols-outlined text-[24px]!' aria-hidden='true'>
-                arrow_back
-              </span>
-            </button>
-            <button
-              type='button'
-              onClick={() => scrollGallery('next')}
-              disabled={!canScrollNext}
-              aria-label='Posunout galerii doprava'
-              className='border-line-strong text-fg hover:border-fg-3 disabled:hover:border-line-strong disabled:hover:text-fg flex h-12 w-12 cursor-pointer items-center justify-center border bg-transparent transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-40'
-            >
-              <span className='material-symbols-outlined text-[24px]!' aria-hidden='true'>
-                arrow_forward
-              </span>
-            </button>
-          </div>
-        </div>
-      </Container>
+        <SectionHead eyebrow={eyebrow} heading={heading} className='mb-12 md:mb-16' />
 
-      <Container>
-        <GalleryScroll images={images} alts={alts} scrollRef={scrollRef} onImageClick={setActiveImageIndex} />
+        <div role='group' aria-label='Galerie fotografií' className='grid grid-cols-2 gap-3 md:grid-cols-12 md:gap-6'>
+          {images.map((src, index) => {
+            const layout = TILE_LAYOUT[index % TILE_LAYOUT.length]
+            return (
+              <button
+                type='button'
+                key={`${src}-${index}`}
+                onClick={() => setActiveImageIndex(index)}
+                aria-label={`Zobrazit fotografii: ${alts[index] ?? `Galerie živého skla ${index + 1}`}`}
+                className={`tile reveal relative cursor-pointer overflow-hidden text-left ${layout.box}`}
+              >
+                <Image
+                  src={src}
+                  alt={alts[index] ?? `Galerie živého skla ${index + 1}`}
+                  fill
+                  sizes={layout.sizes}
+                  className='object-cover'
+                  quality={80}
+                />
+              </button>
+            )
+          })}
+        </div>
       </Container>
 
       <GalleryModal

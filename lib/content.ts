@@ -2,7 +2,7 @@
  * Content constants for Živé Sklo website
  * All Czech copy, structured by section
  */
-import { CONTACT_EVENT_TYPE_LABELS, CONTACT_EVENT_TYPES } from '@/lib/schemas/contact'
+import { CONTACT_EVENT_TYPES, CONTACT_EVENT_TYPE_LABELS } from '@/lib/schemas/contact'
 import {
   BRAND,
   CONTACT_EMAIL,
@@ -32,11 +32,8 @@ export const NAV = {
 }
 
 export const HERO = {
-  backgroundImages: [
-    '/images/gallery/production-01.webp',
-    '/images/gallery/blowing-technique-06.webp',
-    '/images/gallery/hands-flame-01.webp',
-  ],
+  image: '/images/hero/production-hero.jpg',
+  imageAlt: 'Roztavené sklo v plameni hořáku, ruce sklářky při práci',
   h1Prefix: 'Zažijte kouzlo',
   h1Highlight: 'foukaného skla',
   h1Suffix: 'na vlastní oči.',
@@ -58,18 +55,27 @@ export const HERO = {
 export const ABOUT = {
   heading: 'Nepřivezeme jen výrobky. Přivezeme celý příběh jejich vzniku.',
   text: 'Živé Sklo je mobilní sklářská dílna z Vsetína - města s dlouhou tradicí výroby skleněných ozdob. Naše dílna se vejde do jedné dodávky a může se rozložit téměř kdekoliv - na náměstí, ve firmě nebo ve škole. Návštěvníci sledují celý proces výroby od zahřátí skleněné trubice v plameni až po vznik hotové ozdoby. Každá ozdoba je originál. A každý zážitek zůstane. Projekt vznikl z více než dvacetileté zkušenosti s výrobou skleněných vánočních ozdob ve Vsetíně.',
-  image: '/images/gallery/forming-process-02.webp',
+  image: '/images/gallery/glass-detail-tall.jpg',
+  imageAlt: 'Hromada ručně foukaných skleněných baněk a trubic',
+  eyebrow: 'O projektu',
+  facts: [
+    { value: 'Vsetín', label: 'Město s tradicí skleněných ozdob' },
+    { value: '20+ let', label: 'Zkušeností s výrobou skleněných ozdob' },
+    { value: '1 dodávka', label: 'Je vše, co naše dílna potřebuje' },
+  ],
 }
 
 export const VIDEO = {
   heading: 'Živé sklo naživo',
   subtitle: 'Podívejte se, jak sklářská dílna vypadá naživo při\u00A0akci.',
   src: '/videos/zive-sklo-akce.mp4',
-  poster: '/videos/zive-sklo-akce-poster.jpg',
+  poster: '/videos/zive-sklo-akce-poster-vertical.jpg',
+  eyebrow: 'Ukázka z akce',
   ariaLabel: 'Video ze sklářské akce Živého skla',
 }
 
 export const PROCESS = {
+  eyebrow: 'Postup',
   heading: 'Jak to celé funguje',
   steps: [
     {
@@ -97,11 +103,11 @@ export const PROCESS = {
 }
 
 export const OFFER = {
+  eyebrow: 'Nabídka',
   heading: 'Co si můžete objednat',
   subtitle: 'Každý program přizpůsobujeme na míru počtu účastníků, délce akce i vašemu záměru.',
   primary: [
     {
-      icon: 'visibility',
       title: 'Živé divadlo řemesla',
       description:
         'Fascinující sklářská show, která se stane magnetem vaší akce a zastaví každého kolemjdoucího. Vaši hosté sledují vznik skleněné ozdoby od skleněné trubice až po hotový výrobek. Ticho, soustředění, dech a pak obdiv.',
@@ -111,7 +117,6 @@ export const OFFER = {
       ctaHref: '#kontakt',
     },
     {
-      icon: 'groups',
       title: 'Týmový rituál – Firemní event',
       description:
         'Neobvyklý zážitek pro firmy a týmy. Foukání skla vyžaduje soustředění a preciznost - přesně to, na čem stojí dobrá spolupráce ve vašem týmu. Každý odchází s vlastnoručně vyrobenou ozdobou.',
@@ -122,7 +127,6 @@ export const OFFER = {
       ctaHref: '#kontakt',
     },
     {
-      icon: 'school',
       title: 'Fyzika v plamenech – Školní program',
       description:
         'Přineste do školy zážitek, který propojí fyziku, chemii a tradiční řemeslo v jednom odpoledni. Programy jsou navrženy tak, aby děti bavily a zároveň něco naučily o materiálu a lidském dechu.',
@@ -160,10 +164,10 @@ export const OFFER = {
 }
 
 export const AUDIENCE = {
+  eyebrow: 'Pro koho jsme',
   heading: 'Pro ty, kdo chtějí nabídnout lidem něco opravdového.',
   segments: [
     {
-      icon: 'school',
       label: 'Školy',
       title: 'Školy a vzdělávací instituce',
       heading: 'Výuka, která se nezapomene',
@@ -179,7 +183,6 @@ export const AUDIENCE = {
       ctaHref: '#kontakt',
     },
     {
-      icon: 'location_city',
       label: 'Města a obce',
       title: 'Města, obce a kulturní akce',
       heading: 'Živá sklářská dílna jako kulturní atrakce',
@@ -195,7 +198,6 @@ export const AUDIENCE = {
       ctaHref: '#kontakt',
     },
     {
-      icon: 'corporate_fare',
       label: 'Firmy',
       title: 'Firmy a firemní akce',
       heading: 'Zážitek, který spojuje tým',
@@ -235,25 +237,26 @@ export const STATS = {
 }
 
 export const GALLERY = {
-  heading: 'Galerie zážitků - Živé sklo v akci',
-  hint: 'Posuňte galerii pro další záběry',
+  eyebrow: 'Galerie',
+  heading: 'Živé sklo v akci',
   alts: [
-    'Sklář foukající skleněnou ozdobu v plameni',
-    'Detail výroby – ruce umělce nad roztaveným sklem',
-    'Školní exkurze – děti sledují vznik skleněné ozdoby',
-    'Detail skleněné ozdoby – ručně vyrobený originál',
-    'Tváření roztaveného skla – mistr při práci',
+    'Sklář tvaruje roztavené sklo v plameni mezi hromadou skleněných ozdob',
+    'Detail ruky sklářky nad plamenem',
+    'Sklářka foukající skleněnou ozdobu v plameni',
+    'Ruce při tvarování skleněné trubice',
+    'Roztavené sklo žhnoucí v plameni hořáku',
   ],
   images: [
-    '/images/gallery/production-01.webp',
+    '/images/gallery/excursion-wide.jpg',
     '/images/gallery/hands-flame-01.webp',
-    '/images/gallery/excursion-school-01.webp',
-    '/images/gallery/glass-detail-01.webp',
     '/images/gallery/blowing-technique-06.webp',
+    '/images/gallery/forming-process-02.webp',
+    '/images/hero/production-hero.jpg',
   ],
 }
 
 export const BENEFITS = {
+  eyebrow: 'Proč Živé sklo',
   heading: 'Proč zvolit Živé sklo pro vaši akci',
   items: [
     {
@@ -262,17 +265,14 @@ export const BENEFITS = {
       description: 'Nic nemusíte zajišťovat. Přivezeme veškeré vybavení a postaráme se o bezpečný provoz.',
     },
     {
-      icon: 'verified_user',
       title: 'Bezpečný provoz',
       description: 'V souladu s požadavky pojišťoven a přísnými normami. Bezpečný provoz vhodný pro veřejné akce.',
     },
     {
-      icon: 'groups',
       title: 'Pro každou akci',
       description: 'Program vhodný pro děti i dospělé, pro malé skupiny i velké akce od 10 do 500 lidí.',
     },
     {
-      icon: 'description',
       title: 'Profesionální komunikace',
       description: 'Komunikujeme profesionálně - smlouva, faktura, pojištění.',
     },
@@ -282,6 +282,7 @@ export const BENEFITS = {
 }
 
 export const CONTACT = {
+  eyebrow: 'Kontakt',
   heading: 'Poptejte svoji akci',
   subtitle: 'Vyplňte krátký formulář a my se vám co nejdříve ozveme s nabídkou na míru.',
   portrait: {
@@ -290,21 +291,18 @@ export const CONTACT = {
   },
   details: [
     {
-      icon: 'mail',
       label: 'E-mail',
       value: CONTACT_EMAIL,
       href: CONTACT_EMAIL_HREF,
       nowrap: true,
     },
     {
-      icon: 'phone_iphone',
       label: 'Telefon',
       value: CONTACT_PHONE_DISPLAY,
       href: CONTACT_PHONE_HREF,
       nowrap: true,
     },
     {
-      icon: 'location_on',
       label: 'Sídlo',
       value: SITE_STREET_ADDRESS,
       secondary: `${SITE_POSTAL_CODE} ${SITE_LOCALITY}`,
@@ -312,7 +310,6 @@ export const CONTACT = {
       external: true,
     },
     {
-      icon: 'apartment',
       label: 'Obchodní firma',
       value: SITE_LEGAL_NAME,
       secondary: `IČO\u00A0${SITE_ICO}`,
@@ -371,6 +368,43 @@ export const CONTACT = {
     },
   },
   submitLabel: 'Odeslat poptávku',
+}
+
+export const FAQ = {
+  eyebrow: 'Časté dotazy',
+  heading: 'Než nám napíšete',
+  items: [
+    {
+      question: 'Pro kolik lidí je program vhodný?',
+      answer:
+        'Program je vhodný pro děti i dospělé, pro malé skupiny i velké akce od 10 do 500 lidí. Firemní týmový program počítá s minimem 10 osob.',
+    },
+    {
+      question: 'Co musíme zajistit my?',
+      answer: 'Nic. Přivezeme veškeré vybavení a postaráme se o bezpečný provoz. Dílna se vejde do jedné dodávky.',
+    },
+    {
+      question: 'Jak dlouho program trvá?',
+      answer: 'Firemní program trvá 2–4 hodiny, školní program 90 minut až 3 hodiny. Délku přizpůsobujeme vaší akci.',
+    },
+    {
+      question: 'Je provoz bezpečný?',
+      answer:
+        'Provoz je v souladu s požadavky pojišťoven a přísnými normami a je vhodný pro veřejné akce. Pro nejmenší děti nebo velké skupiny nabízíme Kreativní dílnu bez ohně.',
+    },
+    {
+      question: 'Odnesou si hosté vlastní ozdobu?',
+      answer:
+        'U týmového a školního programu si každý účastník odnese vlastnoručně vyrobenou ozdobu. Ozdoby můžeme také osobně popsat jménem či věnováním.',
+    },
+    {
+      question: 'Kolik to stojí a jak objednat?',
+      answer:
+        'Ceny začínají od 12 000 Kč za Živé divadlo řemesla, od 20 000 Kč za firemní event a od 120 Kč za žáka u školního programu. Pošlete nám termín, místo a přibližný počet hostů a ozveme se s nabídkou na míru.',
+    },
+  ],
+  ctaLabel: 'Nezávazně poptat akci',
+  ctaHref: '#kontakt',
 }
 
 export const FOOTER = {

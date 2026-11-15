@@ -18,13 +18,13 @@ type ContactFieldProps = {
 export function ContactField({ id, name, label, required, error, children }: ContactFieldProps) {
   return (
     <div className='space-y-2'>
-      <label htmlFor={id} className='font-label text-fg-2 block text-sm font-semibold tracking-[0.04em]'>
+      <label htmlFor={id} className='text-fg-2 block text-sm font-semibold tracking-[0.02em]'>
         {label}
         {required ? <>{'\u00A0'}*</> : null}
       </label>
       {children}
       {error ? (
-        <p id={`error-${name}`} role='alert' className='text-sm text-red-300'>
+        <p id={`error-${name}`} role='alert' className='text-danger text-sm'>
           {error}
         </p>
       ) : null}

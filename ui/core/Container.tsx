@@ -6,16 +6,17 @@ type ContainerProps = {
 }
 
 /**
- * Container primitive aligned to reference layout rhythm.
+ * Container primitive: one max width and one gutter for the whole page.
+ * Narrow sizes are used by the legal pages only.
  */
 export function Container({ children, size = 'lg' }: ContainerProps) {
   const sizeClasses = {
     sm: 'max-w-3xl',
     md: 'max-w-4xl',
-    lg: 'max-w-[1440px]',
-    xl: 'max-w-[1440px]',
+    lg: '',
+    xl: '',
     full: 'max-w-full',
   }
 
-  return <div className={`mx-auto px-(--gutter) ${sizeClasses[size]}`}>{children}</div>
+  return <div className={`wrap ${sizeClasses[size]}`}>{children}</div>
 }

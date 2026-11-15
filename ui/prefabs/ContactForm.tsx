@@ -23,7 +23,7 @@ export function ContactForm() {
   } = useContactForm()
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-6' aria-label='Formulář pro poptávku sklářské akce' noValidate>
+    <form onSubmit={handleSubmit} className='space-y-7' aria-label='Formulář pro poptávku sklářské akce' noValidate>
       <p className='text-fg-3 text-step--1'>Pole označená * jsou povinná.</p>
 
       <div className='grid grid-cols-1 gap-8 @md:grid-cols-2 @md:gap-x-8 @md:gap-y-8'>
@@ -177,11 +177,11 @@ export function ContactForm() {
             aria-describedby={getFieldError('gdpr') ? 'error-gdpr' : undefined}
             className='peer sr-only'
           />
-          <span className='border-line-strong bg-field peer-checked:border-amber peer-checked:bg-amber peer-focus-visible:outline-ice mt-0.5 flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center border transition-colors duration-300 peer-checked:*:opacity-100 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2'>
+          <span className='border-line-strong bg-field peer-checked:border-ember peer-checked:bg-ember peer-focus-visible:outline-ice mt-0.5 flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center border transition-colors duration-300 peer-checked:*:opacity-100 peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2'>
             <svg
               viewBox='0 0 20 20'
               aria-hidden='true'
-              className='text-on-amber h-3.5 w-3.5 opacity-0 transition-opacity duration-200'
+              className='text-on-ember h-3.5 w-3.5 opacity-0 transition-opacity duration-200'
             >
               <path
                 d='M5 10.5 8.2 13.5 15 6.8'
@@ -202,13 +202,13 @@ export function ContactForm() {
           <p>{applyCzechNbsp(CONTACT.fields.gdpr.detailsText)}</p>
           <PolicyLink
             href={CONTACT.fields.gdpr.detailsHref}
-            className='ui-surface-hover border-line-strong text-amber-hi hover:border-amber-hi mt-1 inline-flex border-b'
+            className='border-line-strong text-ember-hi hover:border-ember-hi mt-1 inline-flex border-b transition-colors'
           >
             {applyCzechNbsp(CONTACT.fields.gdpr.detailsLabel)}
           </PolicyLink>
         </div>
         {getFieldError('gdpr') && (
-          <p id='error-gdpr' role='alert' className='text-sm text-red-300'>
+          <p id='error-gdpr' role='alert' className='text-danger text-sm'>
             {getFieldError('gdpr')}
           </p>
         )}
@@ -232,7 +232,7 @@ export function ContactForm() {
       <button
         type='submit'
         disabled={isSubmitting}
-        className='ui-cta-primary inline-flex w-full items-center justify-center py-4 text-sm font-bold tracking-widest uppercase disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70'
+        className='ui-cta-primary w-full disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70'
       >
         {isSubmitting ? 'Odesílám...' : CONTACT.submitLabel}
       </button>
@@ -240,7 +240,7 @@ export function ContactForm() {
       {showActionMessage && actionState.message ? (
         <p
           role={actionState.status === 'error' ? 'alert' : 'status'}
-          className={actionState.status === 'error' ? 'text-sm text-red-300' : 'text-sm text-emerald-300'}
+          className={actionState.status === 'error' ? 'text-danger text-sm' : 'text-fg text-sm'}
         >
           {actionState.message}
         </p>

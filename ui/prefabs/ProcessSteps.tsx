@@ -22,7 +22,7 @@ interface ProcessStepsProps {
 export function ProcessSteps({ steps }: ProcessStepsProps) {
   const [highlightMode, setHighlightMode] = useState<'scroll' | 'hover' | 'none'>('hover')
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const stepRefs = useRef<(HTMLDivElement | null)[]>([])
+  const stepRefs = useRef<(HTMLLIElement | null)[]>([])
 
   useEffect(() => {
     const mobileQuery = window.matchMedia('(max-width: 767px)')
@@ -112,37 +112,32 @@ export function ProcessSteps({ steps }: ProcessStepsProps) {
   }, [])
 
   return (
-    <div className='relative grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-10 xl:grid-cols-4 xl:gap-10'>
+    <ol className='grid grid-cols-1 gap-x-8 gap-y-0 md:grid-cols-2 xl:grid-cols-4'>
       {steps.map((step, index) => {
         const isActive = activeIndex === index && highlightMode === 'scroll'
         return (
-          <div
+          <li
             key={step.number}
             ref={(el) => {
               stepRefs.current[index] = el
             }}
             data-testid='process-step'
             data-active={isActive ? 'true' : 'false'}
-            className='group reveal relative flex h-full cursor-default flex-col'
+            className={`reveal group flex flex-col border-t py-8 transition-colors duration-240 md:pb-10 ${
+              isActive ? 'border-ember' : 'border-line-strong'
+            }`}
           >
-            {/* Card body */}
-            <div
-              className={`glass flex flex-1 flex-col p-6 md:p-7 xl:p-8 ${
-                isActive ? 'bg-card-hi border-line-strong' : ''
-              }`}
+            <span
+              aria-hidden='true'
+              className='font-display text-ember text-step-4 mb-6 leading-none tracking-[-0.02em] tabular-nums'
             >
-              <span
-                aria-hidden='true'
-                className='font-display text-fg-3 mb-6 text-sm font-medium tracking-[0.18em] tabular-nums'
-              >
-                {step.number}
-              </span>
-              <h3 className='pb-3 text-xl font-semibold'>{applyCzechNbsp(step.title)}</h3>
-              <p className='text-fg-2 text-sm leading-relaxed md:text-[0.95rem]'>{applyCzechNbsp(step.description)}</p>
-            </div>
-          </div>
+              {step.number}
+            </span>
+            <h3 className='pb-3'>{applyCzechNbsp(step.title)}</h3>
+            <p className='text-fg-2 max-w-[34ch]'>{applyCzechNbsp(step.description)}</p>
+          </li>
         )
       })}
-    </div>
+    </ol>
   )
 }

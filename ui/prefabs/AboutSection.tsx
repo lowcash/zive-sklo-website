@@ -7,36 +7,45 @@ import { Container, Section } from '@/ui/core'
 
 /**
  * AboutSection - RSC (Server Component)
- * About section with text and a image
+ * Story on the left, one portrait photo on the right, three proof facts taken from the copy.
  */
 export function AboutSection() {
   return (
-    <div className='overflow-hidden'>
-      <Section id='o-projektu' spacing='xl' surface='subtle'>
-        <Container>
-          <div className='grid grid-cols-1 items-center gap-12 min-[900px]:grid-cols-[1.1fr_0.9fr] min-[900px]:gap-24'>
-            <figure className='reveal relative mx-auto w-full max-w-lg min-[900px]:max-w-none'>
+    <Section id='o-projektu' tone='light'>
+      <Container>
+        <div className='grid-12 items-start gap-y-14'>
+          <div className='reveal md:col-span-7'>
+            <p className='eyebrow mb-6'>{applyCzechNbsp(ABOUT.eyebrow)}</p>
+            <h2 className='max-w-[20ch]'>{applyCzechNbsp(ABOUT.heading)}</h2>
+            <p className='text-fg-2 mt-8 max-w-[58ch] md:mt-10'>{applyCzechNbsp(ABOUT.text)}</p>
+          </div>
+
+          <figure className='reveal md:col-span-5 md:col-start-8'>
+            <div className='relative aspect-4/5 overflow-hidden'>
               <Image
                 src={ABOUT.image}
-                alt='Sklář tvarující skleněnou ozdobu v dílně'
-                width={900}
-                height={1100}
-                className='aspect-4/5 w-full object-cover'
-                quality={85}
-                sizes='(min-width: 900px) 50vw, (min-width: 768px) 42rem, 100vw'
+                alt={ABOUT.imageAlt}
+                fill
+                className='object-cover'
+                quality={80}
+                sizes='(min-width: 768px) 38vw, 100vw'
               />
-            </figure>
-
-            <div className='reveal space-y-8'>
-              <h2 className='max-w-[22ch]'>{applyCzechNbsp(ABOUT.heading)}</h2>
-
-              <div className='text-fg-2 max-w-[62ch]'>
-                <p>{applyCzechNbsp(ABOUT.text)}</p>
-              </div>
             </div>
-          </div>
-        </Container>
-      </Section>
-    </div>
+          </figure>
+        </div>
+
+        <dl className='border-line-strong mt-16 grid grid-cols-1 border-t md:mt-24 md:grid-cols-3'>
+          {ABOUT.facts.map((fact, index) => (
+            <div
+              key={fact.value}
+              className={`border-line flex flex-col gap-2 py-6 md:py-8 ${index > 0 ? 'border-t md:border-t-0 md:border-l md:pl-8' : ''} ${index < 2 ? 'md:pr-8' : ''}`}
+            >
+              <dt className='font-display text-step-4 leading-none tracking-[-0.02em]'>{applyCzechNbsp(fact.value)}</dt>
+              <dd className='text-fg-2 text-step--1 max-w-[30ch]'>{applyCzechNbsp(fact.label)}</dd>
+            </div>
+          ))}
+        </dl>
+      </Container>
+    </Section>
   )
 }

@@ -46,7 +46,7 @@ export function ScrollToTopButton() {
 
   return (
     <div className='pointer-events-none fixed inset-x-0 bottom-6 z-40 md:bottom-8'>
-      <div className='mx-auto flex w-full max-w-360 justify-end px-(--gutter)'>
+      <div className='wrap flex justify-end'>
         <motion.button
           type='button'
           initial={false}
@@ -57,7 +57,7 @@ export function ScrollToTopButton() {
           }}
           transition={{ duration: 0.28, ease: 'easeOut' }}
           onClick={scrollToTop}
-          className={`border-line-strong bg-card text-fg hover:bg-amber hover:text-on-amber pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border transition-colors duration-300 ${canShow ? '' : 'pointer-events-none'}`}
+          className={`border-line-strong bg-card text-fg hover:bg-ember hover:text-on-ember pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border transition-colors duration-300 ${canShow ? '' : 'pointer-events-none'}`}
           style={{
             marginBottom: 'env(safe-area-inset-bottom)',
             transform: 'translateZ(0)',
@@ -69,9 +69,16 @@ export function ScrollToTopButton() {
           aria-hidden={!canShow}
           tabIndex={canShow ? 0 : -1}
         >
-          <span className='material-symbols-outlined text-[24px]!' aria-hidden='true'>
-            arrow_upward
-          </span>
+          <svg
+            viewBox='0 0 24 24'
+            fill='none'
+            stroke='currentColor'
+            strokeWidth='1.6'
+            aria-hidden='true'
+            className='size-5'
+          >
+            <path d='M12 19V5m0 0-6 6m6-6 6 6' strokeLinecap='round' strokeLinejoin='round' />
+          </svg>
         </motion.button>
       </div>
     </div>

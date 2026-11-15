@@ -90,13 +90,13 @@ export function CookieConsentManager({ gaTrackingId, showBannerPreview = false }
                   <p className='text-fg-3 text-step--1 leading-relaxed'>
                     <PolicyLink
                       href='/cookies'
-                      className='ui-surface-hover border-line-strong text-amber-hi hover:border-amber-hi border-b'
+                      className='border-line-strong text-ember-hi hover:border-ember-hi border-b transition-colors'
                     >
                       {applyCzechNbsp(COOKIE_NOTICE.banner.detailsLabel)}
                     </PolicyLink>
                   </p>
                   {isPreviewWithoutAnalytics ? (
-                    <p className='text-amber text-step--1 leading-relaxed'>
+                    <p className='text-ember text-step--1 leading-relaxed'>
                       Náhled v lokálním vývoji: bez nastaveného NEXT_PUBLIC_GA_TRACKING_ID se po kliknutí žádná
                       analytika nenačte.
                     </p>

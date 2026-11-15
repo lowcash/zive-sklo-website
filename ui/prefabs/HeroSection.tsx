@@ -3,79 +3,58 @@ import Image from 'next/image'
 import { HERO } from '@/lib/content'
 import { applyCzechNbsp } from '@/lib/utils'
 
-import { HeroScrollCue } from './HeroScrollCue'
-
 /**
  * HeroSection - RSC (Server Component)
- * Full-height hero: one static photo under a dark gradient, plus the copy.
+ * Full-bleed photograph, left-anchored headline on the 12-column grid, one primary action.
  * The h1 is the LCP element: no animation, opacity or transform on it.
- * Uses min-h-dvh (Dynamic Viewport Height) to prevent content hiding
- * behind iOS Safari's browser toolbar.
  */
 export function HeroSection() {
-  const [heroImage] = HERO.backgroundImages
-
   return (
-    <header className='relative flex min-h-svh items-center overflow-clip pt-28 pb-24 md:min-h-dvh md:pt-28 md:pb-16'>
-      <div className='absolute inset-0 z-0' aria-hidden='true'>
+    <header className='surface-ink relative isolate flex min-h-svh flex-col justify-end overflow-clip md:min-h-dvh'>
+      <div className='absolute inset-0 -z-10' aria-hidden='true'>
         <Image
-          src={heroImage}
+          src={HERO.image}
           alt=''
           fill
           sizes='100vw'
-          className='object-cover opacity-80 max-md:opacity-50 md:object-[70%_center]'
+          className='object-cover object-[66%_50%] md:object-center'
           priority
-          quality={75}
+          quality={80}
         />
-        <div className='to-bg/60 from-bg via-bg/75 absolute inset-0 bg-linear-to-r max-md:hidden' />
-        <div className='from-bg absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t to-transparent' />
-        <div className='bg-bg/55 absolute inset-0 md:hidden' />
+        <div className='absolute inset-0 bg-[linear-gradient(to_top,rgb(20_17_14/0.94)_0%,rgb(20_17_14/0.7)_38%,rgb(20_17_14/0.25)_75%,rgb(20_17_14/0.5)_100%)] md:bg-[linear-gradient(to_right,rgb(20_17_14/0.88)_0%,rgb(20_17_14/0.55)_48%,rgb(20_17_14/0.05)_80%),linear-gradient(to_top,rgb(20_17_14/0.85)_0%,transparent_45%)]' />
       </div>
 
-      <div className='relative z-10 mx-auto w-full max-w-360 px-(--gutter)'>
-        <div className='flex max-w-184 flex-col justify-center gap-6'>
-          <div className='flex flex-wrap gap-2'>
-            {HERO.pills.map((pill) => (
-              <span
-                key={pill.label}
-                className={`text-step--1 inline-flex items-center rounded-full border px-3.5 py-1 leading-snug font-semibold tracking-[0.1em] uppercase ${'border-line-strong text-fg-2'}`}
-              >
-                {applyCzechNbsp(pill.label)}
-              </span>
-            ))}
-          </div>
+      <div className='wrap pt-32 pb-10 md:pb-14'>
+        <div className='grid-12'>
+          <div className='md:col-span-9 xl:col-span-8'>
+            <h1 className='text-step-display leading-[0.98] tracking-[-0.03em]'>
+              {applyCzechNbsp(HERO.h1Prefix)}{' '}
+              <em className='text-ember font-normal italic'>{applyCzechNbsp(HERO.h1Highlight)}</em>{' '}
+              {applyCzechNbsp(HERO.h1Suffix)}
+            </h1>
 
-          <h1 className='text-step-display leading-[1.04] font-medium tracking-[-0.025em] [font-stretch:92%]'>
-            {applyCzechNbsp(HERO.h1Prefix)} <br />
-            <em className='font-normal italic'>{applyCzechNbsp(HERO.h1Highlight)}</em> <br />
-            {applyCzechNbsp(HERO.h1Suffix)}
-          </h1>
+            <p className='text-step-1 text-fg-2 mt-7 max-w-[46ch] leading-[1.55]'>{applyCzechNbsp(HERO.subtitle)}</p>
 
-          <p className='text-step-1 text-fg-2 max-w-160 leading-[1.55]'>{applyCzechNbsp(HERO.subtitle)}</p>
-
-          <p className='font-label text-step--1 text-fg-3 leading-normal font-semibold tracking-[0.16em] uppercase'>
-            {applyCzechNbsp(HERO.trustLine)}
-          </p>
-
-          <div className='flex flex-wrap items-center gap-x-6 gap-y-4 pt-2'>
-            <a
-              href={HERO.ctaHref}
-              className='ui-cta-primary inline-flex items-center justify-center px-8 py-4 text-center font-bold'
-            >
-              {applyCzechNbsp(HERO.ctaLabel)}
-            </a>
-            <a
-              href={HERO.secondaryCtaHref}
-              className='link-arrow font-display text-fg inline-flex items-center justify-center gap-2 py-3 text-center font-semibold'
-            >
-              <span aria-hidden='true'>→</span>
-              {applyCzechNbsp(HERO.secondaryCtaLabel)}
-            </a>
+            <div className='mt-9 flex flex-wrap items-center gap-x-8 gap-y-5'>
+              <a href={HERO.ctaHref} className='ui-cta-primary'>
+                {applyCzechNbsp(HERO.ctaLabel)}
+              </a>
+              <a href={HERO.secondaryCtaHref} className='link-arrow'>
+                {applyCzechNbsp(HERO.secondaryCtaLabel)}
+                <span aria-hidden='true'>→</span>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
 
-      <HeroScrollCue href='#o-projektu' ariaLabel='Posunout na další sekci' />
+        <ul className='border-line mt-12 flex flex-wrap gap-x-8 gap-y-2 border-t pt-5 md:mt-16 md:gap-x-12'>
+          {HERO.pills.map((pill) => (
+            <li key={pill.label} className='text-fg-2 text-step--1 font-semibold tracking-[0.12em] uppercase'>
+              <span>{applyCzechNbsp(pill.label)}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </header>
   )
 }

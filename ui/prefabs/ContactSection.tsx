@@ -9,97 +9,71 @@ import { ContactForm } from './ContactForm'
 
 /**
  * ContactSection - RSC (Server Component)
- * Contact form section (form validation as client leaf)
- *
- * Contacts + portrait stay a tight w-fit group (no justify-between gap).
- * Form grows on the right but caps around max-w-2xl so it does not dominate.
+ * Ink surface: heading, direct contact details and the founder portrait on the left,
+ * the inquiry form on a light card on the right.
  */
 export function ContactSection() {
   return (
-    <Section id='kontakt' spacing='xl' surface='subtle'>
+    <Section id='kontakt' tone='ink'>
       <Container>
-        <div className='space-y-10 md:space-y-12'>
-          <div className='reveal max-w-3xl'>
-            <h2 className='text-step-5 mb-4 md:mb-6'>{applyCzechNbsp(CONTACT.heading)}</h2>
-            <p className='text-step-1 text-fg-2 leading-[1.55]'>{applyCzechNbsp(CONTACT.subtitle)}</p>
-          </div>
+        <div className='grid-12 gap-y-14'>
+          <div className='reveal md:col-span-5'>
+            <p className='eyebrow mb-6'>{applyCzechNbsp(CONTACT.eyebrow)}</p>
+            <h2 className='max-w-[12ch]'>{applyCzechNbsp(CONTACT.heading)}</h2>
+            <p className='text-step-1 text-fg-2 mt-6 max-w-[34ch] leading-[1.55]'>{applyCzechNbsp(CONTACT.subtitle)}</p>
 
-          <div className='flex flex-col items-start gap-12 lg:flex-row lg:gap-14 xl:gap-16'>
-            <div className='grid w-fit max-w-full grid-cols-[auto_10rem] items-stretch gap-x-5 sm:grid-cols-[auto_11rem] sm:gap-x-6 md:grid-cols-[auto_12rem] md:gap-x-8 lg:grid-cols-[auto_15rem] xl:grid-cols-[auto_16rem]'>
-              <div className='relative z-10 min-w-0 space-y-6 sm:space-y-8'>
+            <div className='mt-12 grid grid-cols-1 items-end gap-x-6 lg:grid-cols-[1fr_auto]'>
+              <div className='space-y-6'>
                 {CONTACT.details.map((detail) => {
                   const nowrap = 'nowrap' in detail && detail.nowrap
                   const secondary = 'secondary' in detail ? detail.secondary : undefined
-                  const content = (
+                  const body = (
                     <>
-                      <span className='border-line flex h-11 w-11 shrink-0 items-center justify-center border bg-white/5 sm:h-12 sm:w-12'>
-                        <span
-                          className='material-symbols-outlined text-fg-2 text-[22px]! sm:text-[24px]!'
-                          aria-hidden='true'
-                        >
-                          {detail.icon}
-                        </span>
+                      <span className='text-fg-3 text-step--1 block font-semibold tracking-[0.12em] uppercase'>
+                        {applyCzechNbsp(detail.label)}
                       </span>
-                      <div className='min-w-0'>
-                        <p
-                          className={`font-label text-fg-3 text-xs font-semibold tracking-[0.14em] uppercase ${nowrap ? 'whitespace-nowrap' : 'break-normal'}`}
-                        >
-                          {applyCzechNbsp(detail.label)}
-                        </p>
-                        <p
-                          className={`text-sm font-bold break-normal sm:text-base ${nowrap ? 'whitespace-nowrap' : ''}`}
-                        >
-                          {applyCzechNbsp(detail.value)}
-                        </p>
-                        {secondary ? (
-                          <p className='text-sm font-bold break-normal sm:text-base'>{applyCzechNbsp(secondary)}</p>
-                        ) : null}
-                      </div>
+                      <span className={`mt-1 block ${nowrap ? 'whitespace-nowrap' : ''}`}>
+                        {applyCzechNbsp(detail.value)}
+                      </span>
+                      {secondary ? <span className='block'>{applyCzechNbsp(secondary)}</span> : null}
                     </>
                   )
 
-                  if ('href' in detail && detail.href) {
-                    const isExternal = 'external' in detail && detail.external
-
-                    return (
-                      <a
-                        key={detail.label}
-                        href={detail.href}
-                        className='hover:text-fg-2 flex items-center gap-3 transition-colors sm:gap-5'
-                        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                      >
-                        {content}
-                      </a>
-                    )
-                  }
-
                   return (
-                    <div key={detail.label} className='flex items-center gap-3 sm:gap-5'>
-                      {content}
+                    <div key={detail.label} className='border-line border-t pt-4'>
+                      {'href' in detail && detail.href ? (
+                        <a
+                          href={detail.href}
+                          className='hover:text-ember block transition-colors'
+                          {...('external' in detail && detail.external
+                            ? { target: '_blank', rel: 'noopener noreferrer' }
+                            : {})}
+                        >
+                          {body}
+                        </a>
+                      ) : (
+                        <div>{body}</div>
+                      )}
                     </div>
                   )
                 })}
               </div>
 
-              <div className='relative z-0 min-h-0'>
+              <div className='relative hidden h-80 w-44 lg:block lg:h-[26rem] lg:w-56'>
                 <Image
                   src={CONTACT.portrait.src}
                   alt={CONTACT.portrait.alt}
                   fill
                   className='object-contain object-bottom'
-                  style={{
-                    maskImage: 'linear-gradient(to bottom, #000 72%, transparent 100%)',
-                    WebkitMaskImage: 'linear-gradient(to bottom, #000 72%, transparent 100%)',
-                  }}
-                  quality={90}
-                  sizes='(min-width: 1280px) 16rem, (min-width: 1024px) 15rem, (min-width: 768px) 12rem, (min-width: 640px) 11rem, 10rem'
+                  quality={85}
+                  sizes='14rem'
                 />
               </div>
             </div>
+          </div>
 
-            <div className='glass reveal @container w-full max-w-2xl min-w-0 flex-1 p-6 md:p-8 lg:p-8 xl:max-w-[40rem] xl:p-10'>
-              <ContactForm />
-            </div>
+          <div className='surface-light reveal glass @container p-6 md:col-span-7 md:p-10 lg:col-span-6 lg:col-start-7'>
+            <ContactForm />
           </div>
         </div>
       </Container>
