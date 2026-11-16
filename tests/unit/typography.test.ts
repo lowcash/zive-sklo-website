@@ -8,6 +8,10 @@ describe('applyCzechNbsp', () => {
     expect(applyCzechNbsp('ve škole')).toBe('ve\u00A0škole')
   })
 
+  it('binds consecutive single-letter words', () => {
+    expect(applyCzechNbsp('a v jedné a k nám')).toBe('a\u00A0v\u00A0jedné a\u00A0k\u00A0nám')
+  })
+
   it('keeps postal codes together', () => {
     expect(applyCzechNbsp('755 01 Vsetín')).toBe('755\u00A001 Vsetín')
   })

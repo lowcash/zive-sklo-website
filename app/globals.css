@@ -143,7 +143,10 @@
     letter-spacing: -0.01em;
   }
 
-  p {
+  p,
+  li,
+  dd,
+  summary {
     text-wrap: pretty;
   }
 
@@ -224,6 +227,26 @@
     }
   }
 
+  /* Hero supporting copy fades in once on load (opacity only, no layout shift). The h1 is never animated. */
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in {
+      animation: fade-in 700ms var(--ease-out) 120ms both;
+    }
+
+    .fade-in-late {
+      animation: fade-in 700ms var(--ease-out) 260ms both;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
   /* ===== Navigation ===== */
   .nav-bar {
     background: rgb(20 17 14 / 0.88);
@@ -283,6 +306,18 @@
     background: var(--color-ember-hi);
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+    .ui-cta-primary,
+    .ui-cta-ghost {
+      transition-property: background-color, border-color, color, translate;
+    }
+
+    .ui-cta-primary:hover,
+    .ui-cta-ghost:hover {
+      translate: 0 -1px;
+    }
+  }
+
   .ui-cta-ghost {
     border: 1px solid var(--color-line-strong);
     color: var(--color-fg);
@@ -319,6 +354,45 @@
   .glass {
     background: var(--color-card);
     border: 1px solid var(--color-line);
+  }
+
+  /* ===== Clickable card: one stretched link, whole card is the hit area ===== */
+  .card-hit {
+    position: relative;
+    cursor: pointer;
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+  }
+
+  .card-link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .card-link:focus-visible {
+    outline: none;
+  }
+
+  .card-hit:has(.card-link:focus-visible) {
+    outline: 2px solid var(--color-ice);
+    outline-offset: 3px;
+  }
+
+  .card-hit:hover .link-arrow,
+  .card-hit:has(.card-link:focus-visible) .link-arrow {
+    border-color: var(--color-ember);
+    gap: 0.8rem;
+  }
+
+  .glass.card-hit:hover {
+    background: var(--color-card-hi);
+    border-color: var(--color-line-strong);
+  }
+
+  .card-hit-rule:hover {
+    border-color: var(--color-ember);
   }
 
   /* ===== Image tile ===== */
@@ -382,13 +456,11 @@
 }
 
 @layer utilities {
-  .font-display,
-  .font-headline {
+  .font-display {
     font-family: var(--font-display), Georgia, serif;
   }
 
-  .font-body,
-  .font-label {
+  .font-body {
     font-family: var(--font-body), system-ui, sans-serif;
   }
 
@@ -410,6 +482,13 @@
     width: 1.75rem;
     height: 1px;
     background: var(--color-ember);
+  }
+
+  /* Intro paragraph under a section heading; callers add max-w and margin. */
+  .lead {
+    font-size: var(--text-step-1);
+    line-height: 1.55;
+    color: var(--color-fg-2);
   }
 
   .scrollbar-hide {

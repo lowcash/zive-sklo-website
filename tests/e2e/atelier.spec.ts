@@ -121,3 +121,20 @@ test.describe('Conversion path', () => {
     expect(new Set(hrefs).size).toBe(1)
   })
 })
+
+test.describe('Clickable inquiry cards', () => {
+  test.use({ viewport: { width: 1440, height: 900 } })
+
+  test('whole offer card is one link with pointer cursor and a unique accessible name', async ({ page }) => {
+    await page.goto('/')
+    const card = page.locator('#nabidka article').first()
+    await card.scrollIntoViewIfNeeded()
+    await expect(card.locator('a, button')).toHaveCount(1)
+    expect(await card.evaluate((el) => getComputedStyle(el).cursor)).toBe('pointer')
+    await expect(card.getByRole('link')).toHaveAccessibleName(/Nezávazně poptat.*Živé divadlo řemesla/)
+
+    const box = await card.boundingBox()
+    await page.mouse.click(box!.x + 40, box!.y + 40)
+    await expect(page.locator('#kontakt')).toBeInViewport()
+  })
+})

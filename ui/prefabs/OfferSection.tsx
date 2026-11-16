@@ -3,6 +3,8 @@ import { applyCzechNbsp } from '@/lib/utils'
 
 import { Container, Section, SectionHead } from '@/ui/core'
 
+import { InquiryLink } from './InquiryLink'
+
 /**
  * OfferSection - RSC (Server Component)
  * Three primary programmes as priced cards, three add-ons as a quiet list.
@@ -15,7 +17,7 @@ export function OfferSection() {
 
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8'>
           {OFFER.primary.map((card) => (
-            <article key={card.title} className='glass reveal flex flex-col p-7 md:p-9'>
+            <article key={card.title} className='glass card-hit reveal flex flex-col p-7 md:p-9'>
               <h3 className='lg:min-h-[2.4em]'>{applyCzechNbsp(card.title)}</h3>
               <p className='text-fg-2 mt-5'>{applyCzechNbsp(card.description)}</p>
 
@@ -34,10 +36,7 @@ export function OfferSection() {
 
               <div className='mt-auto flex flex-wrap items-end justify-between gap-x-6 gap-y-5 pt-10'>
                 <p className='font-display text-step-3 leading-none tracking-[-0.01em]'>{applyCzechNbsp(card.price)}</p>
-                <a href={card.ctaHref} className='link-arrow'>
-                  {applyCzechNbsp(card.ctaLabel)}
-                  <span aria-hidden='true'>→</span>
-                </a>
+                <InquiryLink href={card.ctaHref} label={card.ctaLabel} context={card.title} />
               </div>
             </article>
           ))}
@@ -47,7 +46,7 @@ export function OfferSection() {
           {OFFER.secondary.map((card, index) => (
             <li
               key={card.title}
-              className={`reveal border-line flex flex-col gap-4 border-b py-8 lg:border-b-0 lg:py-10 ${
+              className={`reveal card-hit border-line flex flex-col gap-4 border-b py-8 lg:border-b-0 lg:py-10 ${
                 index > 0 ? 'lg:border-l lg:pl-8' : ''
               } ${index < 2 ? 'lg:pr-8' : ''}`}
             >
@@ -56,6 +55,12 @@ export function OfferSection() {
               {card.price ? (
                 <p className='font-display text-step-1 mt-auto pt-2'>{applyCzechNbsp(card.price)}</p>
               ) : null}
+              <InquiryLink
+                href={card.ctaHref}
+                label={card.ctaLabel}
+                context={card.title}
+                className={`self-start ${card.price ? '' : 'mt-auto'}`}
+              />
             </li>
           ))}
         </ul>

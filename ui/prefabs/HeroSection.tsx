@@ -33,9 +33,9 @@ export function HeroSection() {
               {applyCzechNbsp(HERO.h1Suffix)}
             </h1>
 
-            <p className='text-step-1 text-fg-2 mt-7 max-w-[46ch] leading-[1.55]'>{applyCzechNbsp(HERO.subtitle)}</p>
+            <p className='fade-in lead mt-7 max-w-[46ch]'>{applyCzechNbsp(HERO.subtitle)}</p>
 
-            <div className='mt-9 flex flex-wrap items-center gap-x-8 gap-y-5'>
+            <div className='fade-in-late mt-9 flex flex-wrap items-center gap-x-8 gap-y-5'>
               <a href={HERO.ctaHref} className='ui-cta-primary'>
                 {applyCzechNbsp(HERO.ctaLabel)}
               </a>

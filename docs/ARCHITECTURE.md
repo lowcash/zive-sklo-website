@@ -42,9 +42,9 @@ Content-heavy sections are assembled from server-rendered prefabs that read stru
 
 ### 3. Gallery & Motion Leaves
 
-**Implementation**: `ui/prefabs/HeroCarousel.tsx`, `ui/prefabs/GallerySection.tsx`, `ui/prefabs/GalleryScroll.tsx`
+**Implementation**: `ui/prefabs/GallerySection.tsx`, `ui/prefabs/GalleryControls.tsx`, `ui/prefabs/GalleryModal.tsx`, `ui/prefabs/VideoPlayer.tsx`
 
-The hero carousel, horizontal gallery scroll, and modal browsing are isolated into focused client leaves so media interaction stays rich without turning the whole page into a client-rendered app.
+The gallery mosaic, modal browsing and the click-to-play video are isolated into focused client leaves so media interaction stays rich without turning the whole page into a client-rendered app.
 
 ## Tech Stack Decisions
 
@@ -55,4 +55,4 @@ The hero carousel, horizontal gallery scroll, and modal browsing are isolated in
 
 ## Visual Language (redesign/2026-11, Atelier)
 
-Alternating ink and ivory surfaces (`.surface-ink`, `.surface-light`, `.surface-paper` re-map the colour tokens), Newsreader + Instrument Sans, one ember accent, one `.wrap` container and `.grid-12` grid, shared `SectionHead` (eyebrow, h2, lead) in `ui/core`. The gallery is a 12-column mosaic with a modal; the FAQ is native `details`. The only motion is a small scroll reveal gated by `@supports` and `prefers-reduced-motion` and a hover zoom on fine pointers. Full rationale, palette contrast values and the asset audit: [design-spec.md](./design-spec.md).
+Alternating ink and ivory surfaces (`.surface-ink`, `.surface-light`, `.surface-paper` re-map the colour tokens), Newsreader + Instrument Sans, one ember accent, one `.wrap` container and `.grid-12` grid, shared `SectionHead` (eyebrow, h2, lead) in `ui/core`. The gallery is a 12-column mosaic with a modal; the FAQ is native `details`. Clickable cards (`.card-hit` + one stretched `InquiryLink`) make the whole card the inquiry target. Motion is a small scroll reveal, a one-time hero fade-in (never the h1), gentle hover states gated by `@supports` and `prefers-reduced-motion` and a hover zoom on fine pointers. Full rationale, palette contrast values and the asset audit: [design-spec.md](./design-spec.md).

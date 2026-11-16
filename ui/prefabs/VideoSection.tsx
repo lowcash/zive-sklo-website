@@ -19,7 +19,7 @@ export function VideoSection() {
           <div className='reveal md:col-span-6 md:col-start-1'>
             <p className='eyebrow mb-6'>{applyCzechNbsp(VIDEO.eyebrow)}</p>
             <h2 className='max-w-[14ch]'>{applyCzechNbsp(VIDEO.heading)}</h2>
-            <p className='text-step-1 text-fg-2 mt-6 max-w-[40ch] leading-[1.55]'>{applyCzechNbsp(VIDEO.subtitle)}</p>
+            <p className='lead mt-6 max-w-[40ch]'>{applyCzechNbsp(VIDEO.subtitle)}</p>
           </div>
 
           <div className='reveal mx-auto w-full max-w-[22rem] md:col-span-5 md:col-start-8 md:max-w-none'>

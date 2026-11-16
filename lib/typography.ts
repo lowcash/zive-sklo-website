@@ -6,12 +6,12 @@ export function applyCzechNbsp(text: string) {
   const normalizedText = text.replace(/\u00A0/g, ' ')
 
   // Keep one-letter Czech prepositions and conjunctions with the following word.
-  const withSingleLetterWords = normalizedText.replace(/(^|[\s(„"'])([AaIiKkOoSsUuVvZz])\s+/g, '$1$2\u00A0')
+  const withSingleLetterWords = normalizedText.replace(/(?<=^|[\s(„"'])([AaIiKkOoSsUuVvZz])\s+/g, '$1\u00A0')
 
   // Keep common short Czech prepositions and conjunctions with the following word.
   const withShortFunctionWords = withSingleLetterWords.replace(
-    /(^|[\s(„"'])(do|na|od|po|za|ve|ze|ke|se|či|že)\s+/gi,
-    '$1$2\u00A0',
+    /(?<=^|[\s(„"'])(do|na|od|po|za|ve|ze|ke|se|či|že)\s+/gi,
+    '$1\u00A0',
   )
 
   // Keep common abbreviations and titles with the following word.

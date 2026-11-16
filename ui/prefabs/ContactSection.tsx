@@ -20,7 +20,7 @@ export function ContactSection() {
           <div className='reveal md:col-span-5'>
             <p className='eyebrow mb-6'>{applyCzechNbsp(CONTACT.eyebrow)}</p>
             <h2 className='max-w-[12ch]'>{applyCzechNbsp(CONTACT.heading)}</h2>
-            <p className='text-step-1 text-fg-2 mt-6 max-w-[34ch] leading-[1.55]'>{applyCzechNbsp(CONTACT.subtitle)}</p>
+            <p className='lead mt-6 max-w-[34ch]'>{applyCzechNbsp(CONTACT.subtitle)}</p>
 
             <div className='mt-12 grid grid-cols-1 items-end gap-x-6 lg:grid-cols-[1fr_auto]'>
               <div className='space-y-6'>

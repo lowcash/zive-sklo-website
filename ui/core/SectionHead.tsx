@@ -18,7 +18,7 @@ export function SectionHead({ eyebrow, heading, lead, id, className = '' }: Sect
       <h2 id={id} className='max-w-[22ch]'>
         {applyCzechNbsp(heading)}
       </h2>
-      {lead ? <p className='text-step-1 text-fg-2 max-w-[56ch] leading-[1.55]'>{applyCzechNbsp(lead)}</p> : null}
+      {lead ? <p className='lead max-w-[56ch]'>{applyCzechNbsp(lead)}</p> : null}
     </div>
   )
 }

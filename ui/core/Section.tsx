@@ -4,7 +4,7 @@ type SectionProps = {
   children: ReactNode
   id?: string
   'aria-labelledby'?: string
-  spacing?: 'sm' | 'md' | 'lg' | 'xl'
+  spacing?: 'sm' | 'md' | 'lg'
   tone?: 'ink' | 'light' | 'paper'
 }
 
@@ -23,7 +23,6 @@ export function Section({
     sm: 'py-10 md:py-12',
     md: 'py-12 md:py-16',
     lg: 'py-(--section-y)',
-    xl: 'py-(--section-y)',
   }
 
   const toneClasses = {
