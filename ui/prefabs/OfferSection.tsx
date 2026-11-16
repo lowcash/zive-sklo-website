@@ -18,7 +18,7 @@ export function OfferSection() {
         <div className='grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8'>
           {OFFER.primary.map((card) => (
             <article key={card.title} className='glass card-hit reveal flex flex-col p-7 md:p-9'>
-              <h3 className='lg:min-h-[2.4em]'>{applyCzechNbsp(card.title)}</h3>
+              <h3>{applyCzechNbsp(card.title)}</h3>
               <p className='text-fg-2 mt-5'>{applyCzechNbsp(card.description)}</p>
 
               <dl className='border-line mt-8 space-y-4 border-t pt-6'>

@@ -119,6 +119,7 @@ export function ContactForm() {
             id='field-datePlace'
             name='datePlace'
             autoComplete='off'
+            enterKeyHint='next'
             value={formData.datePlace}
             onChange={handleChange}
             placeholder={CONTACT.fields.datePlace.placeholder}
@@ -202,7 +203,7 @@ export function ContactForm() {
           <p>{applyCzechNbsp(CONTACT.fields.gdpr.detailsText)}</p>
           <PolicyLink
             href={CONTACT.fields.gdpr.detailsHref}
-            className='border-line-strong text-ember-hi hover:border-ember-hi mt-1 inline-flex border-b transition-colors'
+            className='tap-target border-line-strong text-ember-hi hover:border-ember-hi mt-1 inline-flex border-b transition-colors'
           >
             {applyCzechNbsp(CONTACT.fields.gdpr.detailsLabel)}
           </PolicyLink>

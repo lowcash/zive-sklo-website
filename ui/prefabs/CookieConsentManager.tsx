@@ -65,7 +65,7 @@ export function CookieConsentManager({ gaTrackingId, showBannerPreview = false }
   return (
     <>
       {shouldShowBanner ? (
-        <div className='pb-safe pointer-events-none fixed inset-x-0 bottom-0 z-80 pb-4'>
+        <div className='pointer-events-none fixed inset-x-0 bottom-0 z-80 pb-[max(1rem,env(safe-area-inset-bottom))]'>
           <div className='mx-auto max-w-360 px-(--gutter)'>
             <div
               role='dialog'

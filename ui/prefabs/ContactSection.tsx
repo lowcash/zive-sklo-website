@@ -17,12 +17,12 @@ export function ContactSection() {
     <Section id='kontakt' tone='ink'>
       <Container>
         <div className='grid-12 gap-y-14'>
-          <div className='reveal md:col-span-5'>
+          <div className='reveal flex flex-col md:col-span-5'>
             <p className='eyebrow mb-6'>{applyCzechNbsp(CONTACT.eyebrow)}</p>
             <h2 className='max-w-[12ch]'>{applyCzechNbsp(CONTACT.heading)}</h2>
             <p className='lead mt-6 max-w-[34ch]'>{applyCzechNbsp(CONTACT.subtitle)}</p>
 
-            <div className='mt-12 grid grid-cols-1 items-end gap-x-6 lg:grid-cols-[1fr_auto]'>
+            <div className='mt-12 grid flex-1 grid-cols-[minmax(0,1fr)_auto] items-start gap-x-4 sm:gap-x-6'>
               <div className='space-y-6'>
                 {CONTACT.details.map((detail) => {
                   const nowrap = 'nowrap' in detail && detail.nowrap
@@ -44,7 +44,7 @@ export function ContactSection() {
                       {'href' in detail && detail.href ? (
                         <a
                           href={detail.href}
-                          className='hover:text-ember block transition-colors'
+                          className='tap-target hover:text-ember block transition-colors'
                           {...('external' in detail && detail.external
                             ? { target: '_blank', rel: 'noopener noreferrer' }
                             : {})}
@@ -59,14 +59,14 @@ export function ContactSection() {
                 })}
               </div>
 
-              <div className='relative hidden h-80 w-44 lg:block lg:h-[26rem] lg:w-56'>
+              <div className='relative h-56 w-28 self-end sm:h-72 sm:w-40 lg:h-[26rem] lg:w-56'>
                 <Image
                   src={CONTACT.portrait.src}
                   alt={CONTACT.portrait.alt}
                   fill
                   className='object-contain object-bottom'
                   quality={85}
-                  sizes='14rem'
+                  sizes='(min-width: 1024px) 14rem, 10rem'
                 />
               </div>
             </div>

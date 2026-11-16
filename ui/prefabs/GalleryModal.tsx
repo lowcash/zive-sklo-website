@@ -50,7 +50,7 @@ export function GalleryModal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className='fixed inset-0 z-70 flex cursor-pointer items-center justify-center bg-black/72 p-4 backdrop-blur-sm sm:p-6 md:p-8'
+          className='fixed inset-0 z-70 flex cursor-pointer items-center justify-center bg-black/72 p-4 sm:p-6 md:p-8 md:backdrop-blur-sm'
           role='dialog'
           aria-modal='true'
           aria-label='Náhled galerie'

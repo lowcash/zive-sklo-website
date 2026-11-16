@@ -57,7 +57,7 @@ export function ScrollToTopButton() {
           }}
           transition={{ duration: 0.28, ease: 'easeOut' }}
           onClick={scrollToTop}
-          className={`border-line-strong bg-card text-fg hover:bg-ember hover:text-on-ember pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border transition-colors duration-300 ${canShow ? '' : 'pointer-events-none'}`}
+          className={`border-line-strong bg-card text-fg hover:bg-ember hover:text-on-ember pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full border transition-colors duration-300 ${canShow ? '' : 'pointer-events-none'}`}
           style={{
             marginBottom: 'env(safe-area-inset-bottom)',
             transform: 'translateZ(0)',

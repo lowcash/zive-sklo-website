@@ -17,7 +17,7 @@ type FooterSectionProps = {
 export function FooterSection({ showCookieInformation = false }: FooterSectionProps) {
   const currentYear = new Date().getFullYear()
 
-  const linkClass = 'text-fg-2 hover:text-fg transition-colors'
+  const linkClass = 'tap-target text-fg-2 hover:text-fg transition-colors'
   const headClass = 'text-fg-3 text-step--1 font-semibold tracking-[0.14em] uppercase'
 
   return (

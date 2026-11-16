@@ -40,6 +40,7 @@ type TextInputProps = {
   placeholder?: string
   autoComplete?: string
   inputMode?: React.HTMLAttributes<HTMLInputElement>['inputMode']
+  enterKeyHint?: React.HTMLAttributes<HTMLInputElement>['enterKeyHint']
   pattern?: string
   maxLength?: number
   required?: boolean
@@ -55,6 +56,7 @@ export function ContactTextInput({
   placeholder,
   autoComplete,
   inputMode,
+  enterKeyHint,
   pattern,
   maxLength,
   required,
@@ -68,6 +70,7 @@ export function ContactTextInput({
       type={type}
       autoComplete={autoComplete}
       inputMode={inputMode}
+      enterKeyHint={enterKeyHint}
       pattern={pattern}
       maxLength={maxLength}
       value={value}

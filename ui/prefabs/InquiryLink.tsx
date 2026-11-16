@@ -15,7 +15,7 @@ type InquiryLinkProps = {
  */
 export function InquiryLink({ href, label, context, className = '' }: InquiryLinkProps) {
   return (
-    <a href={href} className={`card-link link-arrow ${className}`}>
+    <a href={href} className={`card-link link-arrow min-h-11 ${className}`}>
       {applyCzechNbsp(label)}
       <span className='sr-only'> – {context}</span>
       <span aria-hidden='true'>→</span>
